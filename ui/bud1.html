@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Board Lanka ERP - Budget Management</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="bud1-config.js"></script>
+  <link rel="stylesheet" href="bud1.css">
+</head>
+<body class="min-h-screen bg-[#0b1326] text-slate-100 flex flex-col md:flex-row antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- Mobile Top Bar with Navigation Toggle -->
+  <div class="md:hidden flex items-center justify-between px-4 py-3 bg-[#131b2e] border-b border-[#1f2b45] z-30">
+    <div class="flex items-center space-x-3">
+      <div class="w-8 h-8 rounded bg-blue-700 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-900/40">
+        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+        </svg>
+      </div>
+      <div>
+        <div class="text-sm font-bold tracking-wider uppercase text-white leading-tight">Sign Board Lanka</div>
+        <div class="text-[10px] text-blue-400 font-mono">ACCOUNTS CONSOLE</div>
+      </div>
+    </div>
+    <button onclick="toggleMobileSidebar()" class="p-2 rounded-lg bg-[#0b1326] text-slate-300 hover:text-white border border-[#1f2b45]">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Backdrop -->
+  <div id="mobileBackdrop" onclick="toggleMobileSidebar()" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-40 md:hidden"></div>
+
+  <!-- Left Sidebar Navigation -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out md:static z-50 w-64 bg-[#131b2e] border-r border-[#1f2b45] flex flex-col justify-between shrink-0 h-screen md:h-auto">
+    <div>
+      <!-- Brand Header -->
+      <div class="hidden md:flex items-center space-x-3 px-6 py-6 border-b border-[#1f2b45]">
+        <div class="w-9 h-9 rounded bg-blue-700 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-900/50">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="text-sm font-bold tracking-wider uppercase text-white leading-tight">Sign Board Lanka</div>
+          <div class="text-[11px] text-blue-400 font-mono tracking-wide">ACCOUNTS CONSOLE</div>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-4 space-y-1">
+        <a href="javascript:void(0)" onclick="showToast('Navigating to Accounts Dashboard...')" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1a243c] transition-colors text-sm font-medium">
+          <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+          </svg>
+          <span>Dashboard</span>
+        </a>
+
+        <!-- Active Navigation Item: Budget Management -->
+        <a href="javascript:void(0)" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg bg-blue-700 text-white shadow-md shadow-blue-900/40 text-sm font-semibold">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+          </svg>
+          <span>Budget Management</span>
+        </a>
+
+        <a href="javascript:void(0)" onclick="showToast('Quotation Management page will be loaded.')" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1a243c] transition-colors text-sm font-medium">
+          <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+          <span>Quotation Management</span>
+        </a>
+
+        <a href="javascript:void(0)" onclick="showToast('Invoice Management page will be loaded.')" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1a243c] transition-colors text-sm font-medium">
+          <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+          </svg>
+          <span>Invoice Management</span>
+        </a>
+
+        <a href="javascript:void(0)" onclick="showToast('Payment Management page will be loaded.')" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1a243c] transition-colors text-sm font-medium">
+          <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+          <span>Payment Management</span>
+        </a>
+
+        <a href="javascript:void(0)" onclick="showToast('Financial Reports page will be loaded.')" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1a243c] transition-colors text-sm font-medium">
+          <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+          </svg>
+          <span>Financial Reports</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Sidebar Footer / User Profile & Logout -->
+    <div class="p-4 border-t border-[#1f2b45] space-y-3">
+      <div class="flex items-center space-x-3 px-2 py-1.5 rounded-lg bg-[#0b1326]/60 border border-[#1f2b45]/60">
+        <div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center font-bold text-xs text-slate-200">
+          FO
+        </div>
+        <div class="overflow-hidden">
+          <div class="text-xs font-semibold text-white truncate">Finance Officer</div>
+          <div class="text-[10px] text-slate-400 truncate">Accounts Desk</div>
+        </div>
+      </div>
+      <a href="javascript:void(0)" onclick="showToast('Logged out of demo session.')" class="flex items-center space-x-2.5 px-3 py-2 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-950/20 transition-colors text-xs font-medium">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+        </svg>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content Layout -->
+  <main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+
+    <!-- Top Operational Bar -->
+    <header class="bg-[#131b2e] border-b border-[#1f2b45] px-6 py-3.5 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-20">
+      <div class="flex items-center space-x-2 text-xs">
+        <span class="text-slate-400">Sign Board Lanka</span>
+        <span class="text-slate-600">/</span>
+        <span class="text-slate-400">Accounts Console</span>
+        <span class="text-slate-600">/</span>
+        <span class="text-blue-400 font-medium">Budget Management</span>
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <!-- Global Search input -->
+        <div class="relative w-64 md:w-80">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </span>
+          <input type="text" id="globalSearchInput" onkeyup="filterBudgets()" placeholder="Search project, budget no, client..." class="w-full bg-[#0b1326] border border-[#1f2b45] text-xs text-slate-200 placeholder-slate-500 rounded-lg pl-9 pr-4 py-2 focus:outline-none focus:border-blue-500 transition-colors">
+        </div>
+
+        <!-- Notification Bell -->
+        <button onclick="showToast('2 budgets are currently awaiting Owner approval.')" class="relative p-2 rounded-lg bg-[#0b1326] border border-[#1f2b45] text-slate-300 hover:text-white transition-colors" title="Notifications">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+          </svg>
+          <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-blue-500"></span>
+        </button>
+
+        <!-- User Chip -->
+        <div class="hidden sm:flex items-center space-x-2 pl-2 border-l border-[#1f2b45]">
+          <div class="text-right">
+            <div class="text-xs font-semibold text-slate-200">Finance Officer</div>
+            <div class="text-[10px] text-blue-400">Demo Role: Accounts</div>
+          </div>
+          <div class="w-7 h-7 rounded-full bg-blue-600/30 border border-blue-500/40 flex items-center justify-center text-xs font-bold text-blue-300">
+            A
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Body Container -->
+    <div class="p-6 md:p-8 space-y-6">
+
+      <!-- Page Header & Action Bar -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center space-x-3">
+            <h1 class="text-2xl font-bold tracking-tight text-white">BUDGET MANAGEMENT</h1>
+            <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-medium tracking-wide bg-[#1f2b45] text-blue-300 border border-blue-500/20 uppercase">
+              Sample Prototype Data
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 mt-1 max-w-2xl">
+            Prepare initial fabrication, material, and labour costings linked to approved design versions. Submit draft budgets for Owner approval before generating formal client quotations.
+          </p>
+        </div>
+
+        <div class="flex items-center space-x-3 shrink-0">
+          <button onclick="openCreateBudgetModal()" class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg text-xs font-semibold tracking-wide shadow-lg shadow-blue-900/30 transition-all border border-blue-500/40">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            <span>+ CREATE NEW BUDGET</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Governance Policy Banner -->
+      <div class="bg-[#131b2e] border-l-4 border-blue-500 border border-[#1f2b45] p-4 rounded-r-lg flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
+        <div class="flex items-start space-x-3">
+          <svg class="w-5 h-5 text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <div>
+            <span class="font-semibold text-slate-200">Owner Authorization Rule:</span>
+            <span class="text-slate-400 ml-1">Accounts desk prepares and submits budget drafts. Only the Owner holds authority to approve or reject budgets. Once approved, budgets become strictly immutable and unlock quotation drafting.</span>
+          </div>
+        </div>
+        <div class="shrink-0 text-[11px] font-mono text-slate-400 bg-[#0b1326] px-2.5 py-1 rounded border border-[#1f2b45]">
+          Currency: LKR | Tax Rate: 0%
+        </div>
+      </div>
+
+      <!-- Budget Overview Cards (4 KPI Cards) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- KPI 1: Total Budgets -->
+        <div class="bg-[#131b2e] border border-[#1f2b45] rounded-xl p-5 relative overflow-hidden shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-bold tracking-wider uppercase text-slate-400">TOTAL BUDGETS</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-[#1f2b45] text-slate-300">REGISTERED</span>
+          </div>
+          <div class="text-2xl font-bold text-white tracking-tight" id="kpiTotalBudgets">5 Budgets</div>
+          <div class="text-xs text-slate-400 mt-1 flex items-center justify-between">
+            <span>Cumulative costing value</span>
+            <span class="font-mono text-slate-300">LKR 9.61M</span>
+          </div>
+          <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500/20 to-blue-500/80"></div>
+        </div>
+
+        <!-- KPI 2: Draft Budgets -->
+        <div class="bg-[#131b2e] border border-[#1f2b45] rounded-xl p-5 relative overflow-hidden shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-bold tracking-wider uppercase text-slate-400">DRAFT BUDGETS</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-amber-950/40 text-amber-300 border border-amber-600/30">IN PREPARATION</span>
+          </div>
+          <div class="text-2xl font-bold text-amber-400 tracking-tight" id="kpiDraftBudgets">2 Budgets</div>
+          <div class="text-xs text-slate-400 mt-1 flex items-center justify-between">
+            <span>Editable by Accounts</span>
+            <span class="font-mono text-slate-300">PRJ-104 &amp; PRJ-106</span>
+          </div>
+          <div class="absolute bottom-0 left-0 right-0 h-1 bg-amber-500"></div>
+        </div>
+
+        <!-- KPI 3: Pending Owner Approval -->
+        <div class="bg-[#131b2e] border border-[#1f2b45] rounded-xl p-5 relative overflow-hidden shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-bold tracking-wider uppercase text-slate-400">PENDING OWNER APPROVAL</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-blue-950/40 text-blue-300 border border-blue-500/30">AWAITING REVIEW</span>
+          </div>
+          <div class="text-2xl font-bold text-blue-400 tracking-tight" id="kpiPendingBudgets">1 Budget</div>
+          <div class="text-xs text-slate-400 mt-1 flex items-center justify-between">
+            <span>Submitted for authorization</span>
+            <span class="font-mono text-slate-300">BDG-2026-101</span>
+          </div>
+          <div class="absolute bottom-0 left-0 right-0 h-1 bg-blue-500"></div>
+        </div>
+
+        <!-- KPI 4: Approved Budgets -->
+        <div class="bg-[#131b2e] border border-[#1f2b45] rounded-xl p-5 relative overflow-hidden shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-bold tracking-wider uppercase text-slate-400">APPROVED BUDGETS</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-950/40 text-emerald-300 border border-emerald-600/30">LOCKED / IMMUTABLE</span>
+          </div>
+          <div class="text-2xl font-bold text-emerald-400 tracking-tight" id="kpiApprovedBudgets">2 Budgets</div>
+          <div class="text-xs text-slate-400 mt-1 flex items-center justify-between">
+            <span>Ready for quotation</span>
+            <span class="font-mono text-slate-300">LKR 4.70M total</span>
+          </div>
+          <div class="absolute bottom-0 left-0 right-0 h-1 bg-emerald-500"></div>
+        </div>
+      </div>
+
+      <!-- Filters & Search Toolbar -->
+      <div class="bg-[#131b2e] border border-[#1f2b45] rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="flex flex-wrap items-center gap-3">
+          <!-- Status Filter Tabs -->
+          <div class="inline-flex rounded-lg bg-[#0b1326] p-1 border border-[#1f2b45] text-xs">
+            <button onclick="setStatusFilter('ALL')" id="filterBtnALL" class="px-3 py-1.5 rounded-md font-medium text-white bg-blue-700 shadow transition-colors">
+              All (<span id="countAll">5</span>)
+            </button>
+            <button onclick="setStatusFilter('DRAFT')" id="filterBtnDRAFT" class="px-3 py-1.5 rounded-md font-medium text-slate-400 hover:text-white transition-colors">
+              Draft (<span id="countDraft">2</span>)
+            </button>
+            <button onclick="setStatusFilter('PENDING APPROVAL')" id="filterBtnPENDING" class="px-3 py-1.5 rounded-md font-medium text-slate-400 hover:text-white transition-colors">
+              Pending Approval (<span id="countPending">1</span>)
+            </button>
+            <button onclick="setStatusFilter('APPROVED')" id="filterBtnAPPROVED" class="px-3 py-1.5 rounded-md font-medium text-slate-400 hover:text-white transition-colors">
+              Approved (<span id="countApproved">2</span>)
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-3 text-xs text-slate-400">
+          <span>Sort by:</span>
+          <select id="sortBySelect" onchange="filterBudgets()" class="bg-[#0b1326] border border-[#1f2b45] text-slate-200 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-blue-500">
+            <option value="date-desc">Newest Date</option>
+            <option value="amount-desc">Highest Amount</option>
+            <option value="amount-asc">Lowest Amount</option>
+            <option value="id-asc">Budget ID</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Budget Register Table -->
+      <div class="bg-[#131b2e] border border-[#1f2b45] rounded-xl overflow-hidden shadow-sm">
+        <div class="px-6 py-4 border-b border-[#1f2b45] flex items-center justify-between bg-[#151f35]">
+          <div class="flex items-center space-x-2">
+            <span class="font-bold text-sm tracking-wide text-white uppercase">Project Costing &amp; Budget Register</span>
+            <span class="text-xs text-slate-400 font-mono">(All amounts in Sri Lankan Rupees - LKR)</span>
+          </div>
+          <span class="text-xs text-blue-400 font-mono" id="tableFilterCount">Showing 5 budgets</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-[#0d162b] border-b border-[#1f2b45] text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                <th class="py-3 px-4">Budget No</th>
+                <th class="py-3 px-4">Project ID &amp; Name</th>
+                <th class="py-3 px-4">Design Ver</th>
+                <th class="py-3 px-4">Budget Ver</th>
+                <th class="py-3 px-4 text-right">Total Amount (LKR)</th>
+                <th class="py-3 px-4">Created Date</th>
+                <th class="py-3 px-4 text-center">Status</th>
+                <th class="py-3 px-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="budgetTableBody" class="divide-y divide-[#1f2b45]/70 text-slate-300">
+              <!-- Dynamically populated via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Demonstration Note / Prototype Context -->
+      <div class="p-4 rounded-xl bg-[#131b2e]/60 border border-[#1f2b45]/60 flex items-center justify-between text-xs text-slate-400">
+        <div class="flex items-center space-x-2">
+          <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span>Frontend UI Prototype Demonstration: Financial actions and calculations operate entirely in local state. No PostgreSQL commits are made.</span>
+        </div>
+        <div class="font-mono text-[11px] text-slate-500">v2.4 - Accounts Desk</div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ==================== MODAL 1: VIEW BUDGET DETAILS ==================== -->
+  <div id="viewBudgetModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-[#131b2e] border border-[#1f2b45] rounded-xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden my-auto">
+      <!-- Modal Header -->
+      <div class="px-6 py-4 bg-[#18233c] border-b border-[#1f2b45] flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="w-8 h-8 rounded bg-blue-600/30 border border-blue-500/40 flex items-center justify-center text-blue-300">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <h2 class="text-base font-bold text-white" id="viewModalTitle">Budget Details</h2>
+              <span id="viewModalStatusBadge" class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold"></span>
+            </div>
+            <p class="text-xs text-slate-400" id="viewModalSubtitle">Detailed fabrication and material cost breakdown</p>
+          </div>
+        </div>
+        <button onclick="closeViewBudgetModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-[#1f2b45]">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-6 overflow-y-auto space-y-6 text-xs">
+
+        <!-- Project & Version Summary Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 bg-[#0b1326] p-4 rounded-lg border border-[#1f2b45]">
+          <div>
+            <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Project ID &amp; Client</div>
+            <div class="text-xs font-semibold text-white mt-1" id="viewFieldProject">--</div>
+            <div class="text-[11px] text-slate-400" id="viewFieldClient">--</div>
+          </div>
+          <div>
+            <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Approved Design Ver</div>
+            <div class="text-xs font-semibold text-blue-400 font-mono mt-1" id="viewFieldDesignVer">--</div>
+            <div class="text-[10px] text-emerald-400 flex items-center space-x-1 mt-0.5">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              <span>Client Design Sign-off</span>
+            </div>
+          </div>
+          <div>
+            <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Budget Version</div>
+            <div class="text-xs font-semibold text-slate-200 font-mono mt-1" id="viewFieldBudgetVer">--</div>
+            <div class="text-[10px] text-slate-400" id="viewFieldDate">Created: --</div>
+          </div>
+          <div>
+            <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Prepared By</div>
+            <div class="text-xs font-semibold text-slate-200 mt-1" id="viewFieldPreparedBy">--</div>
+            <div class="text-[10px] text-slate-400">Accounts Department</div>
+          </div>
+        </div>
+
+        <!-- Approval Workflow Status Panel -->
+        <div id="viewApprovalPanel" class="p-4 rounded-lg border">
+          <!-- Filled dynamically by JS -->
+        </div>
+
+        <!-- Budget Items Table -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-white uppercase tracking-wider">Cost Items Breakdown</span>
+            <span class="text-[11px] text-slate-400 font-mono" id="viewItemsCount">0 items listed</span>
+          </div>
+
+          <div class="border border-[#1f2b45] rounded-lg overflow-hidden">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-[#0e172c] border-b border-[#1f2b45] text-[10px] uppercase font-bold text-slate-400">
+                  <th class="py-2.5 px-3">#</th>
+                  <th class="py-2.5 px-3">Item Description</th>
+                  <th class="py-2.5 px-3">Category</th>
+                  <th class="py-2.5 px-3 text-right">Qty</th>
+                  <th class="py-2.5 px-3">Unit</th>
+                  <th class="py-2.5 px-3 text-right">Unit Cost (LKR)</th>
+                  <th class="py-2.5 px-3 text-right">Total (LKR)</th>
+                </tr>
+              </thead>
+              <tbody id="viewItemsTableBody" class="divide-y divide-[#1f2b45] text-slate-300">
+                <!-- Rows injected dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Financial Summary Calculation Box -->
+        <div class="flex justify-end">
+          <div class="w-full sm:w-80 bg-[#0b1326] border border-[#1f2b45] rounded-lg p-4 space-y-2">
+            <div class="flex items-center justify-between text-xs text-slate-400">
+              <span>Subtotal (Direct Costs):</span>
+              <span class="font-mono text-slate-200" id="viewSubtotal">LKR 0</span>
+            </div>
+            <div class="flex items-center justify-between text-xs text-slate-400">
+              <span>Estimated Tax (0% Confirmed):</span>
+              <span class="font-mono text-slate-400" id="viewTax">LKR 0</span>
+            </div>
+            <div class="border-t border-[#1f2b45] pt-2 flex items-center justify-between text-sm font-bold text-white">
+              <span class="text-blue-400">Grand Total:</span>
+              <span class="font-mono text-emerald-400 text-base" id="viewGrandTotal">LKR 0</span>
+            </div>
+            <div class="text-[10px] text-slate-500 text-right italic">
+              * Tax rate not applicable / not finalized
+            </div>
+          </div>
+        </div>
+
+        <!-- Notes / Remarks -->
+        <div class="bg-[#0b1326] p-3 rounded-lg border border-[#1f2b45]">
+          <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Costing Notes / Specifications</div>
+          <p class="text-xs text-slate-300" id="viewNotes">--</p>
+        </div>
+
+        <!-- Previous Versions History (if any) -->
+        <div id="viewVersionHistorySection" class="hidden bg-[#0b1326] p-4 rounded-lg border border-[#1f2b45]">
+          <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Previous Budget Version History</div>
+          <div class="space-y-2" id="viewVersionHistoryList">
+            <!-- Injected dynamically -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-3 bg-[#18233c] border-t border-[#1f2b45] flex items-center justify-between" id="viewModalFooter">
+        <button onclick="closeViewBudgetModal()" class="px-4 py-2 rounded-lg bg-[#0b1326] hover:bg-[#1f2b45] text-slate-300 text-xs font-semibold border border-[#1f2b45] transition-colors">
+          Close View
+        </button>
+        <div class="flex items-center space-x-2" id="viewModalActionButtons">
+          <!-- Populated dynamically based on status -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 2: CREATE / EDIT BUDGET FORM ==================== -->
+  <div id="createBudgetModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-[#131b2e] border border-[#1f2b45] rounded-xl max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto">
+
+      <!-- Modal Header -->
+      <div class="px-6 py-4 bg-[#18233c] border-b border-[#1f2b45] flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="w-8 h-8 rounded bg-blue-600 flex items-center justify-center text-white">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-white" id="formModalTitle">Prepare New Project Budget</h2>
+            <p class="text-xs text-slate-400">Link to client-approved design version &amp; specify item cost breakdown</p>
+          </div>
+        </div>
+        <button onclick="closeCreateBudgetModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-[#1f2b45]">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Form Body -->
+      <div class="p-6 overflow-y-auto space-y-5 text-xs">
+
+        <!-- Project Selection & Approved Design Version (Mandatory Rule) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-[#0b1326] p-4 rounded-lg border border-[#1f2b45]">
+          <div>
+            <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+              Select Eligible Project <span class="text-rose-400">*</span>
+            </label>
+            <select id="formProjectSelect" onchange="onProjectSelectChange()" class="w-full bg-[#131b2e] border border-[#1f2b45] text-xs text-white rounded-lg p-2.5 focus:outline-none focus:border-blue-500">
+              <option value="">-- Choose eligible project --</option>
+              <option value="PRJ-2026-104">PRJ-2026-104: Keells Supermarket Pylon</option>
+              <option value="PRJ-2026-106">PRJ-2026-106: Arpico Entrance Fascia</option>
+              <option value="PRJ-2026-110">PRJ-2026-110: John Keells Wayfinding Signs</option>
+            </select>
+            <p class="text-[10px] text-slate-500 mt-1">Only projects with approved design versions appear.</p>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+              Approved Design Version <span class="text-rose-400">*</span>
+            </label>
+            <input type="text" id="formDesignVersion" readonly class="w-full bg-[#131b2e]/60 border border-[#1f2b45] text-xs text-blue-400 font-mono rounded-lg p-2.5 cursor-not-allowed" placeholder="Auto-populated upon project selection">
+            <div id="formDesignSignoffNotice" class="text-[10px] text-emerald-400 mt-1 flex items-center space-x-1 hidden">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              <span>Design sign-off verified</span>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+              Budget Version &amp; Date
+            </label>
+            <div class="flex items-center space-x-2">
+              <input type="text" id="formBudgetVersion" value="v1.0" readonly class="w-24 bg-[#131b2e]/60 border border-[#1f2b45] text-xs text-slate-300 font-mono rounded-lg p-2.5 cursor-not-allowed">
+              <input type="text" id="formBudgetDate" value="19 Nov 2026" readonly class="flex-1 bg-[#131b2e]/60 border border-[#1f2b45] text-xs text-slate-300 rounded-lg p-2.5 cursor-not-allowed">
+            </div>
+            <p class="text-[10px] text-slate-500 mt-1">Sequential numbering enforced.</p>
+          </div>
+        </div>
+
+        <!-- Budget Items Section -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <span class="text-xs font-bold text-white uppercase tracking-wider">Budget Cost Items</span>
+              <span class="text-[11px] text-slate-400 ml-2">Add materials, labour, transport, installation</span>
+            </div>
+            <button type="button" onclick="addBudgetItemRow()" class="flex items-center space-x-1.5 bg-[#1f2b45] hover:bg-[#28385a] text-blue-300 px-3 py-1.5 rounded-lg text-xs font-medium border border-blue-500/30 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+              </svg>
+              <span>+ Add Item Row</span>
+            </button>
+          </div>
+
+          <!-- Items Table -->
+          <div class="border border-[#1f2b45] rounded-lg overflow-x-auto bg-[#0b1326]">
+            <table class="w-full text-left text-xs border-collapse min-w-[700px]">
+              <thead>
+                <tr class="bg-[#0e172c] border-b border-[#1f2b45] text-[10px] uppercase font-bold text-slate-400">
+                  <th class="py-2.5 px-3 w-48">Description <span class="text-rose-400">*</span></th>
+                  <th class="py-2.5 px-3 w-36">Category <span class="text-rose-400">*</span></th>
+                  <th class="py-2.5 px-3 w-24">Qty <span class="text-rose-400">*</span></th>
+                  <th class="py-2.5 px-3 w-28">Unit</th>
+                  <th class="py-2.5 px-3 w-36 text-right">Unit Cost (LKR) <span class="text-rose-400">*</span></th>
+                  <th class="py-2.5 px-3 w-36 text-right">Total (LKR)</th>
+                  <th class="py-2.5 px-3 w-12 text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody id="formItemsTableBody" class="divide-y divide-[#1f2b45]">
+                <!-- Rows injected dynamically by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Dynamic Calculation Bar -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#0b1326] p-4 rounded-lg border border-[#1f2b45]">
+          <div class="text-xs text-slate-400">
+            <span class="font-bold text-slate-300">Calculation Formula:</span>
+            <span class="font-mono text-[11px] text-blue-300 ml-1">Grand Total = &Sigma; (Qty &times; Unit Cost) + 0% Tax</span>
+          </div>
+
+          <div class="flex items-center space-x-6 text-right">
+            <div>
+              <div class="text-[10px] uppercase font-bold text-slate-400">Subtotal</div>
+              <div class="text-xs font-mono text-slate-200 font-semibold" id="formSubtotalDisplay">LKR 0</div>
+            </div>
+            <div>
+              <div class="text-[10px] uppercase font-bold text-slate-400">Tax (0%)</div>
+              <div class="text-xs font-mono text-slate-400">LKR 0</div>
+            </div>
+            <div class="pl-4 border-l border-[#1f2b45]">
+              <div class="text-[10px] uppercase font-bold text-blue-400">Budget Grand Total</div>
+              <div class="text-base font-mono font-bold text-emerald-400" id="formGrandTotalDisplay">LKR 0</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Costing Notes / Specifications -->
+        <div>
+          <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+            Budget Notes &amp; Specifications (Optional)
+          </label>
+          <textarea id="formNotes" rows="2" class="w-full bg-[#0b1326] border border-[#1f2b45] text-xs text-slate-200 rounded-lg p-2.5 focus:outline-none focus:border-blue-500" placeholder="e.g. Laser cutting and primer coat included in labour cost; transportation based on Colombo site delivery..."></textarea>
+        </div>
+
+        <!-- Workflow Notice -->
+        <div class="p-3 bg-blue-950/20 border border-blue-500/20 rounded-lg text-slate-400 text-[11px] flex items-center space-x-2">
+          <svg class="w-4 h-4 text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span>You can save this budget as a <strong>DRAFT</strong> to continue editing later, or immediately <strong>SUBMIT FOR OWNER APPROVAL</strong>. Only the Owner can approve this budget.</span>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-3.5 bg-[#18233c] border-t border-[#1f2b45] flex items-center justify-between">
+        <button type="button" onclick="closeCreateBudgetModal()" class="px-4 py-2 rounded-lg bg-[#0b1326] hover:bg-[#1f2b45] text-slate-300 text-xs font-semibold border border-[#1f2b45] transition-colors">
+          Cancel
+        </button>
+        <div class="flex items-center space-x-3">
+          <button type="button" onclick="saveBudget(false)" class="px-4 py-2 rounded-lg bg-[#1f2b45] hover:bg-[#28385a] text-slate-200 text-xs font-semibold border border-[#2a3b5f] transition-colors">
+            Save as Draft
+          </button>
+          <button type="button" onclick="saveBudget(true)" class="flex items-center space-x-1.5 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-lg shadow-blue-900/40 border border-blue-500 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Save &amp; Submit for Owner Approval</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-[#18233c] border border-blue-500/50 text-slate-100 px-4 py-3 rounded-lg shadow-2xl flex items-center space-x-3 text-xs max-w-md">
+    <div id="toastIcon" class="w-5 h-5 text-blue-400 shrink-0">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+    </div>
+    <div id="toastMessage" class="flex-1 font-medium">Notification message</div>
+  </div>
+
+  <!-- JavaScript Application Logic -->
+  <script src="bud1.js"></script>
+</body>
+</html>

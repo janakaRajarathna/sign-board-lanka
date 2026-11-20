@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-[#0b1326] text-[#dae2fd]" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sign Board Lanka ERP - Payment Management</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Fonts: Space Grotesk & Inter/Geist -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script src="pay-config.js"></script>
+<style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0b1326;
+      color: #dae2fd;
+    }
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    /* Custom scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b1326;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #23314f;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #314268;
+    }
+  </style>
+</head>
+<body class="h-full flex overflow-hidden antialiased selection:bg-blue-600 selection:text-white">
+<!-- =====================================================================
+       SIDEBAR NAVIGATION (Fixed Left)
+       ===================================================================== -->
+<aside class="w-64 bg-[#131b2e] border-r border-[#1e293b] flex flex-col flex-shrink-0 z-30 transition-transform duration-300 md:translate-x-0 -translate-x-full fixed md:static inset-y-0 left-0" id="sidebar">
+<!-- Brand / Identity -->
+<div class="h-16 flex items-center px-6 border-b border-[#1e293b] bg-[#0e172a]/60 gap-3">
+<div class="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<h2 class="font-heading font-bold text-sm tracking-wide text-white">SIGN BOARD LANKA</h2>
+<span class="text-[10px] text-blue-400 tracking-wider font-mono font-medium block -mt-0.5">ERP FABRICATION</span>
+</div>
+</div>
+<!-- Navigation Menu -->
+<nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1 text-xs">
+<div class="px-3 pb-2 text-[10px] font-mono tracking-wider text-slate-500 uppercase">Core Management</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Customers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Projects</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Site Visits</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Designs</span>
+</a>
+<div class="pt-3 px-3 pb-2 text-[10px] font-mono tracking-wider text-slate-500 uppercase">Commercial &amp; Finance</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Budget Management</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Quotation Management</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2zM10 8.5a.5.5 0 11-1 0 .5.5 0 011 0zm5 5a.5.5 0 11-1 0 .5.5 0 011 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Invoice Management</span>
+</a>
+<!-- ACTIVE ITEM: Payment Management -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-blue-600 text-white font-medium shadow-md shadow-blue-600/30" href="#">
+<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Payment Management</span>
+<span class="ml-auto w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+</a>
+<div class="pt-3 px-3 pb-2 text-[10px] font-mono tracking-wider text-slate-500 uppercase">Operations &amp; Delivery</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Quality Check</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Installation</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Reports</span>
+</a>
+<div class="pt-3 px-3 pb-2 text-[10px] font-mono tracking-wider text-slate-500 uppercase">System</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-rose-400 hover:text-rose-300 hover:bg-rose-950/30 transition-colors" href="#">
+<svg class="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Logout</span>
+</a>
+</nav>
+<!-- User Profile Footer -->
+<div class="p-3 border-t border-[#1e293b] bg-[#0c1427]">
+<div class="flex items-center gap-3 px-2 py-1.5 rounded-lg bg-slate-900/60 border border-slate-800">
+<div class="w-8 h-8 rounded-full bg-blue-900/60 border border-blue-500/40 flex items-center justify-center text-blue-300 font-bold text-xs">
+          FO
+        </div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-semibold text-white truncate">Finance Officer</p>
+<p class="text-[10px] text-slate-400 truncate">Accounts Division</p>
+</div>
+<div class="w-2 h-2 rounded-full bg-emerald-500" title="Active Session"></div>
+</div>
+</div>
+</aside>
+<!-- Mobile Drawer Backdrop -->
+<div class="fixed inset-0 bg-black/60 z-20 hidden md:hidden" id="sidebarBackdrop"></div>
+<!-- =====================================================================
+       MAIN CONTENT WRAPPER
+       ===================================================================== -->
+<div class="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#0b1326]">
+<!-- Top System Header Bar -->
+<header class="h-16 bg-[#131b2e] border-b border-[#1e293b] flex items-center justify-between px-6 flex-shrink-0 z-10">
+<div class="flex items-center gap-4">
+<!-- Mobile Drawer Toggle -->
+<button class="md:hidden p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white" id="toggleSidebarBtn">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 text-xs font-mono text-slate-400">
+<span class="hover:text-slate-300">Dashboard</span>
+<span class="text-slate-600">/</span>
+<span class="hover:text-slate-300">Finance</span>
+<span class="text-slate-600">/</span>
+<span class="text-blue-400 font-semibold">Payment Management</span>
+</nav>
+</div>
+<div class="flex items-center gap-3">
+<!-- System Badge -->
+<div class="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-950/60 border border-blue-800/40 text-[11px] text-blue-300 font-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+<span>ACCOUNTS DESK LIVE</span>
+</div>
+<!-- Help / Protocol indicator -->
+<button class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" title="Financial Protocol ENF-03: 30% Advance Deposit Rule">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</header>
+<!-- Main Scrollable Canvas Area -->
+<main class="flex-1 overflow-y-auto p-6 space-y-6">
+<!-- =====================================================================
+           3. PAGE HEADER
+           ===================================================================== -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h1 class="text-2xl font-bold font-heading text-white tracking-tight flex items-center gap-3">
+            Payment Management
+            <span class="text-xs font-mono font-medium px-2 py-0.5 rounded bg-blue-950/70 border border-blue-800/50 text-blue-400">OPERATIONAL LEDGER</span>
+</h1>
+<p class="text-xs text-slate-400 mt-1">
+            Manage project advance deposits and final balance settlements with strict billing governance.
+          </p>
+</div>
+<!-- Prominent "+ Record Payment" CTA -->
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs shadow-lg shadow-blue-600/30 transition-all hover:scale-[1.02] active:scale-[0.98]" id="openRecordPaymentBtn">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="tracking-wide font-semibold">+ RECORD PAYMENT</span>
+</button>
+</div>
+</div>
+<!-- Business Governance Notice Banner -->
+<div class="p-4 rounded-xl bg-gradient-to-r from-blue-950/40 via-[#131b2e] to-slate-900/60 border border-blue-900/40 flex items-start gap-3 text-xs leading-relaxed">
+<div class="p-1.5 rounded-lg bg-blue-900/50 text-blue-300 mt-0.5 flex-shrink-0">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="text-slate-300">
+<span class="font-semibold text-white">Accounts Payment Protocol:</span>
+          A project requires a <span class="text-blue-300 font-mono font-medium">30% advance deposit</span> calculated from the accepted quotation baseline before shop fabrication/mobilization commences. Advance deposits are collected <span class="text-amber-300 underline underline-offset-2">without creating an advance invoice</span>. Exactly <span class="text-emerald-300 font-semibold">one final invoice</span> is issued post-installation, and all final payments must be linked directly to that final invoice.
+        </div>
+</div>
+<!-- =====================================================================
+           4. DASHBOARD SUMMARY CARDS (4 Cards)
+           ===================================================================== -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Card 1: Total Payments -->
+<div class="p-5 rounded-2xl bg-[#131b2e] border border-[#1e293b] hover:border-slate-700 transition-colors shadow-sm">
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-slate-400">Total Payments</span>
+<div class="w-9 h-9 rounded-xl bg-blue-950/60 border border-blue-800/40 flex items-center justify-center text-blue-400">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<div class="mt-3">
+<h3 class="text-xl font-bold font-mono text-white" id="cardTotalPaymentsAmount">LKR 0</h3>
+<p class="text-[11px] text-slate-400 mt-1 flex items-center gap-1.5 font-mono" id="cardTotalPaymentsCount">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+              6 Payments Recorded
+            </p>
+</div>
+</div>
+<!-- Card 2: Advance Payments -->
+<div class="p-5 rounded-2xl bg-[#131b2e] border border-[#1e293b] hover:border-slate-700 transition-colors shadow-sm">
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-slate-400">Advance Payments</span>
+<div class="w-9 h-9 rounded-xl bg-indigo-950/60 border border-indigo-800/40 flex items-center justify-center text-indigo-400">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<div class="mt-3">
+<h3 class="text-xl font-bold font-mono text-indigo-300" id="cardAdvancePaymentsAmount">LKR 0</h3>
+<p class="text-[11px] text-slate-400 mt-1 flex items-center gap-1.5 font-mono" id="cardAdvancePaymentsCount">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
+              3 Advance Payments
+            </p>
+</div>
+</div>
+<!-- Card 3: Final Payments -->
+<div class="p-5 rounded-2xl bg-[#131b2e] border border-[#1e293b] hover:border-slate-700 transition-colors shadow-sm">
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-slate-400">Final Payments</span>
+<div class="w-9 h-9 rounded-xl bg-emerald-950/60 border border-emerald-800/40 flex items-center justify-center text-emerald-400">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<div class="mt-3">
+<h3 class="text-xl font-bold font-mono text-emerald-300" id="cardFinalPaymentsAmount">LKR 0</h3>
+<p class="text-[11px] text-slate-400 mt-1 flex items-center gap-1.5 font-mono" id="cardFinalPaymentsCount">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              3 Final Payments
+            </p>
+</div>
+</div>
+<!-- Card 4: Recent Payments -->
+<div class="p-5 rounded-2xl bg-[#131b2e] border border-[#1e293b] hover:border-slate-700 transition-colors shadow-sm">
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-slate-400">Recent Payments</span>
+<div class="w-9 h-9 rounded-xl bg-amber-950/60 border border-amber-800/40 flex items-center justify-center text-amber-400">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<div class="mt-3">
+<h3 class="text-xl font-bold font-mono text-amber-300" id="cardRecentPaymentsAmount">LKR 0</h3>
+<p class="text-[11px] text-slate-400 mt-1 flex items-center gap-1.5 font-mono" id="cardRecentPaymentsDate">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+              Payments in Last 7 Days
+            </p>
+</div>
+</div>
+</div>
+<!-- =====================================================================
+           5. PAYMENT RECORDS TABLE SECTION (Search, Filters, Register)
+           ===================================================================== -->
+<div class="bg-[#131b2e] border border-[#1e293b] rounded-2xl overflow-hidden shadow-xl">
+<!-- Filter Bar & Search Controls -->
+<div class="p-5 border-b border-[#1e293b] bg-[#11192b] flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+<!-- Search Input -->
+<div class="relative flex-1 max-w-md">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<input class="w-full pl-10 pr-4 py-2 bg-[#0b1326] border border-[#1e293b] rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" id="paymentSearchInput" placeholder="Search by Payment ID, Project, or Customer..." type="text"/>
+</div>
+<!-- Filters: Type, Method, Date Range -->
+<div class="flex flex-wrap items-center gap-3 text-xs">
+<!-- Payment Type Filter -->
+<div class="flex items-center gap-1.5 bg-[#0b1326] border border-[#1e293b] rounded-xl px-2.5 py-1">
+<label class="text-[11px] text-slate-400 uppercase font-mono" for="filterPaymentType">Type:</label>
+<select class="bg-transparent border-0 text-white text-xs py-1 pl-1 pr-6 focus:ring-0 focus:outline-none cursor-pointer" id="filterPaymentType">
+<option class="bg-[#0b1326] text-white" value="ALL">All Types</option>
+<option class="bg-[#0b1326] text-indigo-400" value="ADVANCE">ADVANCE</option>
+<option class="bg-[#0b1326] text-emerald-400" value="FINAL">FINAL</option>
+</select>
+</div>
+<!-- Payment Method Filter -->
+<div class="flex items-center gap-1.5 bg-[#0b1326] border border-[#1e293b] rounded-xl px-2.5 py-1">
+<label class="text-[11px] text-slate-400 uppercase font-mono" for="filterPaymentMethod">Method:</label>
+<select class="bg-transparent border-0 text-white text-xs py-1 pl-1 pr-6 focus:ring-0 focus:outline-none cursor-pointer" id="filterPaymentMethod">
+<option class="bg-[#0b1326] text-white" value="ALL">All Methods</option>
+<option class="bg-[#0b1326] text-white" value="BANK TRANSFER">BANK TRANSFER</option>
+<option class="bg-[#0b1326] text-white" value="CASH">CASH</option>
+</select>
+</div>
+<!-- Date Filter (Month / Quick Preset) -->
+<div class="flex items-center gap-1.5 bg-[#0b1326] border border-[#1e293b] rounded-xl px-2.5 py-1">
+<label class="text-[11px] text-slate-400 uppercase font-mono" for="filterDateRange">Period:</label>
+<select class="bg-transparent border-0 text-white text-xs py-1 pl-1 pr-6 focus:ring-0 focus:outline-none cursor-pointer" id="filterDateRange">
+<option class="bg-[#0b1326] text-white" value="ALL">All Records</option>
+<option class="bg-[#0b1326] text-white" selected="" value="THIS_MONTH">This Month</option>
+<option class="bg-[#0b1326] text-white" value="PREVIOUS_MONTH">Previous Month</option>
+</select>
+</div>
+<!-- Reset Filters -->
+<button class="text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-slate-800 transition-colors text-xs font-mono" id="resetFiltersBtn">
+              Reset
+            </button>
+</div>
+</div>
+<!-- Table Container with Horizontal Scroll for responsiveness -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-[#0e172a] text-[11px] font-mono uppercase tracking-wider text-slate-400 border-b border-[#1e293b]">
+<tr>
+<th class="py-3.5 px-4">Payment ID</th>
+<th class="py-3.5 px-4">Project ID</th>
+<th class="py-3.5 px-4">Project Name</th>
+<th class="py-3.5 px-4">Customer</th>
+<th class="py-3.5 px-4 text-center">Type</th>
+<th class="py-3.5 px-4">Date</th>
+<th class="py-3.5 px-4">Method</th>
+<th class="py-3.5 px-4 text-right">Amount (LKR)</th>
+<th class="py-3.5 px-4 text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#1e293b] text-xs" id="paymentTableBody">
+<!-- Dynamically populated via JS -->
+</tbody>
+</table>
+</div>
+<!-- Empty Table State -->
+<div class="hidden py-16 text-center" id="tableEmptyState">
+<div class="w-12 h-12 rounded-full bg-slate-800/80 text-slate-500 mx-auto flex items-center justify-center mb-3">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<h4 class="text-sm font-semibold text-slate-300">No payment records found</h4>
+<p class="text-xs text-slate-500 mt-1" id="emptyStateMessage">Try adjusting your filters or search keywords.</p>
+</div>
+<!-- Pagination Footer -->
+<div class="p-4 border-t border-[#1e293b] bg-[#11192b] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
+<div class="font-mono text-[11px]" id="paginationInfo">
+            Showing <span class="text-white font-bold" id="pageStart">1</span> to <span class="text-white font-bold" id="pageEnd">6</span> of <span class="text-white font-bold" id="pageTotal">6</span> records
+          </div>
+<div class="flex items-center gap-1 font-mono">
+<button class="px-3 py-1.5 rounded-lg border border-[#1e293b] bg-[#0b1326] text-slate-400 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-colors" disabled="" id="prevPageBtn">
+              Previous
+            </button>
+<div class="flex items-center gap-1" id="pageButtons">
+<button class="w-8 h-8 rounded-lg bg-blue-600 text-white font-bold">1</button>
+</div>
+<button class="px-3 py-1.5 rounded-lg border border-[#1e293b] bg-[#0b1326] text-slate-400 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-colors" disabled="" id="nextPageBtn">
+              Next
+            </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- =====================================================================
+       6. RECORD PAYMENT MODAL (Clean Guided Modal Form)
+       ===================================================================== -->
+<div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto hidden" id="recordPaymentModal">
+<div class="bg-[#0b1326] border border-slate-700 rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl my-8 transform transition-all">
+<!-- Modal Header -->
+<div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-[#131b2e]">
+<div>
+<h3 class="text-base font-bold font-heading text-white tracking-wide flex items-center gap-2">
+<svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            RECORD PAYMENT TRANSACTION
+          </h3>
+<p class="text-xs text-slate-400 mt-0.5">Accounts Division • Guided Financial Ledger Entry</p>
+</div>
+<button class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors" id="closeRecordModalBtn">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<!-- Modal Form -->
+<form class="p-6 space-y-5 text-xs" id="recordPaymentForm">
+<!-- Step 1: Project Selection -->
+<div>
+<label class="block text-slate-300 font-semibold mb-1.5">
+            Select Commercial Project <span class="text-rose-400">*</span>
+</label>
+<select class="w-full bg-[#131b2e] border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" id="modalProjectSelect" required="">
+<option value="">-- Choose Project with Accepted Quotation or Final Invoice --</option>
+<!-- Options dynamically populated by JS -->
+</select>
+<p class="text-[10px] text-slate-500 mt-1">Only projects with locked commercial baselines are eligible for payment booking.</p>
+</div>
+<!-- Payment Type Selection (ADVANCE / FINAL) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="block text-slate-300 font-semibold mb-1.5">
+              Payment Type <span class="text-rose-400">*</span>
+</label>
+<div class="grid grid-cols-2 gap-2">
+<label class="flex items-center justify-center gap-2 p-2.5 rounded-xl border border-slate-700 bg-[#131b2e] cursor-pointer hover:border-indigo-500 has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-950/40 text-slate-300 transition-all">
+<input checked="" class="text-indigo-600 focus:ring-0" name="modalPaymentType" type="radio" value="ADVANCE"/>
+<span class="font-semibold text-xs text-indigo-300">ADVANCE</span>
+</label>
+<label class="flex items-center justify-center gap-2 p-2.5 rounded-xl border border-slate-700 bg-[#131b2e] cursor-pointer hover:border-emerald-500 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-950/40 text-slate-300 transition-all">
+<input class="text-emerald-600 focus:ring-0" name="modalPaymentType" type="radio" value="FINAL"/>
+<span class="font-semibold text-xs text-emerald-300">FINAL</span>
+</label>
+</div>
+</div>
+<!-- Payment Date -->
+<div>
+<label class="block text-slate-300 font-semibold mb-1.5">
+              Payment Date <span class="text-rose-400">*</span>
+</label>
+<input class="w-full bg-[#131b2e] border border-slate-700 rounded-xl px-3.5 py-2 text-white text-xs font-mono focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" id="modalPaymentDate" required="" type="date"/>
+<span class="text-[10px] text-slate-500 mt-1 block">Sri Lanka Standard Time (Asia/Colombo)</span>
+</div>
+</div>
+<!-- DYNAMIC PROJECT FINANCIAL LEDGER PANEL -->
+<div class="p-4 rounded-xl border transition-all duration-200" id="projectFinancialSummaryPanel">
+<!-- Dynamically populated based on chosen project & payment type -->
+</div>
+<!-- Payment Method & Amount -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Method: CASH / BANK TRANSFER -->
+<div>
+<label class="block text-slate-300 font-semibold mb-1.5">
+              Payment Method <span class="text-rose-400">*</span>
+</label>
+<select class="w-full bg-[#131b2e] border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" id="modalPaymentMethod" required="">
+<option selected="" value="BANK TRANSFER">BANK TRANSFER (Slip / Cheque)</option>
+<option value="CASH">CASH (Physical Receipt)</option>
+</select>
+</div>
+<!-- Amount -->
+<div>
+<label class="block text-slate-300 font-semibold mb-1.5">
+              Amount (LKR) <span class="text-rose-400">*</span>
+</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500 font-mono font-bold text-xs">LKR</span>
+<input class="w-full pl-12 pr-4 py-2 bg-[#131b2e] border border-slate-700 rounded-xl text-white text-xs font-mono font-bold focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" id="modalPaymentAmount" min="1" placeholder="0" required="" step="1" type="number"/>
+</div>
+<p class="text-[10px] text-slate-500 mt-1" id="amountHelperText">Partial payments permitted. Overpayment prohibited.</p>
+</div>
+</div>
+<!-- Optional Fields: Reference Number & Evidence Upload -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="block text-slate-300 font-semibold mb-1.5">
+              Reference Number <span class="text-slate-500 font-normal">(Optional)</span>
+</label>
+<input class="w-full bg-[#131b2e] border border-slate-700 rounded-xl px-3.5 py-2 text-white text-xs placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" id="modalPaymentRef" placeholder="e.g. SLIP-TXN-88412 or CHQ-4091" type="text"/>
+</div>
+<div>
+<label class="block text-slate-300 font-semibold mb-1.5">
+              Payment Evidence Document <span class="text-slate-500 font-normal">(Optional)</span>
+</label>
+<input accept=".pdf,.png,.jpg,.jpeg" class="w-full bg-[#131b2e] border border-slate-700 rounded-xl px-3 py-1.5 text-slate-400 text-xs file:mr-3 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[11px] file:bg-blue-600 file:text-white file:cursor-pointer hover:file:bg-blue-500 cursor-pointer" id="modalEvidenceUpload" type="file"/>
+<p class="text-[10px] text-slate-500 mt-1" id="modalEvidenceStatusNotice">Files selected here remain on the local browser client only (not uploaded in prototype).</p>
+</div>
+</div>
+<!-- Modal Action Buttons -->
+<div class="pt-3 flex items-center justify-end gap-3 border-t border-slate-800">
+<button class="px-4 py-2 rounded-xl border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors" id="cancelRecordModalBtn" type="button">
+            Cancel
+          </button>
+<button class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold shadow-lg shadow-blue-600/30 transition-all" id="submitPaymentBtn" type="submit">
+            Confirm &amp; Record Payment
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- =====================================================================
+       7. PAYMENT DETAILS MODAL (Read-Only Audit Modal)
+       ===================================================================== -->
+<div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto hidden" id="paymentDetailsModal">
+<div class="bg-[#0b1326] border border-slate-700 rounded-2xl w-full max-w-xl overflow-hidden shadow-2xl my-8">
+<!-- Details Header -->
+<div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-[#131b2e]">
+<div>
+<div class="flex items-center gap-2">
+<h3 class="text-base font-bold font-heading text-white tracking-wide">PAYMENT RECORD AUDIT</h3>
+<span class="font-mono text-xs px-2 py-0.5 rounded bg-blue-950 text-blue-400 border border-blue-800 font-bold" id="detailPaymentIdBadge">PMT-2026-000</span>
+</div>
+<p class="text-xs text-slate-400 mt-0.5">Verified financial entry in Sign Board Lanka ERP</p>
+</div>
+<button class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors" id="closeDetailsModalBtn">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<!-- Details Body -->
+<div class="p-6 space-y-5 text-xs">
+<!-- Big Amount Highlight Card -->
+<div class="p-4 rounded-xl bg-[#131b2e] border border-slate-700/80 flex items-center justify-between">
+<div>
+<span class="text-slate-400 text-[11px] block">Transacted Amount</span>
+<h2 class="text-2xl font-bold font-mono text-white mt-0.5" id="detailAmountDisplay">LKR 0</h2>
+</div>
+<div id="detailTypeBadgeContainer">
+<!-- Badge: ADVANCE or FINAL -->
+</div>
+</div>
+<!-- 2-Column Info Grid -->
+<div class="grid grid-cols-2 gap-4 bg-[#0e172a] p-4 rounded-xl border border-slate-800/80">
+<div>
+<span class="text-slate-500 text-[10px] uppercase font-mono block">Project Information</span>
+<p class="font-semibold text-white mt-0.5 truncate" id="detailProjectName">--</p>
+<p class="text-blue-400 font-mono text-[11px]" id="detailProjectId">--</p>
+</div>
+<div>
+<span class="text-slate-500 text-[10px] uppercase font-mono block">Customer Entity</span>
+<p class="font-semibold text-white mt-0.5 truncate" id="detailCustomerName">--</p>
+</div>
+<div class="pt-2 border-t border-slate-800/60">
+<span class="text-slate-500 text-[10px] uppercase font-mono block">Payment Date</span>
+<p class="font-mono text-slate-200 mt-0.5" id="detailPaymentDate">--</p>
+</div>
+<div class="pt-2 border-t border-slate-800/60">
+<span class="text-slate-500 text-[10px] uppercase font-mono block">Payment Method</span>
+<p class="font-semibold text-slate-200 mt-0.5" id="detailPaymentMethod">--</p>
+</div>
+</div>
+<!-- Commercial Reference Information -->
+<div class="bg-[#131b2e] p-4 rounded-xl border border-slate-800 space-y-2">
+<div class="flex justify-between items-center text-[11px]">
+<span class="text-slate-400">Commercial Linked Baseline:</span>
+<span class="font-mono text-blue-300 font-medium" id="detailCommercialRef">--</span>
+</div>
+<div class="flex justify-between items-center text-[11px]">
+<span class="text-slate-400">Transaction Reference:</span>
+<span class="font-mono text-slate-200" id="detailTxnRef">--</span>
+</div>
+<div class="flex justify-between items-center text-[11px]">
+<span class="text-slate-400">Payment Evidence Document:</span>
+<span class="text-slate-300" id="detailEvidenceFile">--</span>
+</div>
+</div>
+<!-- Audit Footprint -->
+<div class="flex items-center justify-between text-[11px] text-slate-500 px-1 font-mono">
+<div>Recorded By: <span class="text-slate-400 font-semibold" id="detailRecordedBy">Not available in prototype</span></div>
+<div>Entry Timestamp: <span class="text-slate-400" id="detailCreatedDate">--</span></div>
+</div>
+</div>
+<!-- Details Footer -->
+<div class="px-6 py-4 border-t border-slate-800 bg-[#131b2e] flex items-center justify-end">
+<button class="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs transition-colors" id="dismissDetailsModalBtn">
+          Close Audit Window
+        </button>
+</div>
+</div>
+</div>
+<!-- Toast Notification Feedback System -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 max-w-md bg-[#0e172a] border border-blue-500/50 rounded-xl p-4 shadow-2xl flex items-start gap-3 pointer-events-none" id="toastNotification">
+<div class="p-1 rounded bg-blue-900/40 text-blue-400 mt-0.5 flex-shrink-0" id="toastIconContainer">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="flex-1 text-xs">
+<p class="font-bold text-white" id="toastTitle">Payment Recorded</p>
+<p class="text-slate-300 mt-0.5 leading-relaxed" id="toastMessage">Operation logged in memory.</p>
+</div>
+</div>
+<!-- =====================================================================
+       JAVASCRIPT: BUSINESS LOGIC & INTERACTION ENGINE
+       ===================================================================== -->
+<script src="pay.js"></script>
+</body></html>

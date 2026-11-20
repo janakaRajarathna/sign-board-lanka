@@ -1,0 +1,43 @@
+
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #0b1326;
+        color: #dae2fd;
+      }
+      body {
+        overscroll-behavior: none;
+      }
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b1326;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2d3449;
+      border-radius: 3px;
+    }
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printableInvoiceSheet, #printableInvoiceSheet * {
+        visibility: visible;
+      }
+      #printableInvoiceSheet {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background-color: #0b1326 !important;
+        color: #dae2fd !important;
+        padding: 24px !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }

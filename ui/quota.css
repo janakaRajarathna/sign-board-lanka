@@ -1,0 +1,54 @@
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: #0b1326;
+      color: #dae2fd;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b1326;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #222a3d;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #31394d;
+    }
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+      #printableQuotationSheet, #printableQuotationSheet * {
+        visibility: visible !important;
+      }
+      #printableQuotationSheet {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: white !important;
+        color: #111827 !important;
+        padding: 15mm 20mm !important;
+        box-shadow: none !important;
+        border: none !important;
+      }
+      #printableQuotationSheet .print-dark-text {
+        color: #111827 !important;
+      }
+      #printableQuotationSheet .print-muted-text {
+        color: #4b5563 !important;
+      }
+      #printableQuotationSheet .print-border {
+        border-color: #d1d5db !important;
+      }
+      #printableQuotationSheet .print-bg-light {
+        background-color: #f8fafc !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sign Board Lanka ERP - Quotation Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="quota-config.js"></script>
+<link rel="stylesheet" href="quota.css">
+<meta content="web_dashboard" name="shell-type"/>
+</head>
+<body class="min-h-screen bg-surface text-on-surface flex flex-col md:flex-row antialiased selection:bg-primary-container selection:text-white">
+<!-- Mobile Top Bar with Navigation Toggle -->
+<div class="md:hidden flex items-center justify-between px-4 py-3 bg-surface-container-low border-b border-outline-variant/30 z-30">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center font-bold text-white shadow-lg shadow-blue-900/40">
+<span class="material-symbols-outlined text-lg">domain</span>
+</div>
+<div>
+<div class="text-sm font-bold tracking-wider uppercase text-white leading-tight">Sign Board Lanka</div>
+<div class="text-[10px] text-primary font-mono">ACCOUNTS CONSOLE</div>
+</div>
+</div>
+<button aria-label="Toggle Navigation" class="p-2 rounded bg-surface-container text-on-surface-variant hover:text-white border border-outline-variant/30" onclick="toggleMobileSidebar()">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+<!-- Mobile Backdrop -->
+<div class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-40 md:hidden" id="mobileBackdrop" onclick="toggleMobileSidebar()"></div>
+<!-- Left Sidebar Navigation -->
+<aside class="fixed inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out md:static z-50 w-64 bg-surface-container-low border-r border-outline-variant/30 flex flex-col justify-between shrink-0 h-screen md:h-auto" id="sidebar">
+<div>
+<!-- Brand Header -->
+<div class="hidden md:flex items-center space-x-3 px-6 py-6 border-b border-outline-variant/30">
+<div class="w-9 h-9 rounded bg-primary-container flex items-center justify-center font-bold text-white shadow-lg shadow-blue-900/50">
+<span class="material-symbols-outlined text-xl">domain</span>
+</div>
+<div>
+<div class="text-sm font-bold tracking-wider uppercase text-white leading-tight">Sign Board Lanka</div>
+<div class="text-[11px] text-primary font-mono tracking-wide">ACCOUNTS CONSOLE</div>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="p-4 space-y-1">
+<a class="flex items-center space-x-3 px-3 py-2.5 rounded text-on-surface-variant hover:text-white hover:bg-surface-container transition-colors text-sm font-medium" href="javascript:void(0)" onclick="showToast('Navigating to Accounts Dashboard...')">
+<span class="material-symbols-outlined text-lg">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center space-x-3 px-3 py-2.5 rounded text-on-surface-variant hover:text-white hover:bg-surface-container transition-colors text-sm font-medium" href="javascript:void(0)" onclick="showToast('Navigating to Budget Management...')">
+<span class="material-symbols-outlined text-lg">calculate</span>
+<span>Budget Management</span>
+</a>
+<!-- Active Nav Item -->
+<a class="flex items-center space-x-3 px-3 py-2.5 rounded bg-primary-container text-white shadow-md text-sm font-semibold" href="javascript:void(0)">
+<span class="material-symbols-outlined text-lg">receipt_long</span>
+<span>Quotation Management</span>
+</a>
+<a class="flex items-center space-x-3 px-3 py-2.5 rounded text-on-surface-variant hover:text-white hover:bg-surface-container transition-colors text-sm font-medium" href="javascript:void(0)" onclick="showToast('Invoice Management: Final single invoice generated strictly post-installation.')">
+<span class="material-symbols-outlined text-lg">request_quote</span>
+<span>Invoice Management</span>
+</a>
+<a class="flex items-center space-x-3 px-3 py-2.5 rounded text-on-surface-variant hover:text-white hover:bg-surface-container transition-colors text-sm font-medium" href="javascript:void(0)" onclick="showToast('Payment Management: Advance receipts and client payments log.')">
+<span class="material-symbols-outlined text-lg">payments</span>
+<span>Payment Management</span>
+</a>
+<a class="flex items-center space-x-3 px-3 py-2.5 rounded text-on-surface-variant hover:text-white hover:bg-surface-container transition-colors text-sm font-medium" href="javascript:void(0)" onclick="showToast('Financial Reports page will be loaded.')">
+<span class="material-symbols-outlined text-lg">query_stats</span>
+<span>Financial Reports</span>
+</a>
+</nav>
+</div>
+<!-- Sidebar User & Session -->
+<div class="p-4 border-t border-outline-variant/30 space-y-3">
+<div class="flex items-center space-x-3 px-2 py-1.5 rounded bg-surface-container-lowest/60 border border-outline-variant/30">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center font-bold text-xs text-primary">
+          FO
+        </div>
+<div class="overflow-hidden">
+<div class="text-xs font-semibold text-white truncate">Finance Officer</div>
+<div class="text-[10px] text-outline truncate">Accounts Desk (Operator)</div>
+</div>
+</div>
+<a class="flex items-center space-x-2.5 px-3 py-2 rounded text-outline hover:text-error hover:bg-error-container/20 transition-colors text-xs font-medium" href="javascript:void(0)" onclick="showToast('Logged out of demo session.')">
+<span class="material-symbols-outlined text-base">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+<!-- Top Operational Control Strip -->
+<div class="px-6 py-5 bg-surface-container-low flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-outline-variant/20">
+<div class="space-y-1">
+<div class="flex items-center space-x-3">
+<h1 class="text-2xl font-bold text-on-surface uppercase tracking-tight">Quotation Management</h1>
+<span class="px-2.5 py-0.5 bg-surface-container-highest text-secondary text-xs font-mono uppercase tracking-wider rounded">
+            Accounts Operational Rail
+          </span>
+</div>
+<p class="text-sm text-on-surface-variant max-w-3xl">
+          Prepare, review, and issue commercial client quotations directly derived from Owner-approved project budgets. Track formal client decisions, record 30% advance deposits upon acceptance, and enforce baseline locking.
+        </p>
+</div>
+<div class="flex items-center space-x-3 shrink-0">
+<button class="flex items-center space-x-2 px-5 py-2.5 bg-primary-container hover:bg-secondary-container text-white text-sm font-semibold uppercase tracking-wider rounded transition-all duration-150 active:translate-y-0.5 shadow-md focus:outline-none focus:ring-2 focus:ring-primary/40" onclick="openCreateQuotationModal()">
+<span class="material-symbols-outlined text-base">add_box</span>
+<span>Create New Quotation</span>
+</button>
+</div>
+</div>
+<!-- Mandatory Rule & Compliance Banner -->
+<div class="mx-6 mt-4 p-3.5 bg-surface-container border-l-4 border-primary flex items-start space-x-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-xl shrink-0 mt-0.5">verified_user</span>
+<div class="text-xs leading-relaxed flex-1">
+<div class="flex flex-wrap items-center gap-x-2"><strong class="text-primary font-bold uppercase tracking-wider">Commercial Governance Protocol:</strong><span class="text-[11px] font-mono text-outline">SBL-GOV-2026.04</span></div>
+Accounts personnel can draft and dispatch quotations <span class="text-white font-semibold">strictly derived from verified Owner-Approved Budgets</span>. Once marked as <span class="text-secondary font-mono uppercase font-semibold">Accepted</span>, quotations lock permanently as immutable baselines—enabling the <span class="text-white font-semibold">30% Advance Deposit milestone</span> via Payment Management, while the final single tax invoice is issued strictly after site installation completion. Rejected quotations remain preserved for audit with full revision history.
+</div>
+</div>
+<!-- Dynamic KPI Telemetry Cards (4-Column Bento Grid) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-6 pt-5">
+<!-- Card 1: Total Quotations -->
+<div class="bg-surface-container-low p-5 rounded border border-outline-variant/30 flex flex-col justify-between shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between text-on-surface-variant mb-2">
+<span class="text-xs font-mono uppercase tracking-wider text-outline">Total Register</span>
+<span class="material-symbols-outlined text-primary text-xl">receipt_long</span>
+</div>
+<div>
+<div class="text-2xl font-bold text-on-surface tracking-tight" id="kpiTotalCount">5 Quotations</div>
+<div class="font-mono text-xs text-primary mt-1" id="kpiTotalAmount">LKR 9,620,000 Portfolio</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-on-surface-variant text-xs bg-surface-container-lowest p-2 rounded">
+<span>Total Clients</span>
+<span class="font-mono text-primary font-bold" id="kpiActiveClientsCount">5 Clients</span>
+</div>
+</div>
+<!-- Card 2: Draft Quotations -->
+<div class="bg-surface-container-low p-5 rounded border border-outline-variant/30 flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between text-on-surface-variant mb-2">
+<span class="text-xs font-mono uppercase tracking-wider text-outline">Draft Stage</span>
+<span class="material-symbols-outlined text-secondary text-xl">edit_note</span>
+</div>
+<div>
+<div class="text-2xl font-bold text-secondary tracking-tight" id="kpiDraftCount">2 Quotations</div>
+<div class="text-xs text-on-surface-variant mt-1 truncate" id="kpiDraftSubtext">Editable by Accounts Desk</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-on-surface-variant text-xs bg-surface-container-lowest p-2 rounded">
+<span>Pending Dispatch Value</span>
+<span class="font-mono text-secondary" id="kpiDraftAmount">LKR 2,450,000</span>
+</div>
+</div>
+<!-- Card 3: Sent to Client -->
+<div class="bg-surface-container-low p-5 rounded border border-outline-variant/30 flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between text-on-surface-variant mb-2">
+<span class="text-xs font-mono uppercase tracking-wider text-outline">Sent • Under Review</span>
+<span class="material-symbols-outlined text-primary text-xl">outgoing_mail</span>
+</div>
+<div>
+<div class="text-2xl font-bold text-primary tracking-tight" id="kpiSentCount">1 Quotation</div>
+<div class="text-xs text-on-surface-variant mt-1 truncate" id="kpiSentSubtext">Awaiting Formal Resolution</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-on-surface-variant text-xs bg-surface-container-lowest p-2 rounded">
+<span>Active Commercial Bids</span>
+<span class="font-mono text-primary" id="kpiSentAmount">LKR 2,150,000</span>
+</div>
+</div>
+<!-- Card 4: Accepted Quotations -->
+<div class="bg-surface-container-low p-5 rounded border border-outline-variant/30 flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between text-on-surface-variant mb-2">
+<span class="text-xs font-mono uppercase tracking-wider text-outline">Accepted • Locked</span>
+<span class="material-symbols-outlined text-secondary text-xl">lock</span>
+</div>
+<div>
+<div class="text-2xl font-bold text-secondary tracking-tight" id="kpiAcceptedCount">2 Quotations</div>
+<div class="text-xs text-on-surface-variant mt-1 truncate" id="kpiAcceptedSubtext">Locked Baseline Confirmed</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-on-surface-variant text-xs bg-surface-container-lowest p-2 rounded">
+<span>30% Advance Eligible</span>
+<span class="font-mono text-secondary" id="kpiAcceptedAmount">LKR 5,020,000</span>
+</div>
+</div>
+</div>
+<!-- Filter & Action Rail -->
+<div class="px-6 pt-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<!-- Status Filter Chips -->
+<div class="flex items-center space-x-1.5 bg-surface-container-low p-1 rounded border border-outline-variant/20 overflow-x-auto">
+<button class="px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider bg-primary-container text-white rounded transition-colors" id="filterBtnALL" onclick="setQuotationFilter('ALL')">
+          All (<span id="pillCountAll">5</span>)
+        </button>
+<button class="px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider text-on-surface-variant hover:text-white rounded transition-colors" id="filterBtnDRAFT" onclick="setQuotationFilter('DRAFT')">
+          Draft (<span id="pillCountDraft">2</span>)
+        </button>
+<button class="px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider text-on-surface-variant hover:text-white rounded transition-colors" id="filterBtnSENT" onclick="setQuotationFilter('SENT')">
+          Sent (<span id="pillCountSent">1</span>)
+        </button>
+<button class="px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider text-on-surface-variant hover:text-white rounded transition-colors" id="filterBtnACCEPTED" onclick="setQuotationFilter('ACCEPTED')">
+          Accepted (<span id="pillCountAccepted">2</span>)
+        </button>
+<button class="px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider text-on-surface-variant hover:text-white rounded transition-colors" id="filterBtnREJECTED" onclick="setQuotationFilter('REJECTED')">
+          Rejected (<span id="pillCountRejected">0</span>)
+        </button>
+</div>
+<!-- Search & Sort Controls -->
+<div class="flex items-center space-x-3">
+<div class="relative w-full sm:w-72">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-lg pointer-events-none">search</span>
+<input class="w-full bg-surface-container-lowest pl-9 pr-3 py-2 text-xs text-on-surface rounded border border-outline-variant/30 placeholder:text-outline focus:outline-none focus:border-primary" id="quotationSearchInput" oninput="filterQuotationsTable()" placeholder="Search QTN, project, client..." type="text"/>
+</div>
+<div class="relative shrink-0">
+<select class="bg-surface-container-low px-3 py-2 text-xs font-mono text-on-surface uppercase tracking-wider rounded border border-outline-variant/30 focus:outline-none focus:border-primary" id="quotationSortSelect" onchange="filterQuotationsTable()">
+<option value="newest">Newest First</option>
+<option value="oldest">Oldest First</option>
+<option value="amount-desc">Highest Amount</option>
+<option value="amount-asc">Lowest Amount</option>
+<option value="qtn-id">Quotation Number</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Primary Commercial Register Table / Responsive Mobile Cards -->
+<div class="px-6 py-4">
+<div class="bg-surface-container-low rounded border border-outline-variant/30 overflow-x-auto shadow-sm">
+<table class="w-full text-left text-xs border-collapse min-w-[1080px]">
+<thead>
+<tr class="bg-surface-container text-xs font-mono uppercase tracking-wider text-outline border-b border-outline-variant/30">
+<th class="py-3 px-4">Quotation No</th>
+<th class="py-3 px-4">Project &amp; Client</th>
+<th class="py-3 px-4">Linked Approved Budget</th>
+<th class="py-3 px-4 text-center">Ver</th>
+<th class="py-3 px-4 text-right">Quotation Amount</th>
+<th class="py-3 px-4">Created Date</th>
+<th class="py-3 px-4">Validity</th>
+<th class="py-3 px-4 text-center">Status</th>
+<th class="py-3 px-4 text-right">Commercial Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20 text-on-surface" id="quotationTableBody">
+<!-- Populated dynamically -->
+</tbody>
+</table>
+</div>
+<!-- Table Meta Footer -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between text-on-surface-variant text-xs py-3 px-1 gap-2">
+<div id="tableRecordSummary">Showing 5 of 5 commercial proposals</div>
+<div class="flex items-center space-x-2 text-outline">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span>Commercial Quotations strictly bound by verified Owner-Approved Project Budgets</span>
+</div>
+</div>
+</div>
+<!-- Prototype State Notice -->
+<div class="px-6 py-3 bg-surface-container-lowest mt-auto mx-6 mb-4 text-outline text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border border-outline-variant/20 rounded">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-sm text-primary">science</span>
+<span>Sign Board Lanka Accounts Prototype: All calculations, margin metrics, and version genealogies are maintained in runtime memory.</span>
+</div>
+<div class="font-mono text-on-surface-variant text-[11px]">ENV: SBL-STAGING-ACCOUNTS</div>
+</div>
+</main>
+<!-- ==================== MODAL 1: CREATE / EDIT COMMERCIAL QUOTATION ==================== -->
+<div aria-labelledby="modalQuotationHeading" aria-modal="true" class="hidden fixed inset-0 bg-surface-container-lowest/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto" id="createQuotationModal" role="dialog">
+<div class="bg-surface-container-low border border-outline-variant/40 rounded-lg max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto">
+<!-- Modal Header -->
+<div class="px-6 py-4 bg-surface-container border-b border-outline-variant/30 flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-lg">receipt</span>
+</div>
+<div>
+<h2 class="text-base font-bold text-on-surface" id="modalQuotationHeading">Prepare Commercial Quotation</h2>
+<p class="text-xs text-on-surface-variant">Generate official commercial offer based on Owner-approved budget</p>
+</div>
+</div>
+<button aria-label="Close modal" class="text-on-surface-variant hover:text-on-surface p-1 rounded hover:bg-surface-container-high transition-colors" onclick="closeCreateQuotationModal()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Modal Body (Scrollable) -->
+<div class="p-6 overflow-y-auto space-y-5 text-xs">
+<!-- Project Selector with Budget Auto-Link -->
+<div class="p-4 bg-surface-container-lowest rounded border border-outline-variant/30 space-y-4">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block font-mono text-xs uppercase tracking-wider text-on-surface-variant mb-1.5" for="modalProjectSelect">
+                Select Project (With Owner-Approved Budget) <span class="text-error">*</span>
+</label>
+<select class="w-full bg-surface-container border border-outline-variant/40 rounded p-2.5 text-xs text-on-surface focus:outline-none focus:border-primary" id="modalProjectSelect" onchange="onProjectSelectChange()"><option value="">-- Choose eligible project --</option><option value="PRJ-2026-095">PRJ-2026-095: HNB Towers Backlit Monolith Signboard (BDG-2026-095)</option><option value="PRJ-2026-089">PRJ-2026-089: Dialog Axiata 3D Acrylic Rooftop Pylon (BDG-2026-089)</option><option value="PRJ-2026-071">PRJ-2026-071: Singer Mega Colombo Neon &amp; Display Signage (BDG-2026-071)</option><option value="PRJ-2026-101">PRJ-2026-101: Seylan Bank City Branch Wayfinding Totems (BDG-2026-101)</option><option value="PRJ-2026-081">PRJ-2026-081: Odel Department Store Grand Canopy Signs (BDG-2026-081)</option></select>
+<p class="text-[11px] text-outline mt-1">Rule: Commercial quotes require an immutable signed-off budget.</p>
+</div>
+<div>
+<label class="block font-mono text-xs uppercase tracking-wider text-on-surface-variant mb-1.5" for="modalClientDisplay">
+                Client Corporate Entity
+              </label>
+<input class="w-full bg-surface-container-high border border-outline-variant/30 rounded p-2.5 text-xs text-on-surface-variant cursor-not-allowed focus:outline-none" id="modalClientDisplay" placeholder="Auto-populated upon selection" readonly="" type="text"/>
+</div>
+</div>
+<!-- Linked Approved Budget Metadata Panel -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 bg-surface-container p-3 rounded border border-outline-variant/20">
+<div>
+<span class="text-[11px] font-mono uppercase tracking-wider text-outline block">Approved Budget Ref</span>
+<span class="font-mono text-primary font-bold text-xs" id="modalLinkedBudgetNo">--</span>
+</div>
+<div>
+<span class="text-[11px] font-mono uppercase tracking-wider text-outline block">Approved Budget Version</span>
+<span class="font-mono text-on-surface text-xs" id="modalBudgetVersion">--</span>
+</div>
+<div>
+<span class="text-[11px] font-mono uppercase tracking-wider text-outline block">Direct Cost Base (LKR)</span>
+<span class="font-mono text-secondary font-bold text-xs" id="modalCostBaseDisplay">LKR 0</span>
+</div>
+</div>
+</div>
+<!-- Quotation Identifiers & Dates -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<div>
+<label class="block font-mono text-xs uppercase tracking-wider text-on-surface-variant mb-1.5" for="modalQuoteNumber">
+              Quotation Number &amp; Ver
+            </label>
+<div class="flex items-center space-x-2">
+<input class="w-full bg-surface-container-high border border-outline-variant/30 rounded p-2 font-mono text-xs text-primary cursor-not-allowed focus:outline-none font-bold" id="modalQuoteNumber" readonly="" type="text" value="QTN-2026-046"/>
+<input class="w-20 bg-surface-container-high border border-outline-variant/30 rounded p-2 font-mono text-xs text-on-surface text-center cursor-not-allowed focus:outline-none" id="modalQuoteVer" readonly="" type="text" value="v1.0"/>
+</div>
+</div>
+<div>
+<label class="block font-mono text-xs uppercase tracking-wider text-on-surface-variant mb-1.5" for="modalQuoteDate">
+              Quotation Date (YYYY-MM-DD) <span class="text-error">*</span>
+</label>
+<input class="w-full bg-surface-container border border-outline-variant/40 rounded p-2 text-xs text-on-surface focus:outline-none focus:border-primary" id="modalQuoteDate" onchange="updateCalculatedValidityDate()" type="date" value="2026-11-19"/>
+</div>
+<div>
+<label class="block font-mono text-xs uppercase tracking-wider text-on-surface-variant mb-1.5" for="modalValidityDaysInput">
+              Validity (Days) <span class="text-error">*</span>
+</label>
+<div class="flex items-center space-x-2">
+<input class="w-28 bg-surface-container border border-outline-variant/40 rounded p-2 text-xs font-mono text-on-surface focus:outline-none focus:border-primary text-center" id="modalValidityDaysInput" max="365" min="1" oninput="updateCalculatedValidityDate()" type="number" value="30"/>
+<div class="flex-1 px-2.5 py-2 bg-surface-container-high rounded border border-outline-variant/30 text-[11px] font-mono text-secondary truncate" id="modalValidUntilDisplay">
+                Until: 19 Dec 2026
+              </div>
+</div>
+</div>
+</div>
+<!-- Client Contact & Payment Terms (Standard Locked) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block font-mono text-xs uppercase tracking-wider text-on-surface-variant mb-1.5" for="modalAttentionContact">
+              Attention (Client Representative) <span class="text-error">*</span>
+</label>
+<input class="w-full bg-surface-container border border-outline-variant/40 rounded p-2.5 text-xs text-on-surface focus:outline-none focus:border-primary" id="modalAttentionContact" placeholder="e.g. Head of Facilities / Procurement Manager" type="text"/>
+</div>
+<div>
+<label class="block font-mono text-xs uppercase tracking-wider text-on-surface-variant mb-1.5" for="modalPaymentTerms">
+              Standard Commercial Payment Terms
+            </label>
+<input class="w-full bg-surface-container-high border border-outline-variant/30 rounded p-2.5 text-xs text-on-surface-variant cursor-not-allowed focus:outline-none" id="modalPaymentTerms" readonly="" type="text" value="30% Advance on Acceptance; single final invoice upon site installation completion"/>
+<p class="text-[11px] text-outline mt-1">Rule: 30% advance recorded via Payments; final single tax invoice issued only post-completion.</p>
+</div>
+</div>
+<!-- Verified Signage Scope Summary -->
+<div>
+<label class="block font-mono text-xs uppercase tracking-wider text-on-surface-variant mb-1.5" for="modalScopeDesc">
+            Verified Signage Engineering Scope (Per Approved Design) <span class="text-error">*</span>
+</label>
+<textarea class="w-full bg-surface-container border border-outline-variant/40 rounded p-2.5 text-xs text-on-surface focus:outline-none focus:border-primary" id="modalScopeDesc" placeholder="Scope auto-populates from approved project design..." rows="3"></textarea>
+</div>
+<!-- Commercial Pricing & Margin Calibration Box -->
+<div class="p-4 bg-surface-container-lowest rounded border border-outline-variant/30 space-y-3">
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold text-on-surface uppercase tracking-wider">Commercial Pricing &amp; Margin Calibration</span>
+<span class="text-[11px] font-mono text-outline">Real-Time Margin Engine</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+<div>
+<label class="block font-mono text-[11px] uppercase tracking-wider text-outline mb-1">Owner-Approved Direct Cost Base</label>
+<div class="p-3 bg-surface-container rounded border border-outline-variant/30 font-mono text-base font-bold text-secondary" id="calcCostBaseView">LKR 0</div>
+</div>
+<div>
+<label class="block font-mono text-[11px] uppercase tracking-wider text-primary mb-1" for="modalSellingPriceInput">Commercial Selling Price (LKR) <span class="text-error">*</span></label>
+<input class="w-full bg-surface-container border border-outline-variant/40 rounded p-2.5 font-mono text-base font-bold text-on-surface focus:outline-none focus:border-primary" id="modalSellingPriceInput" min="0" oninput="calculateCommercialMargin()" placeholder="Enter selling price" step="1000" type="number"/>
+</div>
+</div>
+<!-- Explicit Margin Metrics Banner: Separating Markup on Cost & Gross Profit Margin -->
+<div class="p-3 bg-surface-container rounded border border-outline-variant/20 flex flex-col md:flex-row md:items-center justify-between gap-3" id="marginDisplayBox">
+<div class="flex items-center space-x-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-base">analytics</span>
+<span class="font-medium text-xs">Commercial Calibration:</span>
+</div>
+<div class="font-mono text-xs flex flex-wrap items-center gap-3 justify-start md:justify-end" id="marginDisplayText">
+<div class="bg-surface-container-low px-2 py-1 rounded border border-outline-variant/20">
+  Markup on Cost: <span class="text-secondary font-bold" id="markupValText">0.0%</span>
+</div>
+<div class="bg-surface-container-low px-2 py-1 rounded border border-outline-variant/20">
+  Gross Profit Margin: <span class="text-primary font-bold" id="marginValText">0.0%</span>
+</div>
+<div class="bg-surface-container-low px-2 py-1 rounded border border-outline-variant/20">
+  Nominal Surplus: <span class="text-white font-bold" id="diffValText">LKR 0</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Taxes & Levies Explicit Notice (Configurable/Unconfirmed - No Fake Statutory Tax Rates) -->
+<div class="p-3 bg-surface-container rounded border border-outline-variant/20 text-outline text-[11px] flex items-center space-x-2">
+<span class="material-symbols-outlined text-sm text-secondary">info</span>
+<span>Taxes / Statutory Levies: Rate unconfirmed. Applicable VAT/SSCL to be formally calibrated upon single final invoice issuance post-handover; excluded from current baseline quotation.</span>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="px-6 py-4 bg-surface-container border-t border-outline-variant/30 flex items-center justify-between">
+<button class="px-4 py-2 bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface rounded text-xs font-semibold uppercase tracking-wider transition-colors" onclick="closeCreateQuotationModal()">
+          Cancel
+        </button>
+<div class="flex items-center space-x-3">
+<button class="px-4 py-2 bg-surface-container-high hover:bg-surface-bright text-white rounded text-xs font-semibold uppercase tracking-wider border border-outline-variant/30 transition-colors" onclick="saveQuotationRecord(false)">
+            Save as Draft
+          </button>
+<button class="flex items-center space-x-1.5 px-5 py-2 bg-primary-container hover:bg-secondary-container text-white rounded text-xs font-semibold uppercase tracking-wider shadow-md transition-colors" onclick="saveQuotationRecord(true)">
+<span class="material-symbols-outlined text-sm">send</span>
+<span>Save &amp; Dispatch to Client</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== MODAL 2: FORMAL CLIENT PREVIEW & PRINT SHEET ==================== -->
+<div aria-labelledby="modalPreviewHeading" aria-modal="true" class="hidden fixed inset-0 bg-surface-container-lowest/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto" id="viewPreviewModal" role="dialog">
+<div class="bg-surface-container-low border border-outline-variant/40 rounded-lg max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto">
+<!-- Modal Utility Header (Non-printable) -->
+<div class="px-6 py-3 bg-surface-container border-b border-outline-variant/30 flex items-center justify-between no-print">
+<div class="flex items-center space-x-2 text-xs font-mono uppercase tracking-wider text-outline" id="modalPreviewHeading">
+<span class="material-symbols-outlined text-base">print</span>
+<span>Official Commercial Quotation Document Preview</span>
+</div>
+<div class="flex items-center space-x-3">
+<button class="flex items-center space-x-1 px-3 py-1.5 bg-surface-container-high hover:bg-surface-bright text-on-surface rounded text-xs font-mono uppercase border border-outline-variant/30 transition-colors" onclick="triggerClientSidePrint()">
+<span class="material-symbols-outlined text-sm">print</span>
+<span>Print / Save PDF</span>
+</button>
+<button aria-label="Close preview" class="text-on-surface-variant hover:text-on-surface p-1 rounded hover:bg-surface-container-high transition-colors" onclick="closeViewPreviewModal()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</div>
+<!-- Printable Corporate Document Sheet (A4 Compliant) -->
+<div class="p-8 overflow-y-auto space-y-6 bg-surface text-on-surface" id="printableQuotationSheet">
+<!-- Letterhead -->
+<div class="flex flex-col sm:flex-row sm:items-start justify-between pb-6 border-b border-outline-variant/30 print-border gap-4">
+<div class="space-y-1">
+<div class="text-xl font-bold tracking-wider text-white print-dark-text uppercase">Sign Board Lanka (Pvt) Ltd</div>
+<div class="text-xs text-on-surface-variant print-muted-text">Industrial Signage, Architectural Cladding &amp; Structural Fabrication</div>
+<div class="text-[11px] text-outline print-muted-text">[Business Park / Industrial Estate Placeholder, Colombo, Sri Lanka] | Contact: [info@example.lk / +94 11 000 0000]</div>
+</div>
+<div class="p-3 bg-surface-container-low print-bg-light rounded border border-outline-variant/30 print-border text-right space-y-1 shrink-0">
+<div class="text-[11px] font-mono uppercase tracking-wider text-outline print-muted-text">Quotation Number</div>
+<div class="font-mono text-base text-primary print-dark-text font-bold" id="prevQuoteNo">QTN-2026-000</div>
+<div class="text-[11px] text-on-surface-variant print-muted-text" id="prevQuoteDate">Date: 19 Nov 2026</div>
+<div class="text-[10px] font-mono text-outline print-muted-text" id="prevQuoteVerBadge">Version: v1.0</div>
+</div>
+</div>
+<!-- Addressee & Project Meta Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-surface-container-low print-bg-light rounded border border-outline-variant/20 print-border">
+<div>
+<div class="text-[11px] font-mono uppercase tracking-wider text-outline print-muted-text mb-1">To (Client Organization):</div>
+<div class="text-sm font-bold text-white print-dark-text" id="prevClientName">Corporate Client</div>
+<div class="text-xs text-on-surface-variant print-muted-text mt-1" id="prevClientAddress">[Client Registered Address Placeholder, Sri Lanka]</div>
+<div class="text-xs text-primary print-dark-text font-semibold mt-1" id="prevAttention">Attn: Procurement Team</div>
+</div>
+<div class="space-y-1 md:text-right">
+<div class="text-[11px] font-mono uppercase tracking-wider text-outline print-muted-text">Project &amp; Signage Reference:</div>
+<div class="text-xs font-bold text-white print-dark-text" id="prevProjectTitle">Signage Project</div>
+<div class="font-mono text-xs text-on-surface-variant print-muted-text" id="prevLinkedProject">PRJ-2026-000 (Approved Design)</div>
+<div class="text-xs text-secondary print-dark-text font-semibold mt-1" id="prevValidity">Validity: 30 Days (Valid Until: 19 Dec 2026)</div>
+</div>
+</div>
+<!-- Scope Narrative -->
+<div>
+<div class="text-xs font-mono uppercase tracking-wider text-outline print-muted-text mb-2">Verified Scope of Works &amp; Specifications:</div>
+<p class="text-xs leading-relaxed text-on-surface-variant print-dark-text p-4 bg-surface-container-lowest print-bg-light rounded border border-outline-variant/20 print-border" id="prevScopeText">
+            Fabrication and installation according to verified project specifications.
+          </p>
+</div>
+<!-- Commercial Pricing Matrix -->
+<div class="bg-surface-container-low print-bg-light rounded border border-outline-variant/30 print-border overflow-hidden">
+<table class="w-full text-left text-xs border-collapse">
+<thead>
+<tr class="bg-surface-container print-bg-light font-mono text-[11px] uppercase tracking-wider text-outline print-muted-text border-b border-outline-variant/30 print-border">
+<th class="py-2.5 px-4 w-16">Item</th>
+<th class="py-2.5 px-4">Description of Deliverable</th>
+<th class="py-2.5 px-4 text-center w-24">Qty</th>
+<th class="py-2.5 px-4 text-right w-36">Amount (LKR)</th>
+</tr>
+</thead>
+<tbody class="text-on-surface print-dark-text divide-y divide-outline-variant/20 print-border">
+<tr>
+<td class="py-3 px-4 font-mono text-outline print-muted-text">01</td>
+<td class="py-3 px-4">
+<div class="font-bold text-white print-dark-text" id="prevTableScopeTitle">Main Signage Fabrication Package</div>
+<div class="text-xs text-on-surface-variant print-muted-text mt-0.5" id="prevTableScopeSub">Strictly conforms to client-approved design version and verified structural budget.</div>
+</td>
+<td class="py-3 px-4 text-center font-mono">1 Lot</td>
+<td class="py-3 px-4 text-right font-mono font-bold" id="prevTableGrossAmount">LKR 0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Financial Summary Ledger -->
+<div class="flex justify-end">
+<div class="w-full sm:w-80 bg-surface-container-low print-bg-light p-4 rounded border border-outline-variant/30 print-border space-y-2">
+<div class="flex items-center justify-between text-xs text-on-surface-variant print-muted-text">
+<span>Gross Proposal Subtotal:</span>
+<span class="font-mono text-on-surface print-dark-text font-bold" id="prevSummarySubtotal">LKR 0</span>
+</div>
+<div class="flex items-center justify-between text-xs text-on-surface-variant print-muted-text">
+<span>Taxes / Statutory Levies:</span>
+<span class="font-mono text-outline print-muted-text text-[11px]">Unconfirmed (Excluded)</span>
+</div>
+<div class="pt-2 border-t border-outline-variant/30 print-border flex items-center justify-between text-sm font-bold text-on-surface print-dark-text">
+<span class="text-primary print-dark-text">Quotation Amount (LKR):</span>
+<span class="font-mono text-secondary print-dark-text text-base" id="prevSummaryTotal">LKR 0</span>
+</div>
+<div class="p-2 bg-surface-container-lowest print-bg-light rounded text-[11px] text-outline print-muted-text border border-outline-variant/20 print-border flex items-center justify-between">
+<span>30% Advance Deposit Due:</span>
+<span class="font-mono text-primary print-dark-text font-bold" id="prevAdvanceDepositVal">LKR 0</span>
+</div>
+</div>
+</div>
+<!-- Standard Commercial Terms -->
+<div class="p-4 bg-surface-container-lowest print-bg-light rounded border border-outline-variant/20 print-border space-y-1.5 text-xs text-on-surface-variant print-dark-text">
+<div class="font-mono text-[11px] uppercase tracking-wider text-outline print-muted-text font-bold">Standard Commercial Terms &amp; Conditions</div>
+<ul class="list-disc list-inside space-y-1">
+<li id="prevTermsBullet">Commercial Milestone: <strong class="text-white print-dark-text">30% Advance Mobilization Deposit</strong> required upon formal client acceptance; recorded under Payment Management.</li>
+<li>Single Final Invoice Rule: The final single commercial tax invoice is issued strictly upon full site fabrication, structural handover, and certified client clearance.</li>
+<li>Statutory Taxes: Taxes/levies are unconfirmed and excluded; statutory rates will be appended to the final single invoice.</li>
+<li id="prevTermsExpiryNote">Quotation Validity: Adheres strictly to stated validity duration.</li>
+</ul>
+</div>
+</div>
+<!-- Modal Footer (Non-printable) -->
+<div class="px-6 py-3 bg-surface-container border-t border-outline-variant/30 flex items-center justify-between no-print" id="previewModalFooter">
+<button class="px-4 py-2 bg-surface-container-high hover:bg-surface-bright text-on-surface rounded text-xs font-mono uppercase tracking-wider transition-colors" onclick="closeViewPreviewModal()">
+          Close Preview
+        </button>
+<div class="flex items-center space-x-2" id="previewActionZone">
+<!-- Populated dynamically based on quotation state -->
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== MODAL 3: RECORD CLIENT DECISION ==================== -->
+<div aria-labelledby="modalDecisionHeading" aria-modal="true" class="hidden fixed inset-0 bg-surface-container-lowest/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto" id="decisionModal" role="dialog">
+<div class="bg-surface-container-low border border-outline-variant/40 rounded-lg max-w-lg w-full flex flex-col shadow-2xl overflow-hidden my-auto">
+<div class="px-6 py-4 bg-surface-container border-b border-outline-variant/30 flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg">gavel</span>
+</div>
+<div>
+<h2 class="text-base font-bold text-on-surface" id="modalDecisionHeading">Record Client Commercial Decision</h2>
+<p class="text-xs text-on-surface-variant" id="decisionQuoteRef">Quotation: QTN-2026-000</p>
+</div>
+</div>
+<button aria-label="Close modal" class="text-on-surface-variant hover:text-on-surface p-1 rounded hover:bg-surface-container-high transition-colors" onclick="closeDecisionModal()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-6 space-y-4 text-xs">
+<div>
+<label class="block font-mono text-xs uppercase tracking-wider text-on-surface-variant mb-2">
+            Client Commercial Resolution <span class="text-error">*</span>
+</label>
+<div class="grid grid-cols-2 gap-3">
+<label class="flex items-center space-x-2.5 p-3 rounded bg-surface-container border border-outline-variant/30 cursor-pointer hover:bg-surface-bright transition-colors" id="labelDecisionAccept">
+<input class="text-primary focus:ring-0" name="clientDecisionRadio" onchange="onDecisionRadioChange()" type="radio" value="ACCEPTED"/>
+<span class="font-bold text-on-surface uppercase">Accepted</span>
+</label>
+<label class="flex items-center space-x-2.5 p-3 rounded bg-surface-container border border-outline-variant/30 cursor-pointer hover:bg-surface-bright transition-colors" id="labelDecisionReject">
+<input class="text-error focus:ring-0" name="clientDecisionRadio" onchange="onDecisionRadioChange()" type="radio" value="REJECTED"/>
+<span class="font-bold text-on-surface uppercase">Rejected</span>
+</label>
+</div>
+<p class="text-[11px] text-outline mt-1.5" id="decisionInstructionHint">Please choose a resolution above to proceed.</p>
+</div>
+<!-- Conditional Accepted Fields -->
+<div class="space-y-4" id="sectionAcceptedDetails">
+<div>
+<label class="block font-mono text-xs uppercase tracking-wider text-on-surface-variant mb-1.5" for="decisionPoRef">
+              Client PO Number / Formal Approval Reference <span class="text-error">*</span>
+</label>
+<input class="w-full bg-surface-container border border-outline-variant/40 rounded p-2.5 text-xs text-on-surface focus:outline-none focus:border-primary font-mono" id="decisionPoRef" placeholder="e.g. PO-HNB-2026-981 or Official Board Sign-off" type="text"/>
+</div>
+<div>
+<label class="block font-mono text-xs uppercase tracking-wider text-on-surface-variant mb-1.5" for="decisionDate">
+              Acceptance Date (YYYY-MM-DD) <span class="text-error">*</span>
+</label>
+<input class="w-full bg-surface-container border border-outline-variant/40 rounded p-2.5 text-xs text-on-surface focus:outline-none focus:border-primary" id="decisionDate" type="date" value="2026-11-19"/>
+</div>
+</div>
+<!-- Remarks / Rejection Feedback -->
+<div>
+<label class="block font-mono text-xs uppercase tracking-wider text-on-surface-variant mb-1.5" for="decisionRemarks" id="decisionRemarksLabel">
+            Client Remarks &amp; Notes
+          </label>
+<textarea class="w-full bg-surface-container border border-outline-variant/40 rounded p-2.5 text-xs text-on-surface focus:outline-none focus:border-primary" id="decisionRemarks" placeholder="Enter remarks or feedback..." rows="3"></textarea>
+</div>
+<!-- Immutability Notice -->
+<div class="p-3 bg-surface-container-lowest rounded border border-outline-variant/20 text-outline text-[11px]">
+          Notice: Recording an <strong class="text-white">Accepted</strong> decision locks the quotation permanently as an immutable baseline. Next step: record 30% advance deposit under Payment Management. Single final tax invoice is issued only post-completion.
+        </div>
+</div>
+<div class="px-6 py-3.5 bg-surface-container border-t border-outline-variant/30 flex items-center justify-between">
+<button class="px-4 py-2 bg-surface-container-high text-on-surface-variant hover:text-on-surface rounded text-xs font-mono uppercase tracking-wider" onclick="closeDecisionModal()">
+          Cancel
+        </button>
+<button class="px-5 py-2 bg-primary-container hover:bg-secondary-container text-white rounded text-xs font-semibold uppercase tracking-wider shadow-md transition-colors" onclick="commitClientDecision()">
+          Commit Decision
+        </button>
+</div>
+</div>
+</div>
+<!-- ==================== MODAL 4: RECORD 30% ADVANCE PAYMENT MODAL ==================== -->
+<div aria-labelledby="modalAdvanceHeading" aria-modal="true" class="hidden fixed inset-0 bg-surface-container-lowest/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto" id="advancePaymentModal" role="dialog">
+<div class="bg-surface-container-low border border-outline-variant/40 rounded-lg max-w-lg w-full flex flex-col shadow-2xl overflow-hidden my-auto">
+<div class="px-6 py-4 bg-surface-container border-b border-outline-variant/30 flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-lg">payments</span>
+</div>
+<div>
+<h2 class="text-base font-bold text-on-surface" id="modalAdvanceHeading">Record 30% Advance Payment</h2>
+<p class="text-xs text-secondary font-mono" id="advanceQuoteRef">QTN-2026-039</p>
+</div>
+</div>
+<button aria-label="Close modal" class="text-on-surface-variant hover:text-on-surface p-1 rounded hover:bg-surface-container-high transition-colors" onclick="closeAdvancePaymentModal()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-6 space-y-4 text-xs">
+<div class="p-3.5 bg-surface-container-lowest rounded border border-outline-variant/30 space-y-2">
+<div class="flex items-center justify-between font-mono text-[11px] text-outline uppercase tracking-wider">
+<span>Commercial Status</span>
+<span class="text-secondary font-bold flex items-center gap-1"><span class="material-symbols-outlined text-xs">lock</span>ACCEPTED &amp; LOCKED</span>
+</div>
+<div class="text-sm font-bold text-white" id="advanceQuoteProject">Dialog Axiata 3D Acrylic Rooftop Pylon</div>
+<div class="flex items-center justify-between pt-1">
+<div class="font-mono text-xs text-on-surface-variant">Total Proposal: <span class="font-bold text-white" id="advanceQuoteTotal">LKR 2,420,000</span></div>
+<div class="font-mono text-xs text-primary font-bold bg-primary-container/20 px-2.5 py-1 rounded border border-primary/30" id="advanceDueAmountDisplay">30% Advance: LKR 726,000</div>
+</div>
+</div>
+<div class="space-y-3">
+<div>
+<label class="block font-mono text-xs uppercase tracking-wider text-on-surface-variant mb-1" for="advancePaymentRefInput">
+    Payment Receipt / Cheque / Bank Transfer Ref <span class="text-error">*</span>
+</label>
+<input class="w-full bg-surface-container border border-outline-variant/40 rounded p-2.5 text-xs text-on-surface font-mono focus:outline-none focus:border-primary" id="advancePaymentRefInput" placeholder="e.g. TXN-HNB-990812 or CHQ-002910" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block font-mono text-xs uppercase tracking-wider text-on-surface-variant mb-1" for="advancePaymentDateInput">
+      Receipt Date <span class="text-error">*</span>
+</label>
+<input class="w-full bg-surface-container border border-outline-variant/40 rounded p-2 text-xs text-on-surface focus:outline-none focus:border-primary" id="advancePaymentDateInput" type="date" value="2026-11-19"/>
+</div>
+<div>
+<label class="block font-mono text-xs uppercase tracking-wider text-on-surface-variant mb-1" for="advanceMethodSelect">
+      Payment Method
+    </label>
+<select class="w-full bg-surface-container border border-outline-variant/40 rounded p-2 text-xs text-on-surface focus:outline-none focus:border-primary" id="advanceMethodSelect">
+<option value="BANK_TRANSFER">Direct Bank Transfer (SLIPS/CEFT)</option>
+<option value="CORPORATE_CHEQUE">Corporate Cheque</option>
+<option value="ONLINE_GATEWAY">Online Merchant Rail</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Explicit Invoicing Protocol Banner -->
+<div class="space-y-2 p-3 bg-surface-container rounded border border-outline-variant/20">
+<div class="font-mono text-xs uppercase tracking-wider text-outline font-semibold">Sign Board Lanka Invoicing Protocol:</div>
+<ul class="list-disc list-inside space-y-1.5 text-on-surface-variant">
+<li class="text-white font-medium"><span class="text-secondary font-bold font-mono">30% Advance Milestone:</span> Recorded directly to Payment Management to authorize procurement &amp; fabrication kickoff.</li>
+<li><span class="text-outline font-mono">Single Final Invoice:</span> Issued <strong class="text-white">strictly post-installation completion</strong> and site sign-off. No intermediary commercial invoices permitted.</li>
+</ul>
+</div>
+</div>
+<div class="px-6 py-3.5 bg-surface-container border-t border-outline-variant/30 flex items-center justify-between">
+<button class="px-4 py-2 bg-surface-container-high text-on-surface-variant hover:text-on-surface rounded text-xs font-mono uppercase tracking-wider" onclick="closeAdvancePaymentModal()">
+  Cancel
+</button>
+<button class="px-5 py-2 bg-primary-container hover:bg-secondary-container text-white rounded text-xs font-semibold uppercase tracking-wider shadow-md transition-colors flex items-center space-x-1.5" onclick="commitAdvancePayment()">
+<span class="material-symbols-outlined text-sm">payments</span>
+<span>Post Advance to Payment Log</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Notification Toast -->
+<div aria-live="polite" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-surface-container-high border border-outline-variant/50 text-on-surface px-5 py-3.5 rounded shadow-2xl flex items-center space-x-3 text-xs max-w-md" id="toastNotification">
+<span class="material-symbols-outlined text-primary text-xl" id="toastIcon">check_circle</span>
+<div class="flex-1 font-medium" id="toastMessage">Notification dispatched</div>
+</div>
+
+<script src="quota.js"></script></body></html>

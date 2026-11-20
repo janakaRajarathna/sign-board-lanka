@@ -1,0 +1,20 @@
+body {
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: #0b1326;
+      color: #f1f5f9;
+    }
+    /* Custom scrollbar for ERP tables and modals */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b1326;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1f2b45;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #2a3b5f;
+    }

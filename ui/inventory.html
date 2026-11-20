@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_dashboard" name="shell-type"/>
+<title>Invoice Management - Sign Board Lanka ERP</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="inventory-config.js"></script>
+
+<link rel="stylesheet" href="inventory.css">
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen">
+<!-- Persistent Accounts Division Left Sidebar -->
+<aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between border-r border-slate-800">
+<div class="flex flex-col">
+<!-- Brand header -->
+<div class="h-16 px-6 flex items-center gap-3 border-b border-slate-800 bg-surface-container-lowest">
+<span class="material-symbols-outlined text-primary text-[26px]">precision_manufacturing</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-[16px] font-bold uppercase tracking-wider text-on-surface">Sign Board Lanka</span>
+<span class="font-label-sm text-[11px] text-outline tracking-widest uppercase font-semibold">Fabrication ERP</span>
+</div>
+</div>
+<!-- Navigation menu -->
+<div class="px-4 py-4">
+<div class="px-3 py-1 mb-2 font-label-sm text-[11px] uppercase tracking-wider text-outline font-semibold">Accounts Division</div>
+<nav class="flex flex-col gap-1.5" id="sidebarNav">
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+<span>Budget Management</span>
+</a>
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">request_quote</span>
+<span>Quotation Management</span>
+</a>
+<!-- ACTIVE TAB -->
+<a aria-current="page" class="flex items-center gap-3 px-3.5 py-2.5 rounded bg-primary-container text-white font-headline-sm font-semibold shadow-inner" href="#">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+<span>Invoice Management</span>
+</a>
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span>Payment Management</span>
+</a>
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">bar_chart</span>
+<span>Financial Reports</span>
+</a>
+</nav>
+</div>
+</div>
+<!-- Bottom Operator Card -->
+<div class="p-4 border-t border-slate-800 bg-surface-container-lowest/90">
+<div class="flex items-center justify-between p-2.5 rounded bg-surface-container border border-slate-800">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-sm font-semibold text-on-surface leading-tight">Finance Officer</span>
+<span class="font-label-sm text-[11px] text-outline">Accounts Desk</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px]">lock</span>
+</div>
+</div>
+</aside>
+<!-- Main Layout Wrapper (pl-72) -->
+<div class="pl-72 flex flex-col min-h-screen bg-surface">
+<!-- Top Header Bar -->
+<header class="fixed top-0 left-72 right-0 h-16 bg-surface/95 backdrop-blur border-b border-slate-800 z-40 flex items-center justify-between px-8">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 font-code-tabular text-xs text-outline">
+<span class="text-on-surface-variant font-medium">SBL-ERP</span>
+<span>/</span>
+<span class="text-on-surface-variant font-medium">Accounts</span>
+<span>/</span>
+<span class="text-primary font-semibold">Console</span>
+</div>
+<div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-sm bg-surface-container border border-slate-700/60 font-label-sm text-[11px] text-tertiary-fixed font-semibold tracking-wider">
+<span class="w-1.5 h-1.5 rounded-none bg-primary animate-pulse"></span>
+<span>SYSTEM ONLINE</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1 bg-surface-container-lowest border border-slate-800 text-outline text-xs font-label-sm">
+<span class="material-symbols-outlined text-[16px]">domain</span>
+<span class="font-semibold text-slate-300">HQ-COLOMBO-FAB</span>
+</div>
+<div class="h-4 w-px bg-slate-800"></div>
+<button class="flex items-center text-outline hover:text-on-surface transition-colors p-1" title="Notifications">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="flex items-center text-outline hover:text-on-surface transition-colors p-1" title="Settings">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center font-semibold text-on-primary">
+<span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="w-full pt-16 px-8 py-8 flex-1">
+<div class="flex flex-col w-full max-w-7xl mx-auto">
+<!-- Top Operational & Governance Protocol Banner -->
+<div class="mb-6 bg-surface-container-low border border-slate-800 p-4 rounded flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+<div class="flex items-start gap-3 max-w-4xl">
+<span class="material-symbols-outlined text-primary text-[24px] mt-0.5">verified_user</span>
+<div class="flex flex-col">
+<div class="flex items-center gap-2.5">
+<span class="font-headline-sm text-sm font-bold tracking-wider text-on-surface uppercase">Accounts Governance Protocol</span>
+<span class="px-2 py-0.5 bg-primary-container/40 text-primary text-[11px] font-bold rounded-sm uppercase tracking-wide">Rule ENF-04</span>
+</div>
+<p class="font-body-sm text-xs text-on-surface-variant mt-1 leading-relaxed">
+                Strictly <strong class="text-on-surface font-semibold">one final tax invoice</strong> is generated per project following 100% verified site installation sign-off and accepted quotation validation. 30% advance deposits handled exclusively via <span class="text-primary underline cursor-pointer">Payment Management</span> register without standalone advance invoices.
+              </p>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0 font-code-tabular text-xs text-outline uppercase tracking-wider">
+<span>Demo Env • Live Fab Register</span>
+</div>
+</div>
+<!-- Page Header & Action Buttons -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<div class="flex items-center gap-2 text-outline font-label-sm text-[11px] uppercase tracking-widest mb-1.5 font-semibold">
+<span>Sign Board Lanka</span>
+<span>/</span>
+<span>Accounts Division</span>
+<span>/</span>
+<span class="text-primary font-bold">Ledger &amp; Invoicing</span>
+</div>
+<h1 class="font-headline-xl text-3xl md:text-4xl font-bold text-on-surface uppercase tracking-tight">Invoice Management</h1>
+<p class="font-body-md text-sm text-on-surface-variant mt-1">Manage project final invoices, installation certifications, and outstanding settlement balances.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2.5 bg-surface-container-high hover:bg-surface-variant border border-slate-700/80 text-on-surface font-label-lg text-sm font-semibold rounded flex items-center gap-2 transition-colors" id="btnExportSummary">
+<span class="material-symbols-outlined text-[18px]">file_download</span>
+<span>Export Summary</span>
+</button>
+<button class="px-5 py-2.5 bg-primary-container hover:bg-secondary-container text-white font-headline-sm text-sm font-bold uppercase tracking-wider rounded flex items-center gap-2 shadow-md transition-colors" id="btnOpenCreateInvoice">
+<span class="material-symbols-outlined text-[20px]">post_add</span>
+<span>+ Create Invoice</span>
+</button>
+</div>
+</div>
+<!-- 4 KPI Summary Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<!-- Card 1: TOTAL INVOICES -->
+<div class="bg-surface-container-low border border-slate-800 p-5 rounded flex flex-col justify-between hover:border-slate-700 transition-colors">
+<div class="flex items-center justify-between text-outline mb-2">
+<span class="font-label-sm text-xs uppercase tracking-wider font-semibold">Total Invoices</span>
+<span class="material-symbols-outlined text-[22px] text-primary">receipt_long</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-xl text-3xl font-bold text-on-surface" id="kpiTotalCount">4</span>
+<span class="font-label-sm text-xs text-outline font-medium">Projects Billed</span>
+</div>
+<div class="flex items-center gap-2 mt-3 text-on-surface-variant font-label-sm text-xs">
+<span class="w-1.5 h-1.5 bg-primary inline-block"></span>
+<span>100% Installation Handover Certified</span>
+</div>
+</div>
+</div>
+<!-- Card 2: TOTAL INVOICED AMOUNT -->
+<div class="bg-surface-container-low border border-slate-800 p-5 rounded flex flex-col justify-between hover:border-slate-700 transition-colors">
+<div class="flex items-center justify-between text-outline mb-2">
+<span class="font-label-sm text-xs uppercase tracking-wider font-semibold">Total Invoiced Amount</span>
+<span class="material-symbols-outlined text-[22px] text-secondary">request_quote</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-baseline gap-1.5">
+<span class="font-code-tabular text-xs text-outline font-semibold">LKR</span>
+<span class="font-headline-xl text-3xl font-bold text-on-surface" id="kpiTotalInvoiced">8,270,000</span>
+</div>
+<div class="flex items-center gap-1.5 mt-3 text-on-surface-variant font-label-sm text-xs">
+<span class="font-code-tabular text-tertiary">Agreed Quotation Baselines</span>
+</div>
+</div>
+</div>
+<!-- Card 3: PAYMENTS COLLECTED -->
+<div class="bg-surface-container-low border border-slate-800 p-5 rounded flex flex-col justify-between hover:border-slate-700 transition-colors">
+<div class="flex items-center justify-between text-outline mb-2">
+<span class="font-label-sm text-xs uppercase tracking-wider font-semibold">Payments Collected</span>
+<span class="material-symbols-outlined text-[22px] text-tertiary-fixed">payments</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-baseline gap-1.5">
+<span class="font-code-tabular text-xs text-outline font-semibold">LKR</span>
+<span class="font-headline-xl text-3xl font-bold text-on-surface" id="kpiTotalPaid">6,432,000</span>
+</div>
+<div class="flex items-center gap-2 mt-3 text-on-surface-variant font-label-sm text-xs">
+<span class="text-tertiary-fixed font-code-tabular font-semibold">77.78% Collected</span>
+<span class="text-outline text-[11px]">(Advance + Post-Install)</span>
+</div>
+</div>
+</div>
+<!-- Card 4: OUTSTANDING BALANCE -->
+<div class="bg-surface-container-low border border-slate-800 p-5 rounded flex flex-col justify-between hover:border-slate-700 transition-colors">
+<div class="flex items-center justify-between text-outline mb-2">
+<span class="font-label-sm text-xs uppercase tracking-wider font-semibold">Outstanding Balance</span>
+<span class="material-symbols-outlined text-[22px] text-primary">pending_actions</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-baseline gap-1.5">
+<span class="font-code-tabular text-xs text-outline font-semibold">LKR</span>
+<span class="font-headline-xl text-3xl font-bold text-primary" id="kpiTotalOutstanding">1,838,000</span>
+</div>
+<div class="flex items-center gap-1.5 mt-3 text-on-surface-variant font-label-sm text-xs">
+<span class="px-2 py-0.5 bg-primary-container/20 text-primary font-code-tabular text-[11px] font-semibold rounded">2 Invoices Pending Full Due</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Invoice Register Section -->
+<div class="bg-surface-container-low border border-slate-800 rounded p-5 flex flex-col gap-5 shadow-sm">
+<!-- Filters & Real-time Search Toolbar -->
+<div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 pb-2 border-b border-slate-800/80">
+<!-- Tabs -->
+<div class="flex items-center bg-surface-container p-1 rounded gap-1 overflow-x-auto" id="filterTabs">
+<button class="tab-btn px-4 py-1.5 font-label-md text-xs font-semibold rounded text-on-surface bg-surface-container-high transition-colors flex items-center gap-2" data-filter="ALL">
+<span>ALL</span>
+<span class="px-1.5 py-0.5 bg-surface-container-lowest font-code-tabular text-[11px] rounded" id="countAllBadge">4</span>
+</button>
+<button class="tab-btn px-4 py-1.5 font-label-md text-xs font-semibold rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high/50 transition-colors flex items-center gap-2" data-filter="ISSUED">
+<span>ISSUED</span>
+<span class="px-1.5 py-0.5 bg-surface-container-lowest font-code-tabular text-[11px] rounded" id="countIssuedBadge">1</span>
+</button>
+<button class="tab-btn px-4 py-1.5 font-label-md text-xs font-semibold rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high/50 transition-colors flex items-center gap-2" data-filter="PARTIALLY_PAID">
+<span>PARTIALLY PAID</span>
+<span class="px-1.5 py-0.5 bg-surface-container-lowest font-code-tabular text-[11px] rounded" id="countPartialBadge">1</span>
+</button>
+<button class="tab-btn px-4 py-1.5 font-label-md text-xs font-semibold rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high/50 transition-colors flex items-center gap-2" data-filter="PAID">
+<span>PAID</span>
+<span class="px-1.5 py-0.5 bg-surface-container-lowest font-code-tabular text-[11px] rounded" id="countPaidBadge">2</span>
+</button>
+</div>
+<!-- Search input field -->
+<div class="relative w-full md:w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+<input class="w-full bg-surface-container-lowest border border-slate-800 text-on-surface placeholder:text-outline text-xs font-body-sm pl-10 pr-8 py-2 rounded focus:outline-none focus:border-primary" id="invoiceSearchInput" placeholder="Search by Invoice No, Project, Client, or Quote ref..." type="text"/>
+<button class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface text-[14px]" id="clearSearchBtn">✕</button>
+</div>
+</div>
+<!-- Invoice Register Table -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse" id="invoicesTable">
+<thead>
+<tr class="bg-surface-container border-y border-slate-800 text-outline font-label-sm text-xs uppercase tracking-wider font-semibold">
+<th class="py-3 px-4">Invoice #</th>
+<th class="py-3 px-4">Project &amp; Fabrication ID</th>
+<th class="py-3 px-4">Customer Entity</th>
+<th class="py-3 px-4">Date Issued</th>
+<th class="py-3 px-4 text-right">Total (LKR)</th>
+<th class="py-3 px-4 text-right">Paid Amount (LKR)</th>
+<th class="py-3 px-4 text-right">Outstanding Balance (LKR)</th>
+<th class="py-3 px-4 text-center">Status</th>
+<th class="py-3 px-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-xs divide-y divide-slate-800/80 text-on-surface" id="invoiceTableBody">
+<!-- Static Fallback / JS hydrated rows -->
+<!-- Record 1 -->
+<tr class="hover:bg-surface-container/50 transition-colors" data-id="INV-2026-018">
+<td class="py-3.5 px-4 font-code-tabular text-white font-bold whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">description</span>
+<span>INV-2026-018</span>
+</div>
+</td>
+<td class="py-3.5 px-4 max-w-xs">
+<div class="text-on-surface font-semibold truncate">Dialog Axiata 3D Acrylic Rooftop Pylon</div>
+<div class="text-outline text-[11px] font-code-tabular">PRJ-2026-089 • Ref: QTN-2026-031</div>
+</td>
+<td class="py-3.5 px-4 text-on-surface-variant whitespace-nowrap">
+<div class="font-medium text-white">Dialog Axiata PLC</div>
+<div class="text-outline text-[11px]">VAT-8291041-0</div>
+</td>
+<td class="py-3.5 px-4 font-code-tabular text-on-surface-variant whitespace-nowrap">18 Nov 2026</td>
+<td class="py-3.5 px-4 font-code-tabular text-right text-white font-semibold whitespace-nowrap">2,600,000</td>
+<td class="py-3.5 px-4 font-code-tabular text-right text-tertiary-fixed whitespace-nowrap">1,300,000</td>
+<td class="py-3.5 px-4 font-code-tabular text-right text-primary font-bold whitespace-nowrap">1,300,000</td>
+<td class="py-3.5 px-4 text-center whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-bold bg-[#0369a1]/25 text-[#38bdf8] border border-[#0284c7]/40 tracking-wider">
+<span class="w-1.5 h-1.5 bg-[#38bdf8] rounded-none"></span>PARTIALLY PAID
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-1.5">
+<button class="p-1.5 text-outline hover:text-primary hover:bg-surface-container rounded transition-colors" data-action="view" data-id="INV-2026-018" title="View Official Document">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 text-outline hover:text-white hover:bg-surface-container rounded transition-colors" data-action="print" data-id="INV-2026-018" title="Print Invoice">
+<span class="material-symbols-outlined text-[18px]">print</span>
+</button>
+<button class="p-1.5 text-outline hover:text-white hover:bg-surface-container rounded transition-colors" data-action="download" data-id="INV-2026-018" title="Download PDF">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Record 2 -->
+<tr class="hover:bg-surface-container/50 transition-colors" data-id="INV-2026-017">
+<td class="py-3.5 px-4 font-code-tabular text-white font-bold whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">description</span>
+<span>INV-2026-017</span>
+</div>
+</td>
+<td class="py-3.5 px-4 max-w-xs">
+<div class="text-on-surface font-semibold truncate">Keells Supermarket Facade ACP Signage</div>
+<div class="text-outline text-[11px] font-code-tabular">PRJ-2026-074 • Ref: QTN-2026-025</div>
+</td>
+<td class="py-3.5 px-4 text-on-surface-variant whitespace-nowrap">
+<div class="font-medium text-white">Jaykay Marketing Services (Pvt) Ltd</div>
+<div class="text-outline text-[11px]">VAT-1029381-4</div>
+</td>
+<td class="py-3.5 px-4 font-code-tabular text-on-surface-variant whitespace-nowrap">12 Nov 2026</td>
+<td class="py-3.5 px-4 font-code-tabular text-right text-white font-semibold whitespace-nowrap">1,900,000</td>
+<td class="py-3.5 px-4 font-code-tabular text-right text-tertiary-fixed whitespace-nowrap">1,900,000</td>
+<td class="py-3.5 px-4 font-code-tabular text-right text-on-surface whitespace-nowrap">0</td>
+<td class="py-3.5 px-4 text-center whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-bold bg-[#064E3B] text-[#6EE7B7] border border-[#059669]/40 tracking-wider">
+<span class="w-1.5 h-1.5 bg-[#6EE7B7] rounded-none"></span>PAID
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-1.5">
+<button class="p-1.5 text-outline hover:text-primary hover:bg-surface-container rounded transition-colors" data-action="view" data-id="INV-2026-017" title="View Official Document">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 text-outline hover:text-white hover:bg-surface-container rounded transition-colors" data-action="print" data-id="INV-2026-017" title="Print Invoice">
+<span class="material-symbols-outlined text-[18px]">print</span>
+</button>
+<button class="p-1.5 text-outline hover:text-white hover:bg-surface-container rounded transition-colors" data-action="download" data-id="INV-2026-017" title="Download PDF">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Record 3 -->
+<tr class="hover:bg-surface-container/50 transition-colors" data-id="INV-2026-016">
+<td class="py-3.5 px-4 font-code-tabular text-white font-bold whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">description</span>
+<span>INV-2026-016</span>
+</div>
+</td>
+<td class="py-3.5 px-4 max-w-xs">
+<div class="text-on-surface font-semibold truncate">Commercial Bank Wayfinding Signage &amp; Branch Totems</div>
+<div class="text-outline text-[11px] font-code-tabular">PRJ-2026-068 • Ref: QTN-2026-022</div>
+</td>
+<td class="py-3.5 px-4 text-on-surface-variant whitespace-nowrap">
+<div class="font-medium text-white">Commercial Bank of Ceylon PLC</div>
+<div class="text-outline text-[11px]">VAT-3049182-1</div>
+</td>
+<td class="py-3.5 px-4 font-code-tabular text-on-surface-variant whitespace-nowrap">04 Nov 2026</td>
+<td class="py-3.5 px-4 font-code-tabular text-right text-white font-semibold whitespace-nowrap">2,470,000</td>
+<td class="py-3.5 px-4 font-code-tabular text-right text-tertiary-fixed whitespace-nowrap">1,932,000</td>
+<td class="py-3.5 px-4 font-code-tabular text-right text-primary font-bold whitespace-nowrap">538,000</td>
+<td class="py-3.5 px-4 text-center whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-bold bg-[#78350F]/35 text-[#FDE68A] border border-[#D97706]/40 tracking-wider">
+<span class="w-1.5 h-1.5 bg-[#FDE68A] rounded-none"></span>ISSUED
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-1.5">
+<button class="p-1.5 text-outline hover:text-primary hover:bg-surface-container rounded transition-colors" data-action="view" data-id="INV-2026-016" title="View Official Document">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 text-outline hover:text-white hover:bg-surface-container rounded transition-colors" data-action="print" data-id="INV-2026-016" title="Print Invoice">
+<span class="material-symbols-outlined text-[18px]">print</span>
+</button>
+<button class="p-1.5 text-outline hover:text-white hover:bg-surface-container rounded transition-colors" data-action="download" data-id="INV-2026-016" title="Download PDF">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Record 4 -->
+<tr class="hover:bg-surface-container/50 transition-colors" data-id="INV-2026-015">
+<td class="py-3.5 px-4 font-code-tabular text-white font-bold whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">description</span>
+<span>INV-2026-015</span>
+</div>
+</td>
+<td class="py-3.5 px-4 max-w-xs">
+<div class="text-on-surface font-semibold truncate">Odel Mall Atrium Suspended Architectural Signage</div>
+<div class="text-outline text-[11px] font-code-tabular">PRJ-2026-052 • Ref: QTN-2026-019</div>
+</td>
+<td class="py-3.5 px-4 text-on-surface-variant whitespace-nowrap">
+<div class="font-medium text-white">Softlogic Retail Holdings PLC</div>
+<div class="text-outline text-[11px]">VAT-4910294-8</div>
+</td>
+<td class="py-3.5 px-4 font-code-tabular text-on-surface-variant whitespace-nowrap">28 Oct 2026</td>
+<td class="py-3.5 px-4 font-code-tabular text-right text-white font-semibold whitespace-nowrap">1,300,000</td>
+<td class="py-3.5 px-4 font-code-tabular text-right text-tertiary-fixed whitespace-nowrap">1,300,000</td>
+<td class="py-3.5 px-4 font-code-tabular text-right text-on-surface whitespace-nowrap">0</td>
+<td class="py-3.5 px-4 text-center whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-bold bg-[#064E3B] text-[#6EE7B7] border border-[#059669]/40 tracking-wider">
+<span class="w-1.5 h-1.5 bg-[#6EE7B7] rounded-none"></span>PAID
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-1.5">
+<button class="p-1.5 text-outline hover:text-primary hover:bg-surface-container rounded transition-colors" data-action="view" data-id="INV-2026-015" title="View Official Document">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 text-outline hover:text-white hover:bg-surface-container rounded transition-colors" data-action="print" data-id="INV-2026-015" title="Print Invoice">
+<span class="material-symbols-outlined text-[18px]">print</span>
+</button>
+<button class="p-1.5 text-outline hover:text-white hover:bg-surface-container rounded transition-colors" data-action="download" data-id="INV-2026-015" title="Download PDF">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Empty State View -->
+<div class="hidden py-16 flex flex-col items-center justify-center text-center" id="noResultsState">
+<span class="material-symbols-outlined text-[48px] text-outline mb-2">find_in_page</span>
+<h3 class="font-headline-sm text-lg text-on-surface font-semibold">No matching invoices found</h3>
+<p class="font-body-md text-xs text-on-surface-variant max-w-sm mt-1">Adjust search parameters or status tabs to view records.</p>
+</div>
+</div>
+<!-- Table Footer -->
+<div class="pt-2 flex flex-col sm:flex-row items-center justify-between text-outline font-label-sm text-xs border-t border-slate-800/80">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary inline-block"></span>
+<span id="showingCountSummary">Showing 4 of 4 records in register</span>
+</div>
+<div class="flex items-center gap-4 mt-2 sm:mt-0 font-code-tabular text-[11px]">
+<span>ERP Database Ref: DB_ACC_INV_2026</span>
+<span>•</span>
+<span>Standard Terms: Net 14 Days</span>
+</div>
+</div>
+</div>
+<!-- Installation Ready Fabrication Jobs Banner -->
+<div class="mt-6 bg-surface-container-low border border-slate-800 p-5 rounded flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-surface-container rounded flex items-center justify-center text-primary shrink-0 border border-slate-700/60">
+<span class="material-symbols-outlined text-[24px]">engineering</span>
+</div>
+<div>
+<div class="font-label-lg text-sm font-bold text-on-surface">Ready-for-Invoicing Fabrication Jobs</div>
+<p class="font-body-sm text-xs text-on-surface-variant mt-0.5">
+                There is currently <span class="text-primary font-semibold">1 completed project</span> on the shop floor with certified installation awaiting final tax invoice generation.
+              </p>
+</div>
+</div>
+<button class="px-4 py-2 bg-surface-container hover:bg-surface-variant border border-slate-700 text-primary font-label-lg text-xs font-semibold rounded transition-colors whitespace-nowrap" id="btnReviewJobs">
+            Review Completed Jobs
+          </button>
+</div>
+</div>
+</main>
+</div>
+<!-- VIEW INVOICE MODAL (Document Preview Sheet) -->
+<div class="fixed inset-0 bg-surface-container-lowest/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto" id="viewModalOverlay">
+<div class="bg-surface-container-low border border-slate-800 text-on-surface w-full max-w-4xl max-h-[92vh] flex flex-col rounded shadow-2xl overflow-hidden my-auto">
+<!-- Modal Header (Controls) -->
+<div class="px-5 py-3.5 bg-surface-container border-b border-slate-800 flex items-center justify-between no-print">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-primary text-[20px]">description</span>
+<span class="font-headline-sm text-sm font-bold text-on-surface uppercase tracking-wide">Official ERP Tax Invoice Document</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 bg-surface-container-high hover:bg-surface-variant border border-slate-700 text-on-surface font-label-md text-xs font-semibold rounded flex items-center gap-1.5 transition-colors" id="viewPrintBtn">
+<span class="material-symbols-outlined text-[16px]">print</span>
+<span>Print</span>
+</button>
+<button class="px-3 py-1.5 bg-surface-container-high hover:bg-surface-variant border border-slate-700 text-on-surface font-label-md text-xs font-semibold rounded flex items-center gap-1.5 transition-colors" id="viewDownloadBtn">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span>PDF</span>
+</button>
+<button class="p-1.5 text-outline hover:text-on-surface rounded hover:bg-surface-container-high transition-colors" id="closeViewModalBtn">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+</div>
+<!-- Printable Document Sheet Body -->
+<div class="p-8 overflow-y-auto print:p-0 flex-1 bg-surface-container-lowest" id="printableInvoiceSheet">
+<!-- Letterhead Header -->
+<div class="flex flex-col sm:flex-row items-start justify-between pb-6 mb-6 border-b border-slate-800 gap-4">
+<div class="flex items-start gap-4">
+<div class="w-14 h-14 bg-primary-container text-white font-headline-xl text-xl flex items-center justify-center font-bold tracking-tight rounded">
+              SBL
+            </div>
+<div>
+<div class="font-headline-md text-lg text-white font-bold tracking-tight uppercase">Sign Board Lanka (Pvt) Ltd</div>
+<div class="font-body-sm text-xs text-outline mt-0.5">Heavy Architectural Fabrication &amp; Signage Engineering</div>
+<div class="font-code-tabular text-[11px] text-on-surface-variant mt-0.5">48/2 Industrial Zone, Orugodawatta, Colombo, Sri Lanka</div>
+<div class="font-code-tabular text-[11px] text-on-surface-variant">TIN / VAT Reg: 104829104-7000 | finance@signboardlanka.lk</div>
+</div>
+</div>
+<div class="flex flex-col items-start sm:items-end">
+<span class="px-3 py-1 bg-primary text-on-primary font-headline-sm text-xs font-bold uppercase tracking-wider rounded-sm">FINAL TAX INVOICE</span>
+<span class="font-code-tabular text-xl text-white font-bold mt-2" id="docInvoiceNo">INV-2026-018</span>
+<div class="text-outline text-xs mt-1">Status: <span class="font-bold text-white uppercase" id="docStatusBadge">PARTIALLY PAID</span></div>
+</div>
+</div>
+<!-- Metadata Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 p-4 bg-surface-container-low border border-slate-800 rounded mb-6">
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-[11px] text-outline uppercase tracking-wider font-semibold">Billed Customer / Entity:</span>
+<span class="font-headline-sm text-base text-white font-semibold" id="docCustomerName">Dialog Axiata PLC</span>
+<span class="font-body-sm text-xs text-on-surface-variant" id="docCustomerAddress">Dialog Axiata Head Office, No. 475, Union Place, Colombo 02</span>
+<span class="font-code-tabular text-[11px] text-outline" id="docCustomerVat">Client Tax No: VAT-8291041-0</span>
+</div>
+<div class="flex flex-col gap-1.5 sm:text-right">
+<div class="flex justify-between sm:justify-end gap-3 text-xs">
+<span class="text-outline">Invoice Issue Date:</span>
+<span class="font-code-tabular text-white font-semibold" id="docInvoiceDate">18 Nov 2026</span>
+</div>
+<div class="flex justify-between sm:justify-end gap-3 text-xs">
+<span class="text-outline">Linked Quotation Ref:</span>
+<span class="font-code-tabular text-primary font-semibold" id="docQuotationRef">QTN-2026-031</span>
+</div>
+<div class="flex justify-between sm:justify-end gap-3 text-xs">
+<span class="text-outline">Project Dossier:</span>
+<span class="font-code-tabular text-white font-medium" id="docProjectRef">PRJ-2026-089</span>
+</div>
+<div class="flex justify-between sm:justify-end gap-3 text-xs">
+<span class="text-outline">Site Installation Handover:</span>
+<span class="font-code-tabular text-tertiary-fixed font-semibold" id="docHandoverDate">16 Nov 2026 (Verified 100%)</span>
+</div>
+</div>
+</div>
+<!-- Project Title Banner -->
+<div class="p-3 bg-surface-container border border-slate-800 mb-5 rounded flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[18px]">business_center</span>
+<span class="font-label-md text-xs text-outline uppercase font-semibold">Project Scope:</span>
+<span class="font-label-lg text-xs text-white font-bold" id="docProjectTitle">Dialog Axiata 3D Acrylic Rooftop Pylon Fabrication</span>
+</div>
+<span class="font-code-tabular text-[11px] text-outline">Post-Installation Final Settlement</span>
+</div>
+<!-- Scope & Charges Table -->
+<div class="mb-6 overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container text-outline font-label-sm text-[11px] uppercase tracking-wider border-b border-slate-800">
+<th class="py-2.5 px-3">Item #</th>
+<th class="py-2.5 px-3">Fabrication &amp; Installation Scope Description</th>
+<th class="py-2.5 px-3 text-center">Unit / Lot</th>
+<th class="py-2.5 px-3 text-right">Amount (LKR)</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-xs divide-y divide-slate-800/80 text-on-surface" id="docItemsTableBody">
+<tr>
+<td class="py-2.5 px-3 font-code-tabular text-outline">#01</td>
+<td class="py-2.5 px-3">Heavy structural steel sub-frame fabrication &amp; hot-dip galvanizing (18ft x 6ft)</td>
+<td class="py-2.5 px-3 font-code-tabular text-center text-outline">1 Lot</td>
+<td class="py-2.5 px-3 font-code-tabular text-right text-white font-medium">1,150,000</td>
+</tr>
+<tr>
+<td class="py-2.5 px-3 font-code-tabular text-outline">#02</td>
+<td class="py-2.5 px-3">3D Molded Acrylic letter cladding with high-lumen Samsung IP68 LED illumination</td>
+<td class="py-2.5 px-3 font-code-tabular text-center text-outline">1 Lot</td>
+<td class="py-2.5 px-3 font-code-tabular text-right text-white font-medium">750,000</td>
+</tr>
+<tr>
+<td class="py-2.5 px-3 font-code-tabular text-outline">#03</td>
+<td class="py-2.5 px-3">High-elevation crane boom rigging &amp; site installation at Dialog HQ Rooftop</td>
+<td class="py-2.5 px-3 font-code-tabular text-center text-outline">1 Lot</td>
+<td class="py-2.5 px-3 font-code-tabular text-right text-white font-medium">300,000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Financial Calculation Breakdown -->
+<div class="flex flex-col sm:flex-row justify-between items-start gap-6 mb-6">
+<!-- Terms & Signatures -->
+<div class="w-full sm:w-1/2 flex flex-col justify-between self-stretch">
+<div class="bg-surface-container-low border border-slate-800 p-4 rounded text-xs">
+<span class="font-label-sm text-[11px] text-outline uppercase tracking-wider block mb-1 font-semibold">Payment Instructions</span>
+<p class="text-on-surface-variant font-code-tabular leading-relaxed">
+                Bank: Commercial Bank of Ceylon PLC<br/>
+                Account Name: Sign Board Lanka (Pvt) Ltd<br/>
+                A/C No: 1000-8472-9182 (Corporate Branch)<br/>
+                Swift Code: CCEYLKLX | Branch Code: 001
+              </p>
+<div class="mt-2 text-[11px] text-outline">
+                Advance payment deposits are recorded under SBL Payment Gateway and reconciled against this final ledger.
+              </div>
+</div>
+<div class="pt-6 flex items-center justify-between text-outline text-[11px]">
+<div>
+<div class="w-28 border-b border-slate-700 mb-1"></div>
+<span>Certified Accounts Desk</span>
+</div>
+<div>
+<div class="w-28 border-b border-slate-700 mb-1"></div>
+<span>Customer Acceptance</span>
+</div>
+</div>
+</div>
+<!-- Totals Calculation Box -->
+<div class="w-full sm:w-5/12 bg-surface-container border border-slate-800 p-4 rounded flex flex-col gap-2">
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Agreed Subtotal:</span>
+<span class="font-code-tabular text-white font-medium" id="docSubtotal">LKR 2,200,000</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Statutory Tax (Supplied System Total):</span>
+<span class="font-code-tabular text-white font-medium" id="docTaxAmount">LKR 400,000</span>
+</div>
+<div class="h-px bg-slate-700 my-1"></div>
+<div class="flex justify-between font-label-lg text-sm">
+<span class="text-white uppercase font-bold">Total Invoiced Amount:</span>
+<span class="font-code-tabular text-white font-bold" id="docGrandTotal">LKR 2,600,000</span>
+</div>
+<div class="mt-2 pt-2 border-t border-slate-800 flex flex-col gap-1.5 text-xs">
+<div class="flex justify-between text-tertiary-fixed">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>Less 30% Advance Deposit:</span>
+</span>
+<span class="font-code-tabular font-semibold" id="docAdvanceDeducted">- LKR 780,000</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Less Post-Install Payments:</span>
+<span class="font-code-tabular" id="docPostInstallPaid">- LKR 520,000</span>
+</div>
+</div>
+<!-- Net Outstanding Box -->
+<div class="mt-2 p-2.5 bg-surface-container-low border border-slate-800 rounded flex justify-between items-center">
+<div>
+<span class="font-label-sm text-[11px] text-outline uppercase tracking-wider block font-semibold">Net Balance Due</span>
+<span class="font-code-tabular text-[11px] text-on-surface-variant" id="docDueTerms">Net 14 Days Terms Active</span>
+</div>
+<div class="text-right">
+<span class="font-headline-sm text-base text-primary font-bold font-code-tabular" id="docNetBalance">LKR 1,300,000</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Audit Log of Linked Payments -->
+<div class="pt-4 border-t border-slate-800">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-xs text-outline uppercase tracking-wider font-semibold">Recorded Payment &amp; Receipt Ledger</span>
+<span class="text-[11px] text-outline font-code-tabular">Reconciled via Payment Management Module</span>
+</div>
+<div class="bg-surface-container rounded p-3 overflow-x-auto border border-slate-800">
+<table class="w-full text-left text-xs">
+<thead>
+<tr class="text-outline text-[11px] border-b border-slate-800">
+<th class="py-1 px-2 font-semibold">Ref Receipt #</th>
+<th class="py-1 px-2 font-semibold">Payment Date</th>
+<th class="py-1 px-2 font-semibold">Payment Stage</th>
+<th class="py-1 px-2 font-semibold">Method / Transfer Note</th>
+<th class="py-1 px-2 text-right font-semibold">Settled Amount</th>
+</tr>
+</thead>
+<tbody class="font-code-tabular text-[11px] divide-y divide-slate-800/80" id="docPaymentsAuditBody">
+<tr>
+<td class="py-1.5 px-2 font-bold text-white">RCT-2026-114</td>
+<td class="py-1.5 px-2 text-outline">02 Oct 2026</td>
+<td class="py-1.5 px-2 text-tertiary-fixed">30% Advance Deposit</td>
+<td class="py-1.5 px-2 text-on-surface-variant">Commercial Bank Transfer Ref #CB-98214</td>
+<td class="py-1.5 px-2 text-right text-white font-bold">LKR 780,000</td>
+</tr>
+<tr>
+<td class="py-1.5 px-2 font-bold text-white">RCT-2026-289</td>
+<td class="py-1.5 px-2 text-outline">22 Nov 2026</td>
+<td class="py-1.5 px-2 text-tertiary-fixed">Interim Handover Draw</td>
+<td class="py-1.5 px-2 text-on-surface-variant">Commercial Bank Transfer Ref #CB-99410</td>
+<td class="py-1.5 px-2 text-right text-white font-bold">LKR 520,000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Toast Notification Utility -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-16 opacity-0 transition-all duration-200 pointer-events-none" id="toastNotification">
+<div class="bg-surface-container-highest border border-slate-700 text-on-surface px-4 py-3 rounded shadow-xl flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[20px]" id="toastIcon">check_circle</span>
+<span class="font-label-md text-xs font-semibold" id="toastMessage">Action completed successfully</span>
+</div>
+</div>
+
+
+<script src="inventory.js"></script></body></html>

@@ -1,0 +1,21 @@
+{
+  "name": "sign-board-erp",
+  "version": "1.0.0",
+  "description": "Sign Board Lanka ERP",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "argon2": "^0.45.2",
+    "connect-pg-simple": "^10.0.0",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-rate-limit": "^8.7.5",
+    "express-session": "^1.19.0",
+    "helmet": "^8.3.0",
+    "pg": "^8.13.1"
+  }
+}
