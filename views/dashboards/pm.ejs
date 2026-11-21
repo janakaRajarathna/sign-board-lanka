@@ -1,0 +1,950 @@
+<!DOCTYPE html><html class="dark" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Space+Grotesk:wght@100..900&amp;display=swap" rel="stylesheet"><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "primary-fixed-dim": "#b7c4ff", "on-background": "#dae2fd", "outline": "#8e90a0", "secondary-fixed": "#d8e2ff", "on-error-container": "#ffdad6", "on-primary-fixed-variant": "#0039b5", "background": "#0b1326", "inverse-on-surface": "#283044", "on-secondary": "#002e6a", "on-tertiary-fixed": "#0c1b33", "secondary": "#adc6ff", "inverse-surface": "#dae2fd", "inverse-primary": "#2151da", "error": "#ffb4ab", "error-container": "#93000a", "surface-container-high": "#222a3d", "on-error": "#690005", "secondary-fixed-dim": "#adc6ff", "on-tertiary-fixed-variant": "#394761", "surface-container": "#171f33", "on-primary-fixed": "#001551", "surface-tint": "#b7c4ff", "surface-variant": "#2d3449", "surface-container-lowest": "#060e20", "on-primary-container": "#cad3ff", "on-secondary-container": "#e6ecff", "tertiary-container": "#4e5c77", "primary": "#b7c4ff", "on-surface": "#dae2fd", "outline-variant": "#434655", "surface-dim": "#0b1326", "surface": "#0b1326", "on-secondary-fixed": "#001a42", "tertiary-fixed": "#d7e3ff", "surface-container-highest": "#2d3449", "on-tertiary": "#223149", "surface-bright": "#31394d", "tertiary-fixed-dim": "#b8c7e6", "surface-container-low": "#131b2e", "on-surface-variant": "#c4c5d7", "secondary-container": "#0566d9", "primary-container": "#1d4ed8", "tertiary": "#b8c7e6", "on-tertiary-container": "#c6d5f5", "on-secondary-fixed-variant": "#004395", "on-primary": "#002682", "primary-fixed": "#dce1ff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1.5rem", "gutter": "1rem", "gutter-desktop": "1.5rem", "space-md": "1rem", "space-xs": "0.25rem", "margin": "1rem", "space-xl": "2.5rem", "space-sm": "0.5rem", "margin-desktop": "2rem" }, "fontFamily": { "body-sm": ["Geist"], "headline-lg-mobile": ["Space Grotesk"], "label-lg": ["Geist"], "headline-xl-mobile": ["Space Grotesk"], "label-md": ["Geist"], "headline-xl": ["Space Grotesk"], "label-sm": ["Geist"], "code-tabular": ["Geist"], "body-lg": ["Geist"], "headline-sm": ["Space Grotesk"], "body-md": ["Geist"], "headline-lg": ["Space Grotesk"], "headline-md": ["Space Grotesk"] }, "fontSize": { "body-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400"}], "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}], "label-lg": ["14px", {"lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "600"}], "headline-xl-mobile": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}], "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}], "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700"}], "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "600"}], "code-tabular": ["13px", {"lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500"}], "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400"}], "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600"}], "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}], "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}], "headline-md": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}] } } } };</script></head><body class="bg-surface font-body-md text-on-surface"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest border-r border-outline-variant/30 z-50 flex flex-col justify-between"><div class="flex flex-col flex-1 min-h-0"><div class="h-16 px-space-md flex items-center gap-3 border-b border-outline-variant/20 bg-surface-container-low/40"><div class="w-9 h-9 bg-primary-container border border-primary/40 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary-container text-[20px]">precision_manufacturing</span></div><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm uppercase tracking-wider text-on-surface truncate leading-tight">Sign Board LKA</span><div class="flex items-center gap-1.5 mt-0.5"><span class="w-1.5 h-1.5 bg-primary rounded-none"></span><span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">PM Console</span></div></div></div><div class="px-space-md py-space-sm"><div class="flex items-center justify-between px-2 py-1 bg-surface-container-high/40 border border-outline-variant/30 text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider"><span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[13px] text-primary">account_tree</span>Fabrication PM</span><span class="font-code-tabular text-code-tabular text-on-surface">OP-LK-04</span></div></div><nav class="flex-1 overflow-y-auto px-space-xs space-y-0.5" data-active-classes="bg-primary-container text-on-primary-container font-semibold border-l-2 border-primary"><a aria-current="page" class="flex items-center gap-3 px-space-md py-2.5 transition-colors bg-primary-container text-on-primary-container font-semibold border-l-2 border-primary" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span>Dashboard</span></a><a class="flex items-center gap-3 px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="my-projects" href="#"><span class="material-symbols-outlined text-[20px]">assignment</span><span>My Projects</span></a><a class="flex items-center gap-3 px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="site-visits" href="#"><span class="material-symbols-outlined text-[20px]">location_on</span><span>Site Visits</span></a><a class="flex items-center gap-3 px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="designs" href="#"><span class="material-symbols-outlined text-[20px]">draw</span><span>Designs</span></a><a class="flex items-center justify-between px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="budgets" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">monetization_on</span><span>Budgets</span></div><span class="font-code-tabular text-[10px] uppercase text-outline bg-surface-container-highest px-1.5 py-0.5">View Only</span></a><a class="flex items-center justify-between px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="quotations" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">request_quote</span><span>Quotations</span></div><span class="font-code-tabular text-[10px] uppercase text-outline bg-surface-container-highest px-1.5 py-0.5">View Only</span></a><a class="flex items-center gap-3 px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="quality-and-installation" href="#"><span class="material-symbols-outlined text-[20px]">verified</span><span>Quality &amp; Installation</span></a><a class="flex items-center gap-3 px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="documents-and-feedback" href="#"><span class="material-symbols-outlined text-[20px]">folder_shared</span><span>Documents &amp; Feedback</span></a><a class="flex items-center gap-3 px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="reports-and-history" href="#"><span class="material-symbols-outlined text-[20px]">history_edu</span><span>Reports &amp; History</span></a></nav></div><div class="p-space-md border-t border-outline-variant/30 bg-surface-container-low/60 space-y-3"><div class="flex items-center justify-between px-2.5 py-1.5 bg-surface-container border border-outline-variant/40"><div class="flex items-center gap-2"><span class="w-2 h-2 bg-primary animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase">Env</span></div><span class="px-1.5 py-0.5 bg-secondary-container text-on-secondary-container font-label-sm text-label-sm tracking-widest uppercase border border-secondary/40">DEMO</span></div><form action="/logout" method="POST" class="m-0 p-0 block w-full">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <button type="submit" class="flex items-center justify-between w-full px-3 py-2 bg-surface-container-high hover:bg-error-container/40 text-on-surface hover:text-error border border-outline-variant/30 transition-colors cursor-pointer text-left font-inherit">
+    <div class="flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">power_settings_new</span>
+      <span class="font-label-md text-label-md uppercase tracking-wider">Sign Out</span>
+    </div>
+    <span class="font-code-tabular text-code-tabular text-on-surface-variant text-[10px]">END-SES</span>
+  </button>
+</form></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/95 backdrop-blur-md border-b border-outline-variant/30 z-40 px-space-md flex items-center justify-between gap-space-md"><div class="flex-1 max-w-xl"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full h-10 pl-9 pr-14 bg-surface-container-lowest border border-outline-variant text-on-surface placeholder:text-outline font-body-md text-body-md focus:outline-none focus:border-primary" placeholder="Search assigned projects, site visits, client specs..." type="text"><div class="absolute right-2 px-1.5 py-0.5 bg-surface-container border border-outline-variant/40 font-code-tabular text-label-sm text-outline">CTRL+K</div></div></div><div class="flex items-center gap-space-md"><button class="relative p-2 bg-surface-container-low hover:bg-surface-container border border-outline-variant/40 text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 bg-primary text-on-primary font-code-tabular text-label-sm flex items-center justify-center border border-surface-container-lowest">4</span></button><div class="h-6 w-px bg-outline-variant/30"></div><div class="px-2.5 py-1 bg-surface-container-low border border-outline-variant/40 flex items-center gap-2"><span class="w-1.5 h-1.5 bg-secondary"></span><span class="font-label-sm text-label-sm text-on-surface tracking-wider uppercase font-semibold">ROLE: <%= user.role %></span></div><div class="h-6 w-px bg-outline-variant/30"></div><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col text-left"><span class="font-label-md text-label-md text-on-surface leading-tight font-semibold"><%= user.fullName %></span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">Assigned PM (Demo Operational Dataset)</span></div></div></div></header><main class="w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- 1. WELCOME & OPERATIONAL CONTEXT BANNER -->
+<section class="w-full bg-surface-container-low px-space-md py-space-lg lg:px-margin-desktop lg:py-space-xl">
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md">
+<div class="space-y-space-xs max-w-4xl">
+<div class="flex flex-wrap items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-primary-container text-on-primary-container font-label-sm text-label-sm uppercase tracking-widest font-semibold">
+<span class="w-1.5 h-1.5 bg-primary"></span>
+            Project Manager Console Preview
+          </span>
+<span class="inline-flex items-center px-2 py-0.5 bg-surface-container-high text-on-surface-variant font-code-tabular text-label-sm uppercase tracking-wider">
+            [Sample / Demo ERP Dataset - Assigned Projects Only]
+          </span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-surface-container-highest text-secondary font-code-tabular text-label-sm uppercase">
+<span class="material-symbols-outlined text-[13px]">schedule</span>
+            Sri Lanka STD Time UTC+05:30
+          </span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight font-bold pt-1">
+          Welcome back, Project Manager
+        </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Assigned portfolio overview: <span class="text-on-surface font-semibold">12 active signboard projects</span> under direct supervision across Western &amp; Central provinces. <span class="text-primary font-semibold">7 action items</span> requiring immediate field or design coordination today.</p>
+</div>
+<!-- Quick Action Buttons (Demo Interaction) -->
+<div class="flex flex-wrap items-center gap-2 pt-2 lg:pt-0 shrink-0">
+<button class="inline-flex items-center gap-2 px-3 py-2 bg-primary-container text-on-primary-container hover:bg-secondary-container transition-colors font-headline-sm text-label-lg tracking-wide uppercase font-semibold" onclick="openModal('site-visit-modal')">
+<span class="material-symbols-outlined text-[18px]">add_location_alt</span>
+          + Schedule Site Visit
+        </button>
+<button class="inline-flex items-center gap-2 px-3 py-2 bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-headline-sm text-label-lg tracking-wide uppercase font-semibold" onclick="openModal('design-rev-modal')">
+<span class="material-symbols-outlined text-[18px]">upload_file</span>
+          + Upload Design Revision
+        </button>
+<button class="inline-flex items-center gap-2 px-3 py-2 bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-headline-sm text-label-lg tracking-wide uppercase font-semibold" onclick="openModal('qc-modal')">
+<span class="material-symbols-outlined text-[18px]">fact_check</span>
+          + Record Quality Check
+        </button>
+</div>
+</div>
+</section>
+<!-- 2. DASHBOARD SUMMARY KPI CARDS (6 CARDS) -->
+<section class="w-full px-space-md py-space-md lg:px-margin-desktop bg-surface">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
+<!-- Card 1 -->
+<div class="bg-surface-container-low p-space-md flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">My Active Projects</span>
+<span class="material-symbols-outlined text-primary text-[20px]">precision_manufacturing</span>
+</div>
+<div class="my-3">
+<span class="font-headline-xl text-headline-xl text-on-surface font-bold leading-none">12</span>
+<span class="font-code-tabular text-body-sm text-on-surface-variant block mt-1">Assigned Pipeline (Stg 1-7)</span>
+</div>
+<div class="pt-2 flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span class="text-secondary font-code-tabular">Assigned Scope</span>
+<span class="bg-surface-container px-1 py-0.5 text-[10px] uppercase">Demo Data</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-low p-space-md flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-error">Requires Attention</span>
+<span class="material-symbols-outlined text-error text-[20px]">warning</span>
+</div>
+<div class="my-3">
+<span class="font-headline-xl text-headline-xl text-error font-bold leading-none">3</span>
+<span class="font-code-tabular text-body-sm text-on-surface-variant block mt-1">1 survey, 1 rev, 1 QC</span>
+</div>
+<div class="pt-2 flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span class="text-error font-code-tabular">Action Mandatory</span>
+<span class="bg-surface-container px-1 py-0.5 text-[10px] uppercase">Immediate</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-low p-space-md flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Pending Site Visits</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">add_location</span>
+</div>
+<div class="my-3">
+<span class="font-headline-xl text-headline-xl text-on-surface font-bold leading-none">2</span>
+<span class="font-code-tabular text-body-sm text-on-surface-variant block mt-1">Crescat &amp; Kandy KCC</span>
+</div>
+<div class="pt-2 flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span class="text-secondary font-code-tabular">Site Measurements</span>
+<span class="bg-surface-container px-1 py-0.5 text-[10px] uppercase">Stage 02</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-low p-space-md flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Pending Design Work</span>
+<span class="material-symbols-outlined text-primary text-[20px]">design_services</span>
+</div>
+<div class="my-3">
+<span class="font-headline-xl text-headline-xl text-on-surface font-bold leading-none">4</span>
+<span class="font-code-tabular text-body-sm text-on-surface-variant block mt-1">2 Design Reviews, 2 Client Revs</span>
+</div>
+<div class="pt-2 flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span class="text-primary font-code-tabular">Design Review Active</span>
+<span class="bg-surface-container px-1 py-0.5 text-[10px] uppercase">Stage 03</span>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="bg-surface-container-low p-space-md flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Pending Quality Checks</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">verified</span>
+</div>
+<div class="my-3">
+<span class="font-headline-xl text-headline-xl text-on-surface font-bold leading-none">3</span>
+<span class="font-code-tabular text-body-sm text-on-surface-variant block mt-1">GLOMARK &amp; Dialog Signs</span>
+</div>
+<div class="pt-2 flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span class="text-secondary font-code-tabular">Quality Inspection</span>
+<span class="bg-surface-container px-1 py-0.5 text-[10px] uppercase">Stage 06</span>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="bg-surface-container-low p-space-md flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Upcoming Installations</span>
+<span class="material-symbols-outlined text-primary text-[20px]">construction</span>
+</div>
+<div class="my-3">
+<span class="font-headline-xl text-headline-xl text-on-surface font-bold leading-none">2</span>
+<span class="font-code-tabular text-body-sm text-on-surface-variant block mt-1">Cinnamon Life, Odel</span>
+</div>
+<div class="pt-2 flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span class="text-primary font-code-tabular">Installation Coordination</span>
+<span class="bg-surface-container px-1 py-0.5 text-[10px] uppercase">Stage 07</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. MY PROJECT WORKFLOW PIPELINE (8 MANDATORY STAGES) -->
+<section class="w-full px-space-md py-space-sm lg:px-margin-desktop">
+<div class="bg-surface-container-low p-space-md space-y-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2">
+<div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-primary"></span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-wider font-semibold">
+              My Assigned Projects Pipeline
+            </h2>
+<span class="px-2 py-0.5 bg-surface-container-high text-primary font-code-tabular text-label-sm uppercase">PM Scope (12 Projects)</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            Distribution of 12 assigned client projects across standard business gates (Demo Data)
+          </p>
+</div>
+<span class="font-code-tabular text-label-sm text-on-surface-variant uppercase tracking-widest self-start sm:self-auto">
+          Gate Cycle 1-8 Ref. LK-ERP-PM
+        </span>
+</div>
+<!-- 8 Stage Visual Grid -->
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-2">
+<!-- Stage 1 -->
+<div class="bg-surface-container p-2.5 flex flex-col justify-between space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-code-tabular text-label-sm text-on-surface-variant font-bold">STG 01</span>
+<span class="px-1.5 py-0.2 bg-surface-container-high font-code-tabular text-label-sm text-on-surface">1</span>
+</div>
+<div>
+<span class="font-headline-sm text-label-sm text-on-surface block leading-tight font-medium">Project Registration</span>
+<span class="font-code-tabular text-[10px] text-on-surface-variant">8% of portfolio</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 overflow-hidden">
+<div class="bg-primary h-full w-[8%]"></div>
+</div>
+</div>
+<!-- Stage 2 -->
+<div class="bg-surface-container p-2.5 flex flex-col justify-between space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-code-tabular text-label-sm text-on-surface-variant font-bold">STG 02</span>
+<span class="px-1.5 py-0.2 bg-primary-container font-code-tabular text-label-sm text-on-primary-container font-bold">2</span>
+</div>
+<div>
+<span class="font-headline-sm text-label-sm text-on-surface block leading-tight font-medium">Requirements Gathering</span>
+<span class="font-code-tabular text-[10px] text-on-surface-variant">17% of portfolio</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 overflow-hidden">
+<div class="bg-primary h-full w-[17%]"></div>
+</div>
+</div>
+<!-- Stage 3 -->
+<div class="bg-surface-container p-2.5 flex flex-col justify-between space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-code-tabular text-label-sm text-on-surface-variant font-bold">STG 03</span>
+<span class="px-1.5 py-0.2 bg-primary-container font-code-tabular text-label-sm text-on-primary-container font-bold">3</span>
+</div>
+<div>
+<span class="font-headline-sm text-label-sm text-on-surface block leading-tight font-medium">Design</span>
+<span class="font-code-tabular text-[10px] text-on-surface-variant">25% of portfolio</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 overflow-hidden">
+<div class="bg-primary h-full w-[25%]"></div>
+</div>
+</div>
+<!-- Stage 4 -->
+<div class="bg-surface-container p-2.5 flex flex-col justify-between space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-code-tabular text-label-sm text-on-surface-variant font-bold">STG 04</span>
+<span class="px-1.5 py-0.2 bg-surface-container-high font-code-tabular text-label-sm text-on-surface font-bold">2</span>
+</div>
+<div>
+<span class="font-headline-sm text-label-sm text-on-surface block leading-tight font-medium">Budget &amp; Quotation</span>
+<span class="font-code-tabular text-[10px] text-outline">PM View Only</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 overflow-hidden">
+<div class="bg-primary h-full w-[17%]"></div>
+</div>
+</div>
+<!-- Stage 5 -->
+<div class="bg-surface-container p-2.5 flex flex-col justify-between space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-code-tabular text-label-sm text-on-surface-variant font-bold">STG 05</span>
+<span class="px-1.5 py-0.2 bg-surface-container-high font-code-tabular text-label-sm text-on-surface">1</span>
+</div>
+<div>
+<span class="font-headline-sm text-label-sm text-on-surface block leading-tight font-medium">Advance Payment</span>
+<span class="font-code-tabular text-[10px] text-outline">30% Rule Noted</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 overflow-hidden">
+<div class="bg-primary h-full w-[8%]"></div>
+</div>
+</div>
+<!-- Stage 6 -->
+<div class="bg-surface-container p-2.5 flex flex-col justify-between space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-code-tabular text-label-sm text-on-surface-variant font-bold">STG 06</span>
+<span class="px-1.5 py-0.2 bg-secondary-container font-code-tabular text-label-sm text-on-secondary-container font-bold">1</span>
+</div>
+<div>
+<span class="font-headline-sm text-label-sm text-on-surface block leading-tight font-medium">Quality Check</span>
+<span class="font-code-tabular text-[10px] text-on-surface-variant">8% of portfolio</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 overflow-hidden">
+<div class="bg-secondary h-full w-[8%]"></div>
+</div>
+</div>
+<!-- Stage 7 -->
+<div class="bg-surface-container p-2.5 flex flex-col justify-between space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-code-tabular text-label-sm text-on-surface-variant font-bold">STG 07</span>
+<span class="px-1.5 py-0.2 bg-primary-container font-code-tabular text-label-sm text-on-primary-container font-bold">2</span>
+</div>
+<div>
+<span class="font-headline-sm text-label-sm text-on-surface block leading-tight font-medium">Installation</span>
+<span class="font-code-tabular text-[10px] text-on-surface-variant">17% of portfolio</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 overflow-hidden">
+<div class="bg-primary h-full w-[17%]"></div>
+</div>
+</div>
+<!-- Stage 8 -->
+<div class="bg-surface-container p-2.5 flex flex-col justify-between space-y-2 opacity-60">
+<div class="flex items-center justify-between">
+<span class="font-code-tabular text-label-sm text-outline font-bold">STG 08</span>
+<span class="px-1.5 py-0.2 bg-surface-container-high font-code-tabular text-label-sm text-outline">0</span>
+</div>
+<div>
+<span class="font-headline-sm text-label-sm text-outline block leading-tight font-medium">Final Payment &amp; Completion</span>
+<span class="font-code-tabular text-[10px] text-outline">Installation &amp; Full Paid Req</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 overflow-hidden">
+<div class="bg-outline h-full w-0"></div>
+</div>
+</div>
+</div>
+<!-- Business Rule Banner -->
+<div class="p-3 bg-surface-container flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0 mt-0.5">policy</span>
+<div class="text-body-sm font-body-sm space-y-1.5 w-full">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold block">
+            PM OPERATIONAL SCOPE &amp; AUTHORIZATION BOUNDARIES
+          </span>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-on-surface-variant leading-relaxed text-body-sm">
+<div>
+  • <strong class="text-on-surface">Project Manager:</strong> Manages assigned projects, site visits, requirements, design versions, quality checks, and installation records.<br>
+  • <strong class="text-on-surface">Commercial Boundaries:</strong> Project Manager can view relevant budget and quotation information but cannot approve budgets or manage invoices/payments.
+</div>
+<div>
+  • <strong class="text-on-surface">Owner:</strong> Approves budgets and can perform manual project stage overrides with a mandatory reason. Only Owner can cancel or reactivate projects, with a mandatory reason and history record.<br>
+  • <strong class="text-on-surface">Accounts &amp; Completion Rule:</strong> Accounts manages quotations, invoices, and payments. Project completion is only allowed after at least one installation is marked completed and the full invoice amount has been paid (Stage 8 alone does not automatically complete a project). PM cannot cancel/reactivate projects or perform Owner-only stage overrides.
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. MAIN SPLIT: PENDING OPERATIONAL TASKS (LEFT 70%) & RECENT PM ACTIVITY FEED (RIGHT 30%) -->
+<section class="w-full px-space-md py-space-md lg:px-margin-desktop">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+<!-- LEFT COLUMN (8 of 12 cols): ACTION QUEUE -->
+<div class="lg:col-span-8 space-y-4">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-secondary"></span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-wider font-semibold">
+              Pending Tasks &amp; Operational Actions
+            </h2>
+<span class="px-2 py-0.5 bg-error-container text-on-error-container font-code-tabular text-label-sm uppercase font-semibold">7 Action Items</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Filtered by: Assigned PM Projects</span>
+</div>
+<!-- Action Items Queue (Stacked Fabricated Workplates) -->
+<div class="space-y-3">
+<!-- Category 1: Site Visits to Complete -->
+<div class="bg-surface-container-low p-space-md space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">pin_drop</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">Category: Site Visits to Complete</span>
+</div>
+<span class="font-code-tabular text-label-sm text-on-surface-variant">2 Tasks Scheduled</span>
+</div>
+<!-- Task A -->
+<div class="bg-surface-container p-3 flex flex-col md:flex-row md:items-center justify-between gap-3">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 bg-surface-container-highest font-code-tabular text-label-sm text-on-surface">PRJ-2026-102</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Cargills Food City (Colombo 05 Havelock)</span>
+<span class="px-1.5 py-0.2 bg-primary-container text-on-primary-container font-code-tabular text-[10px] uppercase">Due Tomorrow</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Scope: Site measurements for storefront fascia signboard. Client point-of-contact site survey confirmed.
+                </p>
+</div>
+<div class="shrink-0 flex items-center gap-2">
+<button class="px-3 py-1.5 bg-primary-container text-on-primary-container hover:bg-secondary-container transition-colors font-headline-sm text-label-sm uppercase font-semibold" onclick="triggerDemoAction('Record Visit for PRJ-2026-102')">
+                  Record Visit
+                </button>
+</div>
+</div>
+<!-- Task B -->
+<div class="bg-surface-container p-3 flex flex-col md:flex-row md:items-center justify-between gap-3">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 bg-surface-container-highest font-code-tabular text-label-sm text-on-surface">PRJ-2026-104</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Keells Super (Wattala Junction)</span>
+<span class="px-1.5 py-0.2 bg-surface-container-high text-on-surface-variant font-code-tabular text-[10px] uppercase">Pending Slot</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Scope: Entrance pylon baseline measurements and site space survey. Coordinate with branch manager.
+                </p>
+</div>
+<div class="shrink-0 flex items-center gap-2">
+<button class="px-3 py-1.5 bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-headline-sm text-label-sm uppercase font-semibold" onclick="triggerDemoAction('Schedule Slot for PRJ-2026-104')">
+                  Assign Slot
+                </button>
+</div>
+</div>
+</div>
+<!-- Category 2: Requirements to Record -->
+<div class="bg-surface-container-low p-space-md space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">rule</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Category: Requirements to Record</span>
+</div>
+<span class="font-code-tabular text-label-sm text-on-surface-variant">1 Spec Pending</span>
+</div>
+<div class="bg-surface-container p-3 flex flex-col md:flex-row md:items-center justify-between gap-3">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 bg-surface-container-highest font-code-tabular text-label-sm text-on-surface">PRJ-2026-101</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Seylan Bank Head Office (Kollupitiya)</span>
+<span class="px-1.5 py-0.2 bg-error-container text-on-error-container font-code-tabular text-[10px] uppercase">7 Action Items</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Technical spec sheet pending sign-off: Aluminum composite panel finish selection and face substrate preference for storefront branding.
+                </p>
+</div>
+<div class="shrink-0 flex items-center gap-2">
+<button class="px-3 py-1.5 bg-secondary-container text-on-secondary-container hover:bg-primary-container transition-colors font-headline-sm text-label-sm uppercase font-semibold" onclick="triggerDemoAction('Record Spec for PRJ-2026-101')">
+                  Record Spec
+                </button>
+</div>
+</div>
+</div>
+<!-- Category 3: Designs Awaiting Review or Client Revision -->
+<div class="bg-surface-container-low p-space-md space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">draw</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">Category: Designs Awaiting Review / Revision</span>
+</div>
+<span class="font-code-tabular text-label-sm text-on-surface-variant">2 Designs Active</span>
+</div>
+<!-- Design Task 1 -->
+<div class="bg-surface-container p-3 flex flex-col md:flex-row md:items-center justify-between gap-3">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 bg-surface-container-highest font-code-tabular text-label-sm text-on-surface">PRJ-2026-095</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">HNB Towers (Colombo 10)</span>
+<span class="px-1.5 py-0.2 bg-primary-container text-on-primary-container font-code-tabular text-[10px] uppercase">Design Rev v2</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  External illuminated signboard layout v2 prepared. PM design review required prior to client dispatch: verify dimensions and logo placements.
+                </p>
+</div>
+<div class="shrink-0 flex items-center gap-2">
+<button class="px-3 py-1.5 bg-primary-container text-on-primary-container hover:bg-secondary-container transition-colors font-headline-sm text-label-sm uppercase font-semibold" onclick="openModal('design-rev-modal')">
+                  Design Review
+                </button>
+</div>
+</div>
+<!-- Design Task 2 -->
+<div class="bg-surface-container p-3 flex flex-col md:flex-row md:items-center justify-between gap-3">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 bg-surface-container-highest font-code-tabular text-label-sm text-on-surface">PRJ-2026-089</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Dialog Axiata (Kandy Regional HQ)</span>
+<span class="px-1.5 py-0.2 bg-surface-container-high text-on-surface-variant font-code-tabular text-[10px] uppercase">Design Check</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Client requested acrylic face update. Review updated drawing and verify enclosure fit for internal wiring channels.
+                </p>
+</div>
+<div class="shrink-0 flex items-center gap-2">
+<button class="px-3 py-1.5 bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-headline-sm text-label-sm uppercase font-semibold" onclick="triggerDemoAction('Check Specs PRJ-2026-089')">
+                  Check Specs
+                </button>
+</div>
+</div>
+</div>
+<!-- Category 4: Quality Checks & Installations -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+<!-- QC Task -->
+<div class="bg-surface-container-low p-space-md space-y-2 flex flex-col justify-between">
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Category: Quality Inspection</span>
+<span class="px-1.5 py-0.2 bg-surface-container-high font-code-tabular text-[10px] text-on-surface">Ready for Check</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="font-code-tabular text-label-sm text-primary">PRJ-2026-098</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Softlogic GLOMARK</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Fabricated channel letter finish inspection and lighting wiring check prior to site handover.
+                </p>
+</div>
+<div class="pt-2">
+<button class="w-full px-3 py-1.5 bg-primary-container text-on-primary-container hover:bg-secondary-container transition-colors font-headline-sm text-label-sm uppercase font-semibold" onclick="openModal('qc-modal')">
+                  Record Quality Check
+                </button>
+</div>
+</div>
+<!-- Installation Task -->
+<div class="bg-surface-container-low p-space-md space-y-2 flex flex-col justify-between">
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">Category: Installation Coordination</span>
+<span class="px-1.5 py-0.2 bg-primary-container text-on-primary-container font-code-tabular text-[10px]">Active Stage</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="font-code-tabular text-label-sm text-primary">PRJ-2026-097</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Cinnamon Life (Colombo 02)</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Site access timing coordination and installation team scheduling for directional blade sign assembly.
+                </p>
+</div>
+<div class="pt-2">
+<button class="w-full px-3 py-1.5 bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-headline-sm text-label-sm uppercase font-semibold" onclick="triggerDemoAction('Log Installation Step PRJ-2026-097')">
+                  Log Installation Step
+                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN (4 of 12 cols): DEMO PM ACTIVITY FEED -->
+<div class="lg:col-span-4 space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-primary animate-pulse"></span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-wider font-semibold">
+              Sample Activity Feed
+            </h2>
+</div>
+<span class="px-1.5 py-0.5 bg-surface-container-high text-secondary font-code-tabular text-[11px] uppercase">Demo Activity Feed</span>
+</div>
+<div class="bg-surface-container-low p-space-md space-y-4">
+<div class="space-y-4">
+<!-- Feed Item 1 -->
+<div class="flex gap-3 items-start">
+<div class="w-7 h-7 bg-surface-container-highest flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified</span>
+</div>
+<div class="space-y-0.5 flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-label-md text-label-md text-on-surface font-semibold">Quality Inspection Recorded</span><span class="font-code-tabular text-[11px] text-on-surface-variant">11:15 AM (18 Nov 2026)</span></div><p class="font-body-sm text-body-sm text-on-surface-variant leading-snug"><span class="text-primary font-code-tabular">PRJ-2026-098</span> Softlogic GLOMARK channel letters inspection passed by PM.</p><span class="font-code-tabular text-[10px] text-outline block">Stage: 06 (Quality Check)</span></div>
+</div>
+<!-- Feed Item 2 -->
+<div class="flex gap-3 items-start">
+<div class="w-7 h-7 bg-surface-container-highest flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px] text-primary">location_on</span>
+</div>
+<div class="space-y-0.5 flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-label-md text-label-md text-on-surface font-semibold">Site Visit Recorded</span><span class="font-code-tabular text-[11px] text-on-surface-variant">09:30 AM (17 Nov 2026)</span></div><p class="font-body-sm text-body-sm text-on-surface-variant leading-snug"><span class="text-primary font-code-tabular">PRJ-2026-097</span> Cinnamon Life site visit completed; site measurements and photos recorded.</p></div>
+</div>
+<!-- Feed Item 3 -->
+<div class="flex gap-3 items-start">
+<div class="w-7 h-7 bg-surface-container-highest flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px] text-on-surface">draw</span>
+</div>
+<div class="space-y-0.5 flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-label-md text-label-md text-on-surface font-semibold">Design Version Submitted</span><span class="font-code-tabular text-[11px] text-on-surface-variant">15 Nov 2026</span></div><p class="font-body-sm text-body-sm text-on-surface-variant leading-snug"><span class="text-primary font-code-tabular">PRJ-2026-095</span> HNB Towers design revision v2 layout drawing submitted for client review.</p></div>
+</div>
+<!-- Feed Item 4 -->
+<div class="flex gap-3 items-start">
+<div class="w-7 h-7 bg-surface-container-highest flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">approval</span>
+</div>
+<div class="space-y-0.5 flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-label-md text-label-md text-on-surface font-semibold">Design Approved by Client</span><span class="font-code-tabular text-[11px] text-on-surface-variant">14 Nov 2026</span></div><p class="font-body-sm text-body-sm text-on-surface-variant leading-snug"><span class="text-primary font-code-tabular">PRJ-2026-089</span> Dialog Axiata signed off on entrance pylon drawing; passed to Stage 04.</p></div>
+</div>
+<!-- Feed Item 5 -->
+<div class="flex gap-3 items-start">
+<div class="w-7 h-7 bg-surface-container-highest flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px] text-primary">engineering</span>
+</div>
+<div class="space-y-0.5 flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-label-md text-label-md text-on-surface font-semibold">Installation Coordination</span><span class="font-code-tabular text-[11px] text-on-surface-variant">12 Nov 2026</span></div><p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">Odel Alexandra Pl storefront steel framing fixed; ready for signage mount.</p></div>
+</div>
+</div>
+<div class="pt-2">
+<button class="w-full py-2 bg-surface-container hover:bg-surface-container-high transition-colors font-headline-sm text-label-sm uppercase tracking-wider text-on-surface flex items-center justify-center gap-2" onclick="triggerDemoAction('Opening full PM audit trail')">
+<span>View My Complete PM Activity History (24 Events)</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Operational Reference Card -->
+<div class="bg-surface-container-low p-space-md space-y-2">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Field Operations Summary (Demo)</span>
+<span class="font-code-tabular text-secondary text-label-sm">[Simulation Data]</span>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between font-code-tabular text-body-sm text-on-surface">
+<span>Site Measurements Recorded</span>
+<span class="font-bold">18 Completed</span>
+</div>
+<div class="flex justify-between font-code-tabular text-body-sm text-on-surface">
+<span>Quality Checks Passed</span>
+<span class="font-bold">11 of 12</span>
+</div>
+<div class="flex justify-between font-code-tabular text-body-sm text-on-surface">
+<span>Active Installation Jobs</span>
+<span class="font-bold">2 Assigned</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. MY ASSIGNED PROJECTS TABLE -->
+<section class="w-full px-space-md py-space-md lg:px-margin-desktop mb-space-xl">
+<div class="bg-surface-container-low p-space-md space-y-4">
+<!-- Table Controls & Header -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+<div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-primary"></span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-wider font-semibold">
+              My Assigned Projects
+            </h2>
+<span class="px-2 py-0.5 bg-surface-container text-on-surface font-code-tabular text-label-sm">Total 12 Active (Fictional Demo Records)</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            Active fabrication, site preparation, and client sign-off records assigned to this console
+          </p>
+</div>
+<div class="flex flex-wrap items-center gap-2">
+<!-- Stage Filter Dropdown -->
+<div class="relative">
+<select class="h-9 px-3 pr-8 bg-surface-container text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer" id="stageFilter" onchange="applyFilters()"><option value="ALL">All Assigned Stages (8 Gates)</option><option value="Stage 1">Stage 1: Project Registration</option><option value="Stage 2">Stage 2: Requirements Gathering</option><option value="Stage 3">Stage 3: Design</option><option value="Stage 4">Stage 4: Budget &amp; Quotation</option><option value="Stage 5">Stage 5: Advance Payment</option><option value="Stage 6">Stage 6: Quality Check</option><option value="Stage 7">Stage 7: Installation</option><option value="Stage 8">Stage 8: Final Payment &amp; Completion</option></select>
+<span class="material-symbols-outlined absolute right-2 top-2.5 text-outline text-[16px] pointer-events-none">expand_more</span>
+</div>
+<!-- Quick Search -->
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2.5 top-2 text-outline text-[16px]">search</span>
+<input class="h-9 pl-8 pr-3 bg-surface-container text-on-surface placeholder:text-outline font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary w-52 sm:w-64" id="projectSearch" onkeyup="applyFilters()" placeholder="Filter project ID, client..." type="text">
+</div>
+</div>
+</div>
+<!-- Data Table Container -->
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-md text-body-sm border-collapse">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="p-3">Project ID</th>
+<th class="p-3">Project Name &amp; Scope</th>
+<th class="p-3">Customer</th>
+<th class="p-3">Current Stage</th>
+<th class="p-3">Location</th>
+<th class="p-3">Assigned Date</th>
+<th class="p-3">Next Action</th>
+<th class="p-3 text-right">Operation</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-high" id="projectsTableBody">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container/60 transition-colors project-row" data-search="prj-2026-098 softlogic glomark mount lavinia" data-stage="Stage 6">
+<td class="p-3 font-code-tabular text-primary font-bold whitespace-nowrap">PRJ-2026-098</td>
+<td class="p-3">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold block leading-tight">Softlogic GLOMARK Facade Cladding</span>
+<span class="text-on-surface-variant font-body-sm text-[12px]">3D Acrylic Channel Letters &amp; Canopy</span>
+</td>
+<td class="p-3 text-on-surface whitespace-nowrap">Softlogic Holdings PLC (Demo)</td>
+<td class="p-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-secondary-container text-on-secondary-container font-code-tabular text-label-sm font-semibold"><span class="w-1.5 h-1.5 bg-secondary"></span>Stg 6: Quality Check</span>
+</td>
+<td class="p-3 text-on-surface-variant whitespace-nowrap">Mount Lavinia</td>
+<td class="p-3 font-code-tabular text-on-surface-variant whitespace-nowrap">12 Feb 2026</td>
+<td class="p-3">
+<span class="text-secondary font-label-sm text-label-sm font-semibold">Perform Quality Check</span>
+</td>
+<td class="p-3 text-right whitespace-nowrap">
+<button class="px-2.5 py-1 bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-headline-sm text-label-sm uppercase font-semibold" onclick="triggerDemoAction('Details for PRJ-2026-098')">
+                  View Details
+                </button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container/60 transition-colors project-row" data-search="prj-2026-097 john keells cinnamon life colombo 02" data-stage="Stage 7">
+<td class="p-3 font-code-tabular text-primary font-bold whitespace-nowrap">PRJ-2026-097</td>
+<td class="p-3">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold block leading-tight">Cinnamon Life Wayfinding Directionals</span>
+<span class="text-on-surface-variant font-body-sm text-[12px]">Directional Blade Signs</span>
+</td>
+<td class="p-3 text-on-surface whitespace-nowrap">John Keells Holdings (Demo)</td>
+<td class="p-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-primary-container text-on-primary-container font-code-tabular text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 bg-primary"></span>
+                  Stg 7: Installation
+                </span>
+</td>
+<td class="p-3 text-on-surface-variant whitespace-nowrap">Colombo 02</td>
+<td class="p-3 font-code-tabular text-on-surface-variant whitespace-nowrap">18 Feb 2026</td>
+<td class="p-3">
+<span class="text-primary font-label-sm text-label-sm font-semibold">Installation Coordination</span>
+</td>
+<td class="p-3 text-right whitespace-nowrap">
+<button class="px-2.5 py-1 bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-headline-sm text-label-sm uppercase font-semibold" onclick="triggerDemoAction('Details for PRJ-2026-097')">
+                  View Details
+                </button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container/60 transition-colors project-row" data-search="prj-2026-095 hatton national bank hnb towers colombo 10" data-stage="Stage 3">
+<td class="p-3 font-code-tabular text-primary font-bold whitespace-nowrap">PRJ-2026-095</td>
+<td class="p-3">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold block leading-tight">HNB Towers External Backlit Sign</span>
+<span class="text-on-surface-variant font-body-sm text-[12px]">Entrance Signage &amp; Stainless Logos</span>
+</td>
+<td class="p-3 text-on-surface whitespace-nowrap">Hatton National Bank (Demo)</td>
+<td class="p-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-surface-container-highest text-primary font-code-tabular text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 bg-primary"></span>
+                  Stg 3: Design
+                </span>
+</td>
+<td class="p-3 text-on-surface-variant whitespace-nowrap">Colombo 10</td>
+<td class="p-3 font-code-tabular text-on-surface-variant whitespace-nowrap">24 Feb 2026</td>
+<td class="p-3">
+<span class="text-on-surface font-label-sm text-label-sm font-semibold">Submit Design Rev v2</span>
+</td>
+<td class="p-3 text-right whitespace-nowrap">
+<button class="px-2.5 py-1 bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-headline-sm text-label-sm uppercase font-semibold" onclick="triggerDemoAction('Details for PRJ-2026-095')">
+                  View Details
+                </button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container/60 transition-colors project-row" data-search="prj-2026-102 cargills ceylon plc food city colombo 05" data-stage="Stage 2">
+<td class="p-3 font-code-tabular text-primary font-bold whitespace-nowrap">PRJ-2026-102</td>
+<td class="p-3">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold block leading-tight">Cargills Food City Fascia Signboard</span>
+<span class="text-on-surface-variant font-body-sm text-[12px]">Storefront Cladding &amp; Graphic Panels</span>
+</td>
+<td class="p-3 text-on-surface whitespace-nowrap">Cargills (Ceylon) PLC (Demo)</td>
+<td class="p-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-surface-container-highest text-secondary font-code-tabular text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 bg-secondary"></span>
+                  Stg 2: Requirements Gathering
+                </span>
+</td>
+<td class="p-3 text-on-surface-variant whitespace-nowrap">Colombo 05</td>
+<td class="p-3 font-code-tabular text-on-surface-variant whitespace-nowrap">02 Mar 2026</td>
+<td class="p-3">
+<span class="text-secondary font-label-sm text-label-sm font-semibold">Site Measurements</span>
+</td>
+<td class="p-3 text-right whitespace-nowrap">
+<button class="px-2.5 py-1 bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-headline-sm text-label-sm uppercase font-semibold" onclick="triggerDemoAction('Details for PRJ-2026-102')">
+                  View Details
+                </button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container/60 transition-colors project-row" data-search="prj-2026-089 dialog axiata plc kandy city center" data-stage="Stage 4">
+<td class="p-3 font-code-tabular text-primary font-bold whitespace-nowrap">PRJ-2026-089</td>
+<td class="p-3">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold block leading-tight">Dialog Axiata Acrylic Pylon Sign</span>
+<span class="text-on-surface-variant font-body-sm text-[12px]">Entrance Pylon &amp; Lighting Box</span>
+</td>
+<td class="p-3 text-on-surface whitespace-nowrap">Dialog Axiata PLC (Demo)</td>
+<td class="p-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-surface-container-high text-on-surface-variant font-code-tabular text-label-sm">
+<span class="w-1.5 h-1.5 bg-outline"></span>
+                  Stg 4: Budget &amp; Quotation
+                </span>
+</td>
+<td class="p-3 text-on-surface-variant whitespace-nowrap">Kandy City Center</td>
+<td class="p-3 font-code-tabular text-on-surface-variant whitespace-nowrap">05 Mar 2026</td>
+<td class="p-3">
+<span class="text-on-surface-variant font-label-sm text-label-sm font-semibold">View BOQ Specifications</span>
+</td>
+<td class="p-3 text-right whitespace-nowrap">
+<button class="px-2.5 py-1 bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-headline-sm text-label-sm uppercase font-semibold" onclick="triggerDemoAction('Details for PRJ-2026-089')">
+                  View Details
+                </button>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-surface-container/60 transition-colors project-row" data-search="prj-2026-081 softlogic retail odel colombo 07 alexandra place" data-stage="Stage 7">
+<td class="p-3 font-code-tabular text-primary font-bold whitespace-nowrap">PRJ-2026-081</td>
+<td class="p-3">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold block leading-tight">Odel Department Store Sign</span>
+<span class="text-on-surface-variant font-body-sm text-[12px]">Grand Entrance Signboard &amp; Cladding</span>
+</td>
+<td class="p-3 text-on-surface whitespace-nowrap">Softlogic Retail (Demo)</td>
+<td class="p-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-primary-container text-on-primary-container font-code-tabular text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 bg-primary"></span>
+                  Stg 7: Installation
+                </span>
+</td>
+<td class="p-3 text-on-surface-variant whitespace-nowrap">Colombo 07 Alexandra Pl</td>
+<td class="p-3 font-code-tabular text-on-surface-variant whitespace-nowrap">08 Mar 2026</td>
+<td class="p-3">
+<span class="text-primary font-label-sm text-label-sm font-semibold">Installation Coordination</span>
+</td>
+<td class="p-3 text-right whitespace-nowrap">
+<button class="px-2.5 py-1 bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-headline-sm text-label-sm uppercase font-semibold" onclick="triggerDemoAction('Details for PRJ-2026-081')">
+                  View Details
+                </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination & Record count -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 text-on-surface-variant font-body-sm text-body-sm">
+<div class="flex items-center gap-2">
+<span>Showing <strong class="text-on-surface font-code-tabular">6 of 12</strong> assigned demo projects</span>
+<span class="px-2 py-0.5 bg-surface-container font-code-tabular text-[10px] uppercase">Page 1 of 2</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="px-3 py-1 bg-surface-container text-outline opacity-50 cursor-not-allowed font-headline-sm text-label-sm uppercase" disabled="">
+            Previous
+          </button>
+<button class="px-3 py-1 bg-primary-container text-on-primary-container font-code-tabular text-label-sm font-bold">1</button>
+<button class="px-3 py-1 bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-code-tabular text-label-sm" onclick="triggerDemoAction('Switching to table page 2')">2</button>
+<button class="px-3 py-1 bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-headline-sm text-label-sm uppercase" onclick="triggerDemoAction('Switching to table page 2')">
+            Next
+          </button>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. INTERACTIVE DEMO MODALS -->
+<!-- MODAL A: SCHEDULE SITE VISIT -->
+<div class="fixed inset-0 bg-surface-container-lowest/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" id="site-visit-modal">
+<div class="bg-surface-container-low max-w-lg w-full p-space-lg space-y-4 shadow-xl">
+<div class="flex items-center justify-between pb-2 border-b border-surface-container-high">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[22px]">add_location_alt</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-wider font-semibold">
+            Schedule Field Site Visit
+          </h3>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface" onclick="closeModal('site-visit-modal')">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="p-2.5 bg-surface-container text-on-surface-variant font-code-tabular text-[11px] leading-relaxed">
+        PROTOTYPE SIMULATION: Local demo preview only. No backend or database alterations are performed. Multiple site visits may be scheduled for the same project.
+      </div>
+<form class="space-y-3 font-body-md text-body-sm" onsubmit="handleDemoSubmit(event, 'Site Visit Scheduled successfully!')">
+<div class="space-y-1">
+<label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Select Assigned Project</label>
+<select class="w-full h-10 px-3 bg-surface-container text-on-surface focus:outline-none focus:ring-1 focus:ring-primary" required="">
+<option value="PRJ-2026-102">PRJ-2026-102 | Cargills Food City (Colombo 05)</option>
+<option value="PRJ-2026-104">PRJ-2026-104 | Keells Super (Wattala Junction)</option>
+<option value="PRJ-2026-101">PRJ-2026-101 | Seylan Bank Head Office (Kollupitiya)</option>
+<option value="PRJ-2026-089">PRJ-2026-089 | Dialog Axiata (Kandy City Center)</option>
+</select>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<div class="space-y-1">
+<label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Target Visit Date</label>
+<input class="w-full h-10 px-3 bg-surface-container text-on-surface focus:outline-none focus:ring-1 focus:ring-primary font-code-tabular" required="" type="date" value="2026-11-19">
+</div>
+<div class="space-y-1">
+<label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Field Time Slot</label>
+<select class="w-full h-10 px-3 bg-surface-container text-on-surface focus:outline-none focus:ring-1 focus:ring-primary">
+<option>09:00 AM - Morning Slot</option>
+<option>02:00 PM - Afternoon Slot</option>
+<option>05:00 PM - Evening Slot</option>
+</select>
+</div>
+</div>
+<div class="space-y-1"><label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Site Requirements &amp; Tools <span class="text-outline lowercase font-normal">(Optional)</span></label><input class="w-full h-10 px-3 bg-surface-container text-on-surface placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary" placeholder="e.g. Laser measure, ladder access, site survey checklist (Optional)" type="text" value=""></div>
+<div class="space-y-1">
+<label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Measurement &amp; Survey Notes</label>
+<textarea class="w-full p-2.5 bg-surface-container text-on-surface placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary text-body-sm" placeholder="Record specific dimensions, facade condition notes, or contact info..." rows="2"></textarea>
+</div>
+<div class="flex items-center justify-end gap-2 pt-3 border-t border-surface-container-high">
+<button class="px-4 py-2 bg-surface-container text-on-surface hover:bg-surface-container-high font-headline-sm text-label-sm uppercase" onclick="closeModal('site-visit-modal')" type="button">
+            Cancel
+          </button>
+<button class="px-4 py-2 bg-primary-container text-on-primary-container hover:bg-secondary-container transition-colors font-headline-sm text-label-sm uppercase font-semibold" type="submit">
+            Save Site Visit
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- MODAL B: RECORD QUALITY CHECK -->
+<div class="fixed inset-0 bg-surface-container-lowest/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" id="qc-modal">
+<div class="bg-surface-container-low max-w-lg w-full p-space-lg space-y-4 shadow-xl">
+<div class="flex items-center justify-between pb-2 border-b border-surface-container-high">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">verified</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-wider font-semibold">
+            Record Quality Check
+          </h3>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface" onclick="closeModal('qc-modal')">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="p-2.5 bg-surface-container text-on-surface-variant font-code-tabular text-[11px] leading-relaxed">
+        PROTOTYPE SIMULATION: Local demo preview only. Records quality check result in UI preview; no backend database alterations are performed.
+      </div>
+<form class="space-y-3 font-body-md text-body-sm" onsubmit="handleQCSubmit(event)"><div class="space-y-1"><label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Project Under Inspection</label><select class="w-full h-10 px-3 bg-surface-container text-on-surface focus:outline-none focus:ring-1 focus:ring-primary font-code-tabular" required=""><option value="PRJ-2026-098">PRJ-2026-098 | Softlogic GLOMARK Channel Letters</option><option value="PRJ-2026-089">PRJ-2026-089 | Dialog Axiata Acrylic Pylon Sign</option><option value="PRJ-2026-081">PRJ-2026-081 | Odel Store Alexandra Pl Canopy</option></select></div><div class="space-y-2 pt-1"><span class="font-label-sm text-label-sm uppercase text-on-surface-variant block">Inspection Checklist Items (Select applicable)</span><label class="flex items-center gap-2.5 p-2 bg-surface-container cursor-pointer hover:bg-surface-container-high transition-colors"><input class="w-4 h-4 text-primary bg-surface-container-highest border-outline-variant focus:ring-primary" type="checkbox"><span class="text-on-surface text-body-sm">Signboard dimensions and layout verified against approved design</span></label><label class="flex items-center gap-2.5 p-2 bg-surface-container cursor-pointer hover:bg-surface-container-high transition-colors"><input class="w-4 h-4 text-primary bg-surface-container-highest border-outline-variant focus:ring-primary" type="checkbox"><span class="text-on-surface text-body-sm">Illumination and electrical wiring operational check</span></label><label class="flex items-center gap-2.5 p-2 bg-surface-container cursor-pointer hover:bg-surface-container-high transition-colors"><input class="w-4 h-4 text-primary bg-surface-container-highest border-outline-variant focus:ring-primary" type="checkbox"><span class="text-on-surface text-body-sm">Surface finish, paint coats, and weather seal integrity</span></label></div><div class="space-y-1"><label class="font-label-sm text-label-sm uppercase text-on-surface-variant flex items-center justify-between"><span>Inspection Result <span class="text-error">*</span></span><span id="qc-validation-warning" class="hidden text-error font-body-sm text-[11px] font-medium">Please select PASS or FAIL</span></label><div class="grid grid-cols-2 gap-2"><label class="flex items-center gap-2 p-2 bg-surface-container border border-outline-variant/40 cursor-pointer hover:border-primary"><input class="text-primary bg-surface-container-highest focus:ring-primary" name="qc_result" type="radio" value="PASS" onchange="document.getElementById('qc-validation-warning').classList.add('hidden')"><span class="text-on-surface font-semibold text-body-sm">PASS</span></label><label class="flex items-center gap-2 p-2 bg-surface-container border border-outline-variant/40 cursor-pointer hover:border-error"><input class="text-error bg-surface-container-highest focus:ring-error" name="qc_result" type="radio" value="FAIL" onchange="document.getElementById('qc-validation-warning').classList.add('hidden')"><span class="text-on-surface font-semibold text-body-sm">FAIL</span></label></div></div><div class="space-y-1"><label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Inspection Findings &amp; Notes</label><textarea class="w-full p-2.5 bg-surface-container text-on-surface placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary text-body-sm" placeholder="Enter findings, defect remarks, or clearance observations..." rows="3"></textarea></div><div class="flex items-center justify-end gap-2 pt-3 border-t border-surface-container-high"><button class="px-4 py-2 bg-surface-container text-on-surface hover:bg-surface-container-high font-headline-sm text-label-sm uppercase" onclick="closeModal('qc-modal')" type="button">Cancel</button><button class="px-4 py-2 bg-primary-container text-on-primary-container hover:bg-secondary-container transition-colors font-headline-sm text-label-sm uppercase font-semibold" type="submit">Record Quality Check</button></div></form>
+</div>
+</div>
+<!-- MODAL C: UPLOAD DESIGN REVISION -->
+<div class="fixed inset-0 bg-surface-container-lowest/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" id="design-rev-modal">
+<div class="bg-surface-container-low max-w-lg w-full p-space-lg space-y-4 shadow-xl">
+<div class="flex items-center justify-between pb-2 border-b border-surface-container-high">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[22px]">upload_file</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-wider font-semibold">
+            Upload Design Revision
+          </h3>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface" onclick="closeModal('design-rev-modal')">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="p-2.5 bg-surface-container text-on-surface-variant font-code-tabular text-[11px] leading-relaxed">
+        PROTOTYPE SIMULATION: Local demo preview only. No backend database alterations are performed.
+      </div>
+<form class="space-y-3 font-body-md text-body-sm" onsubmit="handleDemoSubmit(event, 'Design Revision Submitted (Demo Preview).')"><div class="space-y-1"><label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Project Reference</label><select class="w-full h-10 px-3 bg-surface-container text-on-surface focus:outline-none focus:ring-1 focus:ring-primary font-code-tabular" required=""><option value="PRJ-2026-095">PRJ-2026-095 | HNB Towers External Backlit Sign</option><option value="PRJ-2026-089">PRJ-2026-089 | Dialog Axiata Acrylic Pylon</option><option value="PRJ-2026-102">PRJ-2026-102 | Cargills Food City Colombo 05</option></select></div><div class="space-y-1"><label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Design File (.PDF, .AI, Images)</label><label for="design-file-input" class="block p-4 bg-surface-container border border-dashed border-outline-variant text-center space-y-1 cursor-pointer hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[28px] text-primary">cloud_upload</span><span class="font-headline-sm text-body-sm text-on-surface block font-medium">Choose design file or click to browse</span><span class="font-code-tabular text-[11px] text-outline block">Supported formats: PDF, PNG, JPG, JPEG, AI</span><div id="design-filename-display" class="hidden mt-2 p-2 bg-surface-container-high border border-primary/40 font-code-tabular text-label-sm text-primary flex items-center justify-center gap-1.5"><span class="material-symbols-outlined text-[16px]">attach_file</span><span id="selected-file-label">No file chosen</span></div></label><input type="file" id="design-file-input" accept=".pdf,.png,.jpg,.jpeg,.ai" class="hidden" onchange="handleDesignFileChange(event)"></div><div class="space-y-1"><label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Design Review Notes</label><textarea class="w-full p-2.5 bg-surface-container text-on-surface placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary text-body-sm" placeholder="Provide design review notes, revision comments, or client change requests..." rows="3"></textarea></div><div class="flex items-center justify-end gap-2 pt-3 border-t border-surface-container-high"><button class="px-4 py-2 bg-surface-container text-on-surface hover:bg-surface-container-high font-headline-sm text-label-sm uppercase" onclick="closeModal('design-rev-modal')" type="button">Cancel</button><button class="px-4 py-2 bg-primary-container text-on-primary-container hover:bg-secondary-container transition-colors font-headline-sm text-label-sm uppercase font-semibold" type="submit">Submit Design Revision</button></div></form>
+</div>
+</div>
+<!-- TOAST NOTIFICATION CONTAINER -->
+<div class="fixed bottom-6 right-6 bg-surface-container-highest text-on-surface px-4 py-3 shadow-2xl z-50 transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-3 border-l-4 border-primary" id="demo-toast">
+<span class="material-symbols-outlined text-primary text-[20px]">info</span>
+<span class="font-body-md text-body-sm font-medium" id="demo-toast-msg">Notification message</span>
+</div><script>function handleDesignFileChange(e){const f=e.target.files[0];const disp=document.getElementById('design-filename-display');const lbl=document.getElementById('selected-file-label');if(f&&disp&&lbl){const sz=(f.size/1024).toFixed(1)+' KB';lbl.textContent=f.name+' ('+sz+')';disp.classList.remove('hidden');}}function handleQCSubmit(e){e.preventDefault();const form=e.target;const sel=form.querySelector('input[name="qc_result"]:checked');const warn=document.getElementById('qc-validation-warning');if(!sel){if(warn)warn.classList.remove('hidden');return false;}closeModal('qc-modal');showToast('Quality Check Recorded successfully as ['+sel.value+'] (Demo Preview).');}</script>
+<!-- SCRIPT FOR CLIENT INTERACTIVITY -->
+<script>
+    function openModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('hidden');
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('demo-toast');
+      const msgEl = document.getElementById('demo-toast-msg');
+      if (toast && msgEl) {
+        msgEl.textContent = message;
+        toast.classList.remove('translate-y-24', 'opacity-0');
+        setTimeout(() => {
+          toast.classList.add('translate-y-24', 'opacity-0');
+        }, 3500);
+      }
+    }
+
+    function triggerDemoAction(actionName) {
+      showToast('Action: [' + actionName + '] triggered in PM console demo environment.');
+    }
+
+    function handleDemoSubmit(e, message) {
+      e.preventDefault();
+      const modal = e.target.closest('.fixed');
+      if (modal) modal.classList.add('hidden');
+      showToast(message);
+    }
+
+    function applyFilters() {
+      const stageVal = document.getElementById('stageFilter') ? document.getElementById('stageFilter').value : 'ALL';
+      const searchVal = document.getElementById('projectSearch') ? document.getElementById('projectSearch').value.toLowerCase().trim() : '';
+      const rows = document.querySelectorAll('.project-row');
+
+      rows.forEach(row => {
+        const rowStage = row.dataset.stage || '';
+        const rowSearch = row.dataset.search || '';
+
+        const stageMatches = (stageVal === 'ALL' || rowStage === stageVal);
+        const searchMatches = (!searchVal || rowSearch.includes(searchVal));
+
+        if (stageMatches && searchMatches) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+
+    // Close on Escape
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        document.querySelectorAll('.fixed:not(.hidden)').forEach(modal => {
+          if (modal.id !== 'demo-toast') modal.classList.add('hidden');
+        });
+      }
+    });
+  </script>
+</div></main></div>
+
+</body></html>

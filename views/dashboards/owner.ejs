@@ -1,0 +1,851 @@
+<!DOCTYPE html><html class="dark" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Space+Grotesk:wght@100..900&amp;display=swap" rel="stylesheet"><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-error": "#690005", "background": "#0b1326", "surface-variant": "#2d3449", "on-tertiary-container": "#c6d5f5", "on-error-container": "#ffdad6", "surface": "#0b1326", "surface-container-high": "#222a3d", "inverse-surface": "#dae2fd", "on-tertiary-fixed": "#0c1b33", "on-tertiary": "#223149", "on-tertiary-fixed-variant": "#394761", "on-background": "#dae2fd", "primary-container": "#1d4ed8", "on-secondary-container": "#e6ecff", "on-primary-container": "#cad3ff", "on-primary-fixed-variant": "#0039b5", "error": "#ffb4ab", "primary": "#b7c4ff", "surface-container-highest": "#2d3449", "on-primary": "#002682", "tertiary-container": "#4e5c77", "inverse-on-surface": "#283044", "surface-tint": "#b7c4ff", "surface-dim": "#0b1326", "surface-container": "#171f33", "secondary-fixed": "#d8e2ff", "surface-container-lowest": "#060e20", "surface-container-low": "#131b2e", "tertiary-fixed-dim": "#b8c7e6", "outline": "#8e90a0", "secondary": "#adc6ff", "on-surface": "#dae2fd", "on-secondary-fixed": "#001a42", "tertiary": "#b8c7e6", "outline-variant": "#434655", "error-container": "#93000a", "tertiary-fixed": "#d7e3ff", "on-secondary": "#002e6a", "on-primary-fixed": "#001551", "secondary-fixed-dim": "#adc6ff", "secondary-container": "#0566d9", "primary-fixed": "#dce1ff", "on-surface-variant": "#c4c5d7", "on-secondary-fixed-variant": "#004395", "surface-bright": "#31394d", "inverse-primary": "#2151da", "primary-fixed-dim": "#b7c4ff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "margin-desktop": "2rem", "space-xs": "0.25rem", "gutter": "1rem", "margin": "1rem", "space-xl": "2.5rem", "space-sm": "0.5rem", "space-md": "1rem", "space-lg": "1.5rem", "gutter-desktop": "1.5rem" }, "fontFamily": { "headline-lg": ["Space Grotesk"], "label-lg": ["Geist"], "headline-lg-mobile": ["Space Grotesk"], "body-lg": ["Geist"], "label-md": ["Geist"], "label-sm": ["Geist"], "headline-sm": ["Space Grotesk"], "code-tabular": ["Geist"], "headline-md": ["Space Grotesk"], "body-sm": ["Geist"], "body-md": ["Geist"], "headline-xl-mobile": ["Space Grotesk"], "headline-xl": ["Space Grotesk"] }, "fontSize": { "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "600" }], "headline-sm": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }], "code-tabular": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" }], "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }], "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-xl-mobile": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700" }] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest border-r border-outline-variant/30 z-50 flex flex-col justify-between select-none"><div class="flex flex-col flex-1 min-h-0"><div class="h-16 px-space-md border-b border-outline-variant/30 flex items-center gap-space-sm bg-surface-container-lowest"><div class="w-9 h-9 bg-primary-container flex items-center justify-center text-on-primary-container font-headline-sm text-headline-sm border border-primary/40 shrink-0"><span class="material-symbols-outlined text-[20px]">view_in_ar</span></div><div class="flex flex-col justify-center min-w-0"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight truncate">SIGN BOARD</span><span class="font-label-sm text-label-sm text-primary uppercase">LKA</span></div><span class="font-label-sm text-label-sm text-on-surface-variant truncate uppercase tracking-wider">Owner Console</span></div></div><div class="flex-1 overflow-y-auto px-space-sm py-space-sm space-y-space-xs"><nav class="space-y-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-semibold border-l-2 border-primary"><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2 transition-colors bg-primary-container text-on-primary-container font-semibold border-l-2 border-primary" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[18px]">dashboard</span><span class="font-body-md text-body-md">Dashboard</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="users-and-access" href="#"><span class="material-symbols-outlined text-[18px]">manage_accounts</span><span class="font-body-md text-body-md">Users &amp; Access</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="customers" href="#"><span class="material-symbols-outlined text-[18px]">groups</span><span class="font-body-md text-body-md">Customers</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="projects" href="#"><span class="material-symbols-outlined text-[18px]">precision_manufacturing</span><span class="font-body-md text-body-md">Projects</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="site-visits" href="#"><span class="material-symbols-outlined text-[18px]">location_searching</span><span class="font-body-md text-body-md">Site Visits</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="designs" href="#"><span class="material-symbols-outlined text-[18px]">architecture</span><span class="font-body-md text-body-md">Designs</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="budgets" href="#"><span class="material-symbols-outlined text-[18px]">calculate</span><span class="font-body-md text-body-md">Budgets</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="quotations" href="#"><span class="material-symbols-outlined text-[18px]">request_quote</span><span class="font-body-md text-body-md">Quotations</span></a><div class="pt-space-xs"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-outline">Finance &amp; Ledger</div><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="invoices" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span><span class="font-body-md text-body-md">Invoices</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="payments" href="#"><span class="material-symbols-outlined text-[18px]">payments</span><span class="font-body-md text-body-md">Payments</span></a></div><div class="pt-space-xs"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-outline">Operations</div><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="quality-and-installation" href="#"><span class="material-symbols-outlined text-[18px]">verified</span><span class="font-body-md text-body-md">Quality &amp; Installation</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="documents-and-feedback" href="#"><span class="material-symbols-outlined text-[18px]">folder_shared</span><span class="font-body-md text-body-md">Documents &amp; Feedback</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="reports-and-history" href="#"><span class="material-symbols-outlined text-[18px]">query_stats</span><span class="font-body-md text-body-md">Reports &amp; History</span></a></div></nav></div></div><div class="p-space-sm border-t border-outline-variant/30 bg-surface-container-lowest space-y-space-sm"><div class="flex items-center justify-between px-space-sm py-1.5 bg-surface-container-low border border-outline-variant/40"><div class="flex items-center gap-2"><span class="w-2 h-2 bg-amber-400"></span><span class="font-code-tabular text-code-tabular text-on-surface">Demo Environment</span></div><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Demo</span></div><form action="/logout" method="POST" class="m-0 p-0 block w-full">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <button type="submit" class="flex items-center justify-between w-full px-space-sm py-2 text-on-surface-variant hover:text-error hover:bg-surface-container-high transition-colors border-0 bg-transparent cursor-pointer text-left font-inherit">
+    <div class="flex items-center gap-space-sm">
+      <span class="material-symbols-outlined text-[18px]">logout</span>
+      <span class="font-label-lg text-label-lg">Sign Out</span>
+    </div>
+    <span class="font-label-sm text-label-sm text-outline">END-SES</span>
+  </button>
+</form></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-md border-b border-outline-variant/30 z-40 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-md flex-1 max-w-xl"><div class="relative w-full max-w-md"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span><input class="w-full h-9 pl-9 pr-4 bg-surface-container-lowest border border-outline-variant/50 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary" placeholder="Search projects, customers, quotations..." type="text"></div></div><div class="flex items-center gap-space-md"><div class="relative"><button class="w-9 h-9 flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors border border-outline-variant/40"><span class="material-symbols-outlined text-[20px]">notifications</span></button><span class="absolute -top-1 -right-1 w-4 h-4 bg-primary-container text-on-primary-container font-label-sm text-label-sm flex items-center justify-center font-bold">2</span></div><div class="h-6 w-px bg-outline-variant/40"></div><div class="px-2.5 py-1 bg-surface-container-high border border-outline-variant/60"><span class="font-label-sm text-label-sm text-primary tracking-widest uppercase">ROLE: <%= user.role %></span></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden xl:flex flex-col text-left"><span class="font-label-lg text-label-lg text-on-surface font-semibold leading-tight"><%= user.fullName %></span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">System Owner (Demo ERP Dataset)</span></div></div></div></header><main class="w-full pt-16 bg-surface min-h-screen px-space-lg py-space-lg"><div class="flex flex-col w-full space-y-space-lg">
+<!-- TOP EXECUTIVE BANNER & SYSTEM NOTICE -->
+<section class="w-full bg-surface-container-lowest p-space-lg relative overflow-hidden shadow-xl">
+<div class="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-primary/5 blur-3xl pointer-events-none"></div>
+<div class="absolute left-1/3 -bottom-20 w-64 h-64 rounded-full bg-secondary-container/10 blur-2xl pointer-events-none"></div>
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-lg relative z-10">
+<div class="space-y-space-xs max-w-3xl">
+<div class="flex flex-wrap items-center gap-space-sm">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-surface-container-high text-on-surface-variant font-code-tabular text-label-sm uppercase tracking-wider">
+<span class="w-2 h-2 rounded-full bg-amber-400"></span>
+            SYS: OWNER DASHBOARD PREVIEW
+          </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 bg-surface-container-highest text-primary font-code-tabular text-label-sm uppercase tracking-wider">
+            [SAMPLE / DEMO ERP DATASET - Real user data will load from database]
+          </span>
+<span class="font-code-tabular text-label-sm text-outline">SRI LANKA STD TIME UTC+05:30</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+          Welcome back, Owner
+        </h1>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          Executive portfolio overview indicates <span class="text-on-surface font-semibold">38 active client projects (Demo)</span> across Western, Central, and Southern provinces.
+          <span class="text-primary font-medium">Pending Owner items</span> require direct owner authorization.
+        </p>
+</div>
+<!-- Quick Executive Actions with Mandatory Audit Requirement -->
+<div class="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-space-sm shrink-0">
+<button class="inline-flex items-center gap-2 px-3.5 py-2.5 bg-surface-container-high hover:bg-surface-variant text-primary transition-colors font-label-md text-label-md shadow-sm" id="btn-stage-override" title="Reason required (Logged in audit trail)">
+<span class="material-symbols-outlined text-[18px]">rule_settings</span>
+<span>Manual Stage Override</span>
+<span class="text-[10px] px-1.5 py-0.5 bg-surface-container text-on-surface-variant font-code-tabular">Reason Required</span>
+</button>
+<button class="inline-flex items-center gap-2 px-3.5 py-2.5 bg-surface-container hover:bg-surface-container-high text-error transition-colors font-label-md text-label-md shadow-sm" id="btn-project-cancellation" title="Reason required (Logged in audit trail)">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+<span>Project Cancellation</span>
+<span class="text-[10px] px-1.5 py-0.5 bg-surface-container-high text-error font-code-tabular">Reason Required</span>
+</button>
+<button class="inline-flex items-center gap-2 px-4 py-2.5 bg-primary-container hover:bg-inverse-primary text-on-primary font-label-lg text-label-lg transition-all shadow-md active:translate-y-0.5" id="btn-new-project">
+<span class="material-symbols-outlined text-[18px]">add_box</span>
+<span>+ New Project</span>
+</button>
+</div>
+</div>
+</section>
+<!-- EXECUTIVE KPI SUMMARY CARDS (6 METRIC TILES) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-space-md">
+<!-- Tile 1: Total Projects -->
+<div class="bg-surface-container-lowest p-space-md flex flex-col justify-between shadow-md relative group hover:bg-surface-container-low transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Total Projects (Demo)</span>
+<span class="material-symbols-outlined text-outline text-[18px]">folder_copy</span>
+</div>
+<div class="my-space-sm">
+<div class="font-headline-xl text-headline-xl text-on-surface tracking-tighter">124</div>
+<div class="flex items-center gap-1.5 font-label-md text-label-md text-emerald-400">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span>+8 this month (Sample)</span>
+</div>
+</div>
+<div class="pt-space-xs bg-surface-container-lowest/80 font-code-tabular text-body-sm text-outline truncate">
+        [Demo Figures: 124 Total]
+      </div>
+</div>
+<!-- Tile 2: Active Projects -->
+<div class="bg-surface-container-lowest p-space-md flex flex-col justify-between shadow-md relative group hover:bg-surface-container-low transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Active Projects (Demo)</span>
+<span class="material-symbols-outlined text-primary text-[18px]">precision_manufacturing</span>
+</div>
+<div class="my-space-sm">
+<div class="font-headline-xl text-headline-xl text-primary tracking-tighter">38</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">
+          Active workflow pipeline
+        </div>
+</div>
+<div class="pt-space-xs font-code-tabular text-body-sm text-outline truncate">
+        Stages 1 through 7 (Sample)
+      </div>
+</div>
+<!-- Tile 3: Completed Projects -->
+<div class="bg-surface-container-lowest p-space-md flex flex-col justify-between shadow-md relative group hover:bg-surface-container-low transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Completed Projects (Demo)</span>
+<span class="material-symbols-outlined text-emerald-400 text-[18px]">verified</span>
+</div>
+<div class="my-space-sm">
+<div class="font-headline-xl text-headline-xl text-on-surface tracking-tighter">76</div>
+<div class="font-body-sm text-body-sm text-emerald-400 truncate">
+          Installation Completed &amp; Fully Paid
+        </div>
+</div>
+<div class="pt-space-xs font-code-tabular text-body-sm text-outline truncate">
+        LKR 148.2M Cleared Ledger (Demo)
+      </div>
+</div>
+<!-- Tile 4: Cancelled Projects -->
+<div class="bg-surface-container-lowest p-space-md flex flex-col justify-between shadow-md relative group hover:bg-surface-container-low transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Cancelled Projects (Demo)</span>
+<span class="material-symbols-outlined text-outline text-[18px]">cancel</span>
+</div>
+<div class="my-space-sm">
+<div class="font-headline-xl text-headline-xl text-on-surface-variant tracking-tighter">10</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">
+          Owner reason recorded in history
+        </div>
+</div>
+<div class="pt-space-xs font-code-tabular text-body-sm text-outline truncate">
+        Audit logged cancellation (Demo)
+      </div>
+</div>
+<!-- Tile 5: Total Customers -->
+<div class="bg-surface-container-lowest p-space-md flex flex-col justify-between shadow-md relative group hover:bg-surface-container-low transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Total Customers (Demo)</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">domain</span>
+</div>
+<div class="my-space-sm">
+<div class="font-headline-xl text-headline-xl text-on-surface tracking-tighter">89</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">Registered Customers (Sample)</div>
+</div>
+<div class="pt-space-xs font-code-tabular text-body-sm text-outline truncate">Customer records in demo dataset</div>
+</div>
+<!-- Tile 6: Pending Approvals (High Priority) -->
+<div class="bg-surface-container-low p-space-md flex flex-col justify-between shadow-lg relative overflow-hidden group">
+<div class="absolute inset-0 bg-primary/10 pointer-events-none"></div>
+<div class="flex items-center justify-between relative z-10">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">Pending Approvals</span>
+<span class="px-1.5 py-0.5 bg-primary-container text-on-primary-container font-label-sm text-label-sm">DEMO</span>
+</div>
+<div class="my-space-sm relative z-10">
+<div class="font-headline-xl text-headline-xl text-primary font-bold tracking-tighter">4</div>
+<div class="font-body-sm text-body-sm text-primary truncate">
+          Require Owner Authorization
+        </div>
+</div>
+<div class="pt-space-xs font-code-tabular text-body-sm text-primary/80 truncate relative z-10">4 Budget Reviews (Demo)</div>
+</div>
+</section>
+<!-- PROJECT WORKFLOW STAGE PIPELINE (8 STRICT SIGN BOARD LANKA STAGES) -->
+<section class="bg-surface-container-lowest p-space-lg shadow-md space-y-space-md">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="space-y-0.5">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 bg-primary"></span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface tracking-tight uppercase">
+            Sign Board Lanka Execution Flow Pipeline
+          </h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Distribution of 38 sample client projects across the 8 mandatory business gates (Demo Data).
+        </p>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="px-2.5 py-1 bg-surface-container-high text-on-surface-variant font-code-tabular text-label-sm uppercase">
+          Standard Gate Model (8 Stages)
+        </span>
+</div>
+</div>
+<!-- 8-Stage Interactive Grid Blocks -->
+<div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-space-xs">
+<!-- Stage 1 -->
+<div class="bg-surface-container-low p-space-sm flex flex-col justify-between hover:bg-surface-container transition-all cursor-pointer group">
+<div class="flex items-center justify-between">
+<span class="font-code-tabular text-label-sm text-outline">STG 01</span>
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+</div>
+<div class="my-2">
+<div class="font-label-lg text-label-lg text-on-surface line-clamp-1 group-hover:text-primary">Project Registration</div>
+<div class="font-headline-md text-headline-md text-on-surface mt-1">4 <span class="font-body-sm text-body-sm text-outline font-normal">/ 11%</span></div>
+</div>
+<div class="w-full bg-surface-container-highest h-1 overflow-hidden">
+<div class="bg-outline h-full w-[11%]"></div>
+</div>
+</div>
+<!-- Stage 2 -->
+<div class="bg-surface-container-low p-space-sm flex flex-col justify-between hover:bg-surface-container transition-all cursor-pointer group">
+<div class="flex items-center justify-between">
+<span class="font-code-tabular text-label-sm text-outline">STG 02</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+<div class="my-2">
+<div class="font-label-lg text-label-lg text-on-surface line-clamp-1 group-hover:text-primary">Requirements Gathering</div>
+<div class="font-headline-md text-headline-md text-on-surface mt-1">3 <span class="font-body-sm text-body-sm text-outline font-normal">/ 8%</span></div>
+</div>
+<div class="w-full bg-surface-container-highest h-1 overflow-hidden">
+<div class="bg-secondary h-full w-[8%]"></div>
+</div>
+</div>
+<!-- Stage 3 -->
+<div class="bg-surface-container-low p-space-sm flex flex-col justify-between hover:bg-surface-container transition-all cursor-pointer group">
+<div class="flex items-center justify-between">
+<span class="font-code-tabular text-label-sm text-secondary">STG 03</span>
+<span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
+</div>
+<div class="my-2">
+<div class="font-label-lg text-label-lg text-on-surface line-clamp-1 group-hover:text-primary">Design</div>
+<div class="font-headline-md text-headline-md text-on-surface mt-1">6 <span class="font-body-sm text-body-sm text-outline font-normal">/ 16%</span></div>
+</div>
+<div class="w-full bg-surface-container-highest h-1 overflow-hidden">
+<div class="bg-secondary-fixed h-full w-[16%]"></div>
+</div>
+</div>
+<!-- Stage 4 -->
+<div class="bg-surface-container-low p-space-sm flex flex-col justify-between hover:bg-surface-container transition-all cursor-pointer group">
+<div class="flex items-center justify-between">
+<span class="font-code-tabular text-label-sm text-primary">STG 04</span>
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+</div>
+<div class="my-2">
+<div class="font-label-lg text-label-lg text-on-surface line-clamp-1 group-hover:text-primary">Budget &amp; Quotation</div>
+<div class="font-headline-md text-headline-md text-on-surface mt-1">5 <span class="font-body-sm text-body-sm text-outline font-normal">/ 13%</span></div>
+</div>
+<div class="w-full bg-surface-container-highest h-1 overflow-hidden">
+<div class="bg-primary h-full w-[13%]"></div>
+</div>
+</div>
+<!-- Stage 5 -->
+<div class="bg-surface-container-low p-space-sm flex flex-col justify-between hover:bg-surface-container transition-all cursor-pointer group">
+<div class="flex items-center justify-between">
+<span class="font-code-tabular text-label-sm text-on-primary-container">STG 05</span>
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+</div>
+<div class="my-2">
+<div class="font-label-lg text-label-lg text-on-surface line-clamp-1 group-hover:text-primary">Advance Payment (30%)</div>
+<div class="font-headline-md text-headline-md text-on-surface mt-1">4 <span class="font-body-sm text-body-sm text-outline font-normal">/ 11%</span></div>
+</div>
+<div class="w-full bg-surface-container-highest h-1 overflow-hidden">
+<div class="bg-primary-container h-full w-[11%]"></div>
+</div>
+</div>
+<!-- Stage 6: Quality Check -->
+<div class="bg-surface-container-high p-space-sm flex flex-col justify-between hover:bg-surface-variant transition-all cursor-pointer group shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-code-tabular text-label-sm text-primary font-bold">STG 06</span>
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+</div>
+<div class="my-2">
+<div class="font-label-lg text-label-lg text-on-surface font-semibold line-clamp-1 group-hover:text-primary">Quality Check</div>
+<div class="font-headline-md text-headline-md text-primary mt-1">7 <span class="font-body-sm text-body-sm text-on-surface-variant font-normal">/ 18%</span></div>
+</div>
+<div class="w-full bg-surface-container-highest h-1 overflow-hidden">
+<div class="bg-primary h-full w-[18%]"></div>
+</div>
+</div>
+<!-- Stage 7 -->
+<div class="bg-surface-container-low p-space-sm flex flex-col justify-between hover:bg-surface-container transition-all cursor-pointer group">
+<div class="flex items-center justify-between">
+<span class="font-code-tabular text-label-sm text-tertiary">STG 07</span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+</div>
+<div class="my-2">
+<div class="font-label-lg text-label-lg text-on-surface line-clamp-1 group-hover:text-primary">Installation</div>
+<div class="font-headline-md text-headline-md text-on-surface mt-1">5 <span class="font-body-sm text-body-sm text-outline font-normal">/ 13%</span></div>
+</div>
+<div class="w-full bg-surface-container-highest h-1 overflow-hidden">
+<div class="bg-tertiary h-full w-[13%]"></div>
+</div>
+</div>
+<!-- Stage 8 -->
+<div class="bg-surface-container-low p-space-sm flex flex-col justify-between hover:bg-surface-container transition-all cursor-pointer group">
+<div class="flex items-center justify-between">
+<span class="font-code-tabular text-label-sm text-emerald-400">STG 08</span>
+<span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+</div>
+<div class="my-2">
+<div class="font-label-lg text-label-lg text-on-surface line-clamp-1 group-hover:text-primary">Final Payment &amp; Completion</div>
+<div class="font-headline-md text-headline-md text-emerald-400 mt-1">4 <span class="font-body-sm text-body-sm text-outline font-normal">/ 10%</span></div>
+</div>
+<div class="w-full bg-surface-container-highest h-1 overflow-hidden">
+<div class="bg-emerald-400 h-full w-[10%]"></div>
+</div>
+</div>
+</div>
+<!-- MANDATORY COMPLETION RULE CALLOUT BANNER -->
+<div class="bg-surface-container-low border-l-4 border-primary p-space-sm flex items-start gap-space-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">verified_user</span>
+<div class="font-body-sm text-body-sm leading-normal">
+<strong class="text-on-surface uppercase tracking-wide">MANDATORY COMPLETION RULE:</strong>
+        A project can only become COMPLETED after at least one installation record is marked completed and the full invoice amount has been paid. Reaching Stage 8 alone does not automatically mean the project is completed.
+      </div>
+</div>
+</section>
+<!-- TWO-COLUMN SECTION: APPROVALS & RECENT ACTIVITY -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- COLUMN A: 65% Width Pending Owner Approvals -->
+<div class="lg:col-span-8 space-y-space-md">
+<div class="bg-surface-container-lowest p-space-lg shadow-md space-y-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-sm">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[22px]">gavel</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">
+                Pending Owner Approvals &amp; Action Items (Demo)
+              </h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Decisions requiring direct Owner authorization: Budget approvals and Project reactivation reviews. (Manual overrides are initiated directly by the Owner).
+            </p>
+</div>
+<span class="px-2.5 py-1 bg-surface-container-high text-primary font-code-tabular text-label-sm uppercase self-start">
+            Budgets &amp; Reactivation Reviews (Demo)
+          </span>
+</div>
+<!-- Audit Notice Callout -->
+<div class="bg-surface-container-low p-space-sm flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">
+<span class="material-symbols-outlined text-primary text-[18px]">history_edu</span>
+<span>AUDIT NOTICE: Every manual stage override, project cancellation, and project reactivation requires a mandatory reason and is recorded in the system audit history. (Demo Mode: Local Simulation Only)</span>
+</div>
+</div>
+<!-- Action Items List -->
+<div class="space-y-space-sm">
+<!-- Card 1: Budget Approval -->
+<div class="bg-surface-container p-space-md hover:bg-surface-container-high transition-all shadow-sm">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-space-md">
+<div class="space-y-1.5 flex-1 min-w-0">
+<div class="flex flex-wrap items-center gap-space-xs">
+<span class="font-code-tabular text-label-sm px-2 py-0.5 bg-surface-container-highest text-primary font-semibold">PRJ-2025-089 (Sample)</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 bg-primary-container text-on-primary-container uppercase">Owner Budget Approval</span>
+<span class="font-body-sm text-body-sm text-outline">PM: Project Manager 01</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">
+                  Dialog Axiata 3D Acrylic Pylon Sign (Kandy HQ)
+                </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  High-profile 24ft double-sided illuminated pylon. Internal structural steel framework, CNC-milled 10mm cast acrylic, Samsung LED modules with MeanWell IP67 drivers.
+                </p>
+<div class="pt-1 flex items-center gap-space-md font-code-tabular text-body-sm">
+<span class="text-on-surface">Est. Budget: <strong class="text-primary font-bold text-headline-sm">LKR 1,850,000</strong></span>
+<span class="text-outline">Client Quoted: LKR 2,420,000 (Margin 23.5% Demo)</span>
+</div>
+</div>
+<div class="flex sm:flex-row md:flex-col lg:flex-row gap-space-xs shrink-0 self-end md:self-start">
+<button class="px-3 py-2 bg-surface-container-lowest hover:bg-surface-variant text-on-surface font-label-md text-label-md transition-colors" onclick="handleOwnerAction('Budget Revision Request', 'PRJ-2025-089')">
+                  Request Revision
+                </button>
+<button class="px-4 py-2 bg-primary-container hover:bg-inverse-primary text-on-primary font-label-md text-label-md transition-colors shadow" onclick="handleOwnerAction('Owner Budget Approval', 'PRJ-2025-089')">
+                  Review &amp; Approve
+                </button>
+</div>
+</div>
+</div>
+<!-- Card 2: Project Reactivation Review (Owner-only action) -->
+<div class="bg-surface-container p-space-md hover:bg-surface-container-high transition-all shadow-sm">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-space-md">
+<div class="space-y-1.5 flex-1 min-w-0">
+<div class="flex flex-wrap items-center gap-space-xs">
+<span class="font-code-tabular text-label-sm px-2 py-0.5 bg-surface-container-highest text-error font-semibold">PRJ-2025-052 (Sample)</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 bg-error-container text-on-error-container uppercase">Owner-Only Reactivation Review</span>
+<span class="font-body-sm text-body-sm text-outline">Assigned: Project Manager 03</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">
+                  Commercial Bank Digital Signage (Galle)
+                </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">This project was previously cancelled. The Owner may review the project and decide whether to reactivate it. A mandatory reason must be recorded in the system history.</p>
+<div class="pt-1 flex items-center gap-space-md font-code-tabular text-body-sm">
+<span class="text-outline">Contract Value: LKR 1,120,000</span>
+<span class="text-outline">Mandatory reason logged in audit trail (Demo)</span>
+</div>
+</div>
+<div class="flex sm:flex-row md:flex-col lg:flex-row gap-space-xs shrink-0 self-end md:self-start">
+<button class="px-4 py-2 bg-surface-container-lowest hover:bg-surface-container-highest text-error font-label-md text-label-md transition-colors" onclick="handleOwnerAction('Project Reactivation (Owner Only)', 'PRJ-2025-052')">
+                  Owner Decision (Mandatory Reason Required)
+                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- COLUMN B: 35% Width Chronological Activity Stream -->
+<div class="lg:col-span-4 space-y-space-md">
+<div class="bg-surface-container-lowest p-space-lg shadow-md space-y-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[22px]">history_edu</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">
+              Sample Activity Feed
+            </h2>
+</div>
+<span class="px-1.5 py-0.5 bg-surface-container-high text-on-surface-variant font-code-tabular text-[10px] uppercase">DEMO DATA</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Sample activity feed of operational movements and payment reconciliations for demonstration purposes.
+        </p>
+<!-- Chronological Timeline -->
+<div class="space-y-space-md relative before:absolute before:left-3 before:top-2 before:bottom-2 before:w-px before:bg-surface-container-highest">
+<!-- Event 1 -->
+<div class="relative pl-7 group">
+<div class="absolute left-1.5 top-1.5 w-3 h-3 rounded-full bg-primary ring-4 ring-surface-container-lowest group-hover:scale-125 transition-transform"></div>
+<div class="space-y-0.5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">Stage Advanced (Sample)</span>
+<span class="font-code-tabular text-body-sm text-outline">10:45 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">
+<strong>PRJ-2025-081</strong> moved to <span class="text-primary font-medium">Installation (Stage 7)</span>
+</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                By Project Manager • Site: Colombo 03 Crescat Mall
+              </p>
+</div>
+</div>
+<!-- Event 2 -->
+<div class="relative pl-7 group">
+<div class="absolute left-1.5 top-1.5 w-3 h-3 rounded-full bg-emerald-400 ring-4 ring-surface-container-lowest group-hover:scale-125 transition-transform"></div>
+<div class="space-y-0.5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-emerald-400 uppercase font-bold tracking-wider">Payment Confirmed (Sample)</span>
+<span class="font-code-tabular text-body-sm text-outline">09:20 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">
+<strong>LKR 450,000</strong> advance (30%) verified for <span class="font-code-tabular">PRJ-2025-094</span>
+</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                By Accounts User • HNB Bank Transfer Ref: #TX-9011
+              </p>
+</div>
+</div>
+<!-- Event 3 -->
+<div class="relative pl-7 group">
+<div class="absolute left-1.5 top-1.5 w-3 h-3 rounded-full bg-secondary ring-4 ring-surface-container-lowest group-hover:scale-125 transition-transform"></div>
+<div class="space-y-0.5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary uppercase font-bold tracking-wider">Quotation Accepted (Sample)</span>
+<span class="font-code-tabular text-body-sm text-outline">Yesterday</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">
+                Singer Sri Lanka signed Quote <strong>#Q-2025-112</strong>
+</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                LKR 890,000 for 12 Branch LED pylons • Auto-notified PM
+              </p>
+</div>
+</div>
+<!-- Event 4 -->
+<div class="relative pl-7 group">
+<div class="absolute left-1.5 top-1.5 w-3 h-3 rounded-full bg-primary-container ring-4 ring-surface-container-lowest group-hover:scale-125 transition-transform"></div>
+<div class="space-y-0.5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-primary-container uppercase font-bold tracking-wider">Owner Budget Sign-off (Sample)</span>
+<span class="font-code-tabular text-body-sm text-outline">Yesterday</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">
+<strong>PRJ-2025-078</strong> budget approved
+              </p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Approved by Owner • LKR 2,150,000
+              </p>
+</div>
+</div>
+<!-- Event 5 -->
+<div class="relative pl-7 group">
+<div class="absolute left-1.5 top-1.5 w-3 h-3 rounded-full bg-outline ring-4 ring-surface-container-lowest group-hover:scale-125 transition-transform"></div>
+<div class="space-y-0.5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline uppercase font-bold tracking-wider">Project Intake (Sample)</span>
+<span class="font-code-tabular text-body-sm text-outline">2 days ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">
+<strong>PRJ-2025-102</strong> 'Cargills Food City Signage'
+              </p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Assigned to Project Manager • Site visit logged
+              </p>
+</div>
+</div>
+</div>
+<button class="w-full py-2.5 bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors text-center" onclick="alert('[DEMO PROTOTYPE] Sample audit log viewer preview. In production, this displays full chronological PostgreSQL audit events. No live data loaded.')">
+          View Complete Audit Trail (58 Events - Sample)
+        </button>
+</div>
+</div>
+</section>
+<!-- RECENT PROJECTS DATA TABLE -->
+<section class="bg-surface-container-lowest p-space-lg shadow-md space-y-space-md">
+<!-- Table Header & Controls -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="space-y-1">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[22px]">table_chart</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface tracking-tight">
+            Recent Projects Overview (Demo Data)
+          </h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Sample register of active client orders, milestone progression, and managerial assignment for preview.
+        </p>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm">
+<!-- Live Table Filter -->
+<div class="relative">
+<select class="h-9 pl-3 pr-8 bg-surface-container font-label-md text-label-md text-on-surface border-none focus:outline-none focus:bg-surface-container-high transition-colors cursor-pointer" id="stage-filter">
+<option value="ALL">All Stages (8 Stages)</option>
+<option value="REG">Stage 1: Project Registration</option>
+<option value="REQ">Stage 2: Requirements Gathering</option>
+<option value="DES">Stage 3: Design</option>
+<option value="BUD">Stage 4: Budget &amp; Quotation</option>
+<option value="ADV">Stage 5: Advance Payment (30%)</option>
+<option value="QC">Stage 6: Quality Check</option>
+<option value="INS">Stage 7: Installation</option>
+<option value="FIN">Stage 8: Final Payment &amp; Completion</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-outline text-[18px] pointer-events-none">expand_more</span>
+</div>
+<!-- Inline Table Search -->
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline text-[16px]">filter_list</span>
+<input class="h-9 pl-8 pr-3 bg-surface-container text-body-sm text-on-surface placeholder:text-outline border-none focus:outline-none focus:bg-surface-container-high transition-colors w-48 lg:w-60" placeholder="Filter projects or PM..." type="text">
+</div>
+</div>
+</div>
+<!-- Responsive Table Wrapper -->
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low font-label-sm text-label-sm uppercase tracking-wider text-outline">
+<th class="p-space-sm font-semibold">Project No.</th>
+<th class="p-space-sm font-semibold">Project Name</th>
+<th class="p-space-sm font-semibold">Customer</th>
+<th class="p-space-sm font-semibold">Assigned Project Manager</th>
+<th class="p-space-sm font-semibold">Current Stage</th>
+<th class="p-space-sm font-semibold">Status</th>
+<th class="p-space-sm font-semibold">Created Date</th>
+<th class="p-space-sm font-semibold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-highest/20 font-body-sm text-body-sm">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group">
+<td class="p-space-sm font-code-tabular text-primary font-semibold whitespace-nowrap">
+              PRJ-2025-098
+            </td>
+<td class="p-space-sm font-medium text-on-surface min-w-[240px]">
+              Softlogic GLOMARK Facade Cladding &amp; Channel Letters
+              <span class="block font-label-sm text-label-sm text-outline">Location: Mount Lavinia</span>
+</td>
+<td class="p-space-sm text-on-surface-variant whitespace-nowrap">
+              Softlogic Holdings PLC
+            </td>
+<td class="p-space-sm text-on-surface whitespace-nowrap">
+              Project Manager 01
+            </td>
+<td class="p-space-sm whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-surface-container-highest text-primary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 bg-primary"></span>
+                Stg 6: Quality Check
+              </span>
+</td>
+<td class="p-space-sm whitespace-nowrap">
+<span class="px-2 py-0.5 bg-emerald-950/40 text-emerald-400 font-label-sm text-label-sm">
+                Active
+              </span>
+</td>
+<td class="p-space-sm font-code-tabular text-outline whitespace-nowrap">
+              18 Oct 2025
+            </td>
+<td class="p-space-sm text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-1">
+<button class="px-2.5 py-1.5 bg-primary-container/20 hover:bg-primary-container text-primary hover:text-on-primary font-label-sm text-label-sm transition-colors">
+                  View Details
+                </button>
+<button class="p-1.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" onclick="handleOwnerAction('Owner Quick Actions', 'PRJ-2025-098')" title="Reason required (Logged in audit trail)">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group">
+<td class="p-space-sm font-code-tabular text-primary font-semibold whitespace-nowrap">
+              PRJ-2025-097
+            </td>
+<td class="p-space-sm font-medium text-on-surface min-w-[240px]">
+              John Keells Cinnamon Life Wayfinding &amp; Directional Blade Signs
+              <span class="block font-label-sm text-label-sm text-outline">Interior Brushed Brass Signs</span>
+</td>
+<td class="p-space-sm text-on-surface-variant whitespace-nowrap">
+              John Keells Holdings
+            </td>
+<td class="p-space-sm text-on-surface whitespace-nowrap">
+              Project Manager 02
+            </td>
+<td class="p-space-sm whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-surface-container-highest text-tertiary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 bg-tertiary"></span>
+                Stg 7: Installation
+              </span>
+</td>
+<td class="p-space-sm whitespace-nowrap">
+<span class="px-2 py-0.5 bg-emerald-950/40 text-emerald-400 font-label-sm text-label-sm">
+                Active
+              </span>
+</td>
+<td class="p-space-sm font-code-tabular text-outline whitespace-nowrap">
+              16 Oct 2025
+            </td>
+<td class="p-space-sm text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-1">
+<button class="px-2.5 py-1.5 bg-primary-container/20 hover:bg-primary-container text-primary hover:text-on-primary font-label-sm text-label-sm transition-colors">
+                  View Details
+                </button>
+<button class="p-1.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" onclick="handleOwnerAction('Owner Quick Actions', 'PRJ-2025-097')" title="Reason required (Logged in audit trail)">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group">
+<td class="p-space-sm font-code-tabular text-primary font-semibold whitespace-nowrap">
+              PRJ-2025-095
+            </td>
+<td class="p-space-sm font-medium text-on-surface min-w-[240px]">
+              HNB Towers External LED Backlit Sign &amp; Entrance Canopies
+              <span class="block font-label-sm text-label-sm text-outline">Location: Colombo 10</span>
+</td>
+<td class="p-space-sm text-on-surface-variant whitespace-nowrap">
+              Hatton National Bank
+            </td>
+<td class="p-space-sm text-on-surface whitespace-nowrap">
+              Project Manager 01
+            </td>
+<td class="p-space-sm whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-surface-container-highest text-secondary-fixed font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 bg-secondary-fixed"></span>
+                Stg 3: Design
+              </span>
+</td>
+<td class="p-space-sm whitespace-nowrap">
+<span class="px-2 py-0.5 bg-amber-950/40 text-amber-400 font-label-sm text-label-sm">
+                Pending Approval
+              </span>
+</td>
+<td class="p-space-sm font-code-tabular text-outline whitespace-nowrap">
+              15 Oct 2025
+            </td>
+<td class="p-space-sm text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-1">
+<button class="px-2.5 py-1.5 bg-primary-container/20 hover:bg-primary-container text-primary hover:text-on-primary font-label-sm text-label-sm transition-colors">
+                  View Details
+                </button>
+<button class="p-1.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" onclick="handleOwnerAction('Owner Quick Actions', 'PRJ-2025-095')" title="Reason required (Logged in audit trail)">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group">
+<td class="p-space-sm font-code-tabular text-primary font-semibold whitespace-nowrap">
+              PRJ-2025-089
+            </td>
+<td class="p-space-sm font-medium text-on-surface min-w-[240px]">
+              Dialog Axiata 3D Acrylic Pylon Sign (Kandy HQ)
+              <span class="block font-label-sm text-label-sm text-outline">24ft Double Sided Structural</span>
+</td>
+<td class="p-space-sm text-on-surface-variant whitespace-nowrap">
+              Dialog Axiata PLC
+            </td>
+<td class="p-space-sm text-on-surface whitespace-nowrap">
+              Project Manager 03
+            </td>
+<td class="p-space-sm whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-surface-container-highest text-primary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 bg-primary"></span>
+                Stg 4: Budget &amp; Quotation
+              </span>
+</td>
+<td class="p-space-sm whitespace-nowrap">
+<span class="px-2 py-0.5 bg-amber-950/40 text-amber-400 font-label-sm text-label-sm">
+                Pending Approval
+              </span>
+</td>
+<td class="p-space-sm font-code-tabular text-outline whitespace-nowrap">
+              12 Oct 2025
+            </td>
+<td class="p-space-sm text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-1">
+<button class="px-2.5 py-1.5 bg-primary-container/20 hover:bg-primary-container text-primary hover:text-on-primary font-label-sm text-label-sm transition-colors">
+                  View Details
+                </button>
+<button class="p-1.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" onclick="handleOwnerAction('Owner Quick Actions', 'PRJ-2025-089')" title="Reason required (Logged in audit trail)">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group">
+<td class="p-space-sm font-code-tabular text-primary font-semibold whitespace-nowrap">
+              PRJ-2025-081
+            </td>
+<td class="p-space-sm font-medium text-on-surface min-w-[240px]">
+              Odel Department Store Illuminated Letters &amp; Canopy
+              <span class="block font-label-sm text-label-sm text-outline">Location: Colombo 07 Alexandra Place</span>
+</td>
+<td class="p-space-sm text-on-surface-variant whitespace-nowrap">
+              Softlogic Retail
+            </td>
+<td class="p-space-sm text-on-surface whitespace-nowrap">
+              Project Manager 02
+            </td>
+<td class="p-space-sm whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-surface-container-highest text-tertiary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 bg-tertiary"></span>
+                Stg 7: Installation
+              </span>
+</td>
+<td class="p-space-sm whitespace-nowrap">
+<span class="px-2 py-0.5 bg-emerald-950/40 text-emerald-400 font-label-sm text-label-sm">
+                Active
+              </span>
+</td>
+<td class="p-space-sm font-code-tabular text-outline whitespace-nowrap">
+              08 Oct 2025
+            </td>
+<td class="p-space-sm text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-1">
+<button class="px-2.5 py-1.5 bg-primary-container/20 hover:bg-primary-container text-primary hover:text-on-primary font-label-sm text-label-sm transition-colors">
+                  View Details
+                </button>
+<button class="p-1.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" onclick="handleOwnerAction('Owner Quick Actions', 'PRJ-2025-081')" title="Reason required (Logged in audit trail)">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group">
+<td class="p-space-sm font-code-tabular text-primary font-semibold whitespace-nowrap">
+              PRJ-2025-071
+            </td>
+<td class="p-space-sm font-medium text-on-surface min-w-[240px]">
+              Commercial Bank Southern Regional Office Pylon
+              <span class="block font-label-sm text-label-sm text-outline">Matara Main Street Branch</span>
+</td>
+<td class="p-space-sm text-on-surface-variant whitespace-nowrap">
+              Commercial Bank of Ceylon
+            </td>
+<td class="p-space-sm text-on-surface whitespace-nowrap">
+              Project Manager 01
+            </td>
+<td class="p-space-sm whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-surface-container-highest text-emerald-400 font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 bg-emerald-400"></span>
+                Stg 8: Final Payment &amp; Completion
+              </span>
+</td>
+<td class="p-space-sm whitespace-nowrap">
+<span class="px-2 py-0.5 bg-emerald-950/40 text-emerald-400 font-label-sm text-label-sm">
+                Completed
+              </span>
+</td>
+<td class="p-space-sm font-code-tabular text-outline whitespace-nowrap">
+              28 Sep 2025
+            </td>
+<td class="p-space-sm text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-1">
+<button class="px-2.5 py-1.5 bg-primary-container/20 hover:bg-primary-container text-primary hover:text-on-primary font-label-sm text-label-sm transition-colors">
+                  View Details
+                </button>
+<button class="p-1.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" onclick="handleOwnerAction('Owner Quick Actions', 'PRJ-2025-071')" title="Reason required (Logged in audit trail)">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination & Count Footer -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pt-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<div class="font-code-tabular">
+        Showing <span class="text-on-surface font-semibold">6</span> of <span class="text-on-surface font-semibold">38</span> sample projects in demo portfolio
+      </div>
+<div class="flex items-center gap-1">
+<button class="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high text-on-surface disabled:opacity-30 disabled:cursor-not-allowed font-label-sm text-label-sm" disabled="">
+          Prev
+        </button>
+<button class="px-2.5 py-1 bg-primary-container text-on-primary font-label-sm text-label-sm font-semibold">
+          1
+        </button>
+<button class="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm">
+          2
+        </button>
+<button class="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm">
+          3
+        </button>
+<button class="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm">
+          ...
+        </button>
+<button class="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm">
+          7
+        </button>
+<button class="px-2.5 py-1 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm">
+          Next
+        </button>
+</div>
+</div>
+</section>
+</div>
+<script>
+  function handleOwnerAction(actionType, targetRef) {
+    const promptMessage = '[DEMO PROTOTYPE] OWNER ACTION: ' + actionType + (targetRef ? ' for ' + targetRef : '') +
+      '\n\nNotice: This is a front-end preview demonstration.' +
+      '\nIn production, a mandatory reason is recorded in the PostgreSQL audit log.' +
+      '\n\nPlease enter a mandatory business reason to test validation:';
+
+    const reason = prompt(promptMessage);
+
+    if (reason && reason.trim().length > 0) {
+      alert('[DEMO PROTOTYPE] Action logged locally for preview.\n\nAction: ' + actionType +
+            (targetRef ? '\nTarget: ' + targetRef : '') +
+            '\nReason Entered: "' + reason.trim() + '"' +
+            '\n\nNote: In production, this records a mandatory audit trail in PostgreSQL. No database was updated.');
+    } else if (reason !== null) {
+      alert('[DEMO PROTOTYPE] Validation Failed: A mandatory reason is strictly required before this owner action can proceed.');
+    }
+  }
+
+  document.getElementById('btn-stage-override')?.addEventListener('click', function() {
+    handleOwnerAction('Manual Stage Override', 'Selected Demo Project');
+  });
+
+  document.getElementById('btn-project-cancellation')?.addEventListener('click', function() {
+    handleOwnerAction('Project Cancellation', 'Selected Demo Project');
+  });
+
+  document.getElementById('btn-new-project')?.addEventListener('click', function() {
+    alert('[DEMO PROTOTYPE] Opening New Project Intake Specification Form (Stage 1: Project Registration). No live database record will be created.');
+  });
+
+  document.getElementById('stage-filter')?.addEventListener('change', function(e) {
+    console.log('[DEMO] Filtering sample table by stage: ' + e.target.value);
+  });
+</script></main></div>
+
+</body></html>

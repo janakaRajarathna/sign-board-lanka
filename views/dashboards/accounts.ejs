@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"outline-variant":"#434655","on-secondary-container":"#e6ecff","secondary":"#adc6ff","primary":"#b7c4ff","background":"#0b1326","inverse-primary":"#2151da","on-error-container":"#ffdad6","tertiary-fixed-dim":"#b8c7e6","on-secondary-fixed":"#001a42","on-tertiary":"#223149","on-secondary-fixed-variant":"#004395","on-background":"#dae2fd","surface-container":"#171f33","outline":"#8e90a0","on-surface":"#dae2fd","surface-tint":"#b7c4ff","secondary-fixed-dim":"#adc6ff","secondary-container":"#0566d9","on-primary-fixed-variant":"#0039b5","surface-container-lowest":"#060e20","on-tertiary-container":"#c6d5f5","surface-dim":"#0b1326","secondary-fixed":"#d8e2ff","on-tertiary-fixed-variant":"#394761","surface-bright":"#31394d","primary-fixed-dim":"#b7c4ff","surface-container-highest":"#2d3449","tertiary-fixed":"#d7e3ff","surface-variant":"#2d3449","on-error":"#690005","surface-container-high":"#222a3d","inverse-on-surface":"#283044","primary-fixed":"#dce1ff","tertiary":"#b8c7e6","on-secondary":"#002e6a","error-container":"#93000a","on-primary":"#002682","error":"#ffb4ab","surface":"#0b1326","on-primary-container":"#cad3ff","on-surface-variant":"#c4c5d7","inverse-surface":"#dae2fd","tertiary-container":"#4e5c77","primary-container":"#1d4ed8","surface-container-low":"#131b2e","on-primary-fixed":"#001551","on-tertiary-fixed":"#0c1b33"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter":"1rem","margin":"1rem","space-lg":"1.5rem","space-sm":"0.5rem","space-md":"1rem","margin-desktop":"2rem","gutter-desktop":"1.5rem","space-xl":"2.5rem","space-xs":"0.25rem"},"fontFamily":{"body-md":["Geist"],"code-tabular":["Geist"],"body-lg":["Geist"],"body-sm":["Geist"],"label-md":["Geist"],"headline-lg-mobile":["Space Grotesk"],"headline-xl-mobile":["Space Grotesk"],"headline-md":["Space Grotesk"],"headline-sm":["Space Grotesk"],"label-lg":["Geist"],"headline-xl":["Space Grotesk"],"headline-lg":["Space Grotesk"],"label-sm":["Geist"]},"fontSize":{"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}],"code-tabular":["13px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"500"}],"body-lg":["16px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.01em","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"500"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-xl-mobile":["30px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-md":["22px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-sm":["18px",{"lineHeight":"24px","letterSpacing":"0em","fontWeight":"600"}],"label-lg":["14px",{"lineHeight":"18px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-xl":["40px",{"lineHeight":"48px","letterSpacing":"-0.03em","fontWeight":"700"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.06em","fontWeight":"600"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Mobile Backdrop -->
+<div class="fixed inset-0 bg-surface-container-lowest/80 backdrop-blur-sm z-40 hidden transition-opacity lg:hidden" id="mobileDrawerBackdrop" onclick="toggleMobileMenu()"></div>
+<!-- ASIDE / NAVIGATION DRAWER -->
+<aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-low z-50 flex flex-col justify-between border-r border-outline-variant/30 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out" id="sidebarDrawer"><div class="flex flex-col flex-1 min-h-0"><div class="h-16 px-space-md border-b border-outline-variant/30 flex items-center justify-between bg-surface-container-lowest/60"><div class="flex items-center gap-space-sm min-w-0"><div class="w-8 h-8 rounded-none bg-primary-container flex items-center justify-center text-on-primary-container border border-primary/40 flex-shrink-0"><span class="material-symbols-outlined text-[20px]">precision_manufacturing</span></div><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface truncate">SIGN BOARD LANKA</span><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline truncate">ACCOUNTS CONSOLE</span></div></div><button aria-label="Close menu" class="p-space-xs text-outline hover:text-on-surface lg:hidden cursor-pointer" onclick="toggleMobileMenu()" type="button"><span class="material-symbols-outlined text-[20px]">close</span></button></div><nav class="flex-1 overflow-y-auto px-space-xs py-space-sm flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-label-lg font-bold border-l-2 border-primary"><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-none transition-colors bg-primary-container text-on-primary-container font-label-lg font-bold border-l-2 border-primary" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span>Dashboard</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="budget-management" href="#"><span class="material-symbols-outlined text-[20px]">account_balance_wallet</span><span>Budget Management</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="quotation-management" href="#"><span class="material-symbols-outlined text-[20px]">request_quote</span><span>Quotation Management</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="invoice-management" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span>Invoice Management</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="payment-management" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span>Payment Management</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-none text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="financial-reports" href="#"><span class="material-symbols-outlined text-[20px]">analytics</span><span>Financial Reports</span></a></nav></div><div class="p-space-xs border-t border-outline-variant/30 bg-surface-container-lowest/40"><form action="/logout" method="POST" class="m-0 p-0 block w-full">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <button type="submit" class="flex items-center gap-space-sm w-full px-space-sm py-space-sm rounded-none text-error hover:bg-error-container/20 hover:text-error transition-colors font-label-lg text-label-lg bg-transparent border-0 cursor-pointer text-left font-inherit">
+    <span class="material-symbols-outlined text-[20px]">logout</span>
+    <span>Logout</span>
+  </button>
+</form></div></aside>
+<!-- MAIN WRAPPER -->
+<div class="lg:pl-72 flex flex-col min-h-screen">
+<!-- HEADER -->
+<header class="fixed top-0 left-0 right-0 lg:left-72 h-16 bg-surface/90 backdrop-blur-md border-b border-outline-variant/30 z-30 flex items-center justify-between px-space-md"><div class="flex items-center gap-space-sm"><button aria-label="Open sidebar menu" class="p-space-xs text-outline hover:text-on-surface lg:hidden cursor-pointer flex items-center justify-center" onclick="toggleMobileMenu()" type="button"><span class="material-symbols-outlined text-[24px]">menu</span></button><div class="flex items-center gap-space-xs"><span class="font-label-lg text-label-lg text-outline hidden sm:inline">Sign Board Lanka</span><span class="text-outline-variant hidden sm:inline">/</span><span class="font-label-lg text-label-lg text-on-surface font-semibold">Accounts Console</span></div></div><div class="flex items-center gap-space-sm sm:gap-space-md"><div class="relative hidden md:flex items-center"><span class="material-symbols-outlined absolute left-space-sm text-[18px] text-outline pointer-events-none">search</span><input class="w-64 lg:w-72 h-9 pl-9 pr-space-sm bg-surface-container-lowest border border-outline-variant/40 rounded-none text-on-surface placeholder:text-outline text-body-sm font-body-sm focus:outline-none focus:border-primary" placeholder="Search ledgers, invoices, vouchers..." type="search"/></div><button aria-label="Notifications" class="relative p-space-xs rounded-none text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 bg-secondary-container rounded-none"></span></button><div class="h-6 w-px bg-outline-variant/40"></div><div class="flex items-center gap-space-sm"><div class="hidden sm:flex flex-col items-end"><span class="font-label-md text-label-md text-on-surface leading-tight"><%= user.fullName %></span><span class="font-label-sm text-label-sm text-outline leading-tight">Role: <%= user.role %> (Demo Ledger)</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header>
+<!-- MAIN CONTENT -->
+<main class="relative pt-16 bg-surface min-h-screen w-full px-space-md py-space-md"><div class="flex flex-col w-full gap-space-lg">
+<!-- PAGE HEADER -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md pb-space-xs">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm flex-wrap">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight uppercase">Accounts Overview</h1>
+<span class="px-space-xs py-0.5 bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+          Sample Prototype Data
+        </span>
+</div>
+<p class="font-body-md text-body-md text-outline">
+        Sample demo prototype — Sign Board Lanka ERP finance workflow in Sri Lankan Rupees (LKR)
+      </p>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-space-sm self-start md:self-auto flex-wrap">
+<button class="flex items-center gap-space-xs px-space-md py-space-sm bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-lg text-label-lg transition-colors cursor-pointer" onclick="openInvoiceNotification()" type="button">
+<span class="material-symbols-outlined text-[18px]">post_add</span>
+<span>+ New Invoice</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-space-sm bg-primary-container hover:bg-secondary-container text-on-primary font-label-lg text-label-lg transition-colors cursor-pointer shadow-md" onclick="openPaymentModal()" type="button">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span>+ Record Payment</span>
+</button>
+</div>
+</div>
+<!-- FOUR KPI CARDS (1 Col Mobile, 2 Col Tablet, 4 Col Desktop Grid) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- KPI 1 -->
+<div class="bg-surface-container-low p-space-md flex flex-col justify-between gap-space-md relative overflow-hidden shadow-sm">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Costing Stage</span>
+<span class="font-label-lg text-label-lg text-on-surface font-medium mt-1">Pending Budget Preparations</span>
+</div>
+<span class="px-space-xs py-0.5 bg-surface-container-highest text-secondary font-label-sm text-label-sm uppercase">
+          Costing Queue
+        </span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">2 Projects</span>
+<span class="font-body-sm text-body-sm text-outline">PRJ-2026-104 &amp; PRJ-2026-106 awaiting initial costing</span>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-surface-container-low p-space-md flex flex-col justify-between gap-space-md relative overflow-hidden shadow-sm">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Proposals</span>
+<span class="font-label-lg text-label-lg text-on-surface font-medium mt-1">Pending Quotations</span>
+</div>
+<span class="px-space-xs py-0.5 bg-surface-container-highest text-tertiary font-label-sm text-label-sm uppercase">
+          Client Review
+        </span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">3 Quotations</span>
+<span class="font-body-sm text-body-sm text-outline">2 in draft preparation, 1 dispatched to client</span>
+</div>
+</div>
+<!-- KPI 3: Outstanding Receivables (Strictly 1 issued invoice: INV-044) -->
+<div class="bg-surface-container-low p-space-md flex flex-col justify-between gap-space-md relative overflow-hidden shadow-sm">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Unsettled Receivables</span>
+<span class="font-label-lg text-label-lg text-on-surface font-medium mt-1">Outstanding Balance</span>
+</div>
+<span class="px-space-xs py-0.5 bg-surface-container-highest text-secondary font-label-sm text-label-sm uppercase">
+          1 Active Invoice
+        </span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-headline-lg text-headline-lg font-bold text-primary font-code-tabular">LKR 1,240,000</span>
+<span class="font-body-sm text-body-sm text-outline">INV-044 (Odel Department Store) awaiting completion settlement</span>
+</div>
+</div>
+<!-- KPI 4 -->
+<div class="bg-surface-container-low p-space-md flex flex-col justify-between gap-space-md relative overflow-hidden shadow-sm">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Ledger Realized</span>
+<span class="font-label-lg text-label-lg text-on-surface font-medium mt-1">Total Payments Received</span>
+</div>
+<span class="px-space-xs py-0.5 bg-surface-container-highest text-on-primary-container font-label-sm text-label-sm uppercase">
+          Recorded Payments
+        </span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface font-code-tabular">LKR 7,111,000</span>
+<span class="font-body-sm text-body-sm text-outline">Total recorded across 8 sample ledger entries (Demo data)</span>
+</div>
+</div>
+</div>
+<!-- MAIN CONTENT SPLIT (Left ~65%, Right ~35%) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md items-start">
+<!-- LEFT: Pending Financial Tasks (8 cols = ~66%) -->
+<div class="lg:col-span-8 flex flex-col bg-surface-container-low p-space-md gap-space-md shadow-sm">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[22px]">assignment_turned_in</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight">Pending Financial Tasks</h2>
+</div>
+<span class="px-space-sm py-0.5 bg-surface-container-highest text-on-surface font-label-sm text-label-sm uppercase tracking-wider">
+          Action Items (5)
+        </span>
+</div>
+<!-- Task List (5 Items) -->
+<div class="flex flex-col gap-space-sm">
+<!-- Task Item 1: PRJ-2026-104 -->
+<div class="p-space-md bg-surface-container flex flex-col md:flex-row md:items-center justify-between gap-space-md transition-colors hover:bg-surface-container-high">
+<div class="flex flex-col gap-space-xs max-w-xl">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="font-label-md text-label-md font-code-tabular text-secondary font-semibold">PRJ-2026-104</span>
+<span class="text-outline text-label-sm">/</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Keells Supermarket Pylon Signboard</span>
+<span class="px-space-xs py-0.5 bg-surface-container-highest text-outline font-label-sm text-label-sm uppercase">
+                Budget Draft
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Design approved. Prepare initial material &amp; fabrication budget for Owner review.
+            </p>
+</div>
+<button class="px-space-md py-space-xs bg-surface-container-highest hover:bg-primary-container hover:text-on-primary text-on-surface font-label-md text-label-md uppercase tracking-wider self-start md:self-auto transition-colors whitespace-nowrap cursor-pointer" onclick="handleQuickAction('Prepare Budget', 'PRJ-2026-104', 'Keells Supermarket Pylon Signboard')" type="button">
+            Prepare Budget
+          </button>
+</div>
+<!-- Task Item 2: PRJ-2026-106 -->
+<div class="p-space-md bg-surface-container flex flex-col md:flex-row md:items-center justify-between gap-space-md transition-colors hover:bg-surface-container-high">
+<div class="flex flex-col gap-space-xs max-w-xl">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="font-label-md text-label-md font-code-tabular text-secondary font-semibold">PRJ-2026-106</span>
+<span class="text-outline text-label-sm">/</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Arpico Supercentre Main Entrance Fascia</span>
+<span class="px-space-xs py-0.5 bg-surface-container-highest text-outline font-label-sm text-label-sm uppercase">
+                Budget Draft
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Site measurements verified. Prepare initial budget for Owner review.
+            </p>
+</div>
+<button class="px-space-md py-space-xs bg-surface-container-highest hover:bg-primary-container hover:text-on-primary text-on-surface font-label-md text-label-md uppercase tracking-wider self-start md:self-auto transition-colors whitespace-nowrap cursor-pointer" onclick="handleQuickAction('Prepare Budget', 'PRJ-2026-106', 'Arpico Supercentre Main Entrance Fascia')" type="button">
+            Prepare Budget
+          </button>
+</div>
+<!-- Task Item 3: PRJ-2026-095 -->
+<div class="p-space-md bg-surface-container flex flex-col md:flex-row md:items-center justify-between gap-space-md transition-colors hover:bg-surface-container-high">
+<div class="flex flex-col gap-space-xs max-w-xl">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="font-label-md text-label-md font-code-tabular text-secondary font-semibold">PRJ-2026-095</span>
+<span class="text-outline text-label-sm">/</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">HNB Towers Backlit Monolith</span>
+<span class="px-space-xs py-0.5 bg-surface-container-highest text-tertiary font-label-sm text-label-sm uppercase">
+                Quotation Sent
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Owner approved budget BDG-095. Quotation dispatched to client; awaiting client acceptance.
+            </p>
+</div>
+<button class="px-space-md py-space-xs bg-surface-container-highest hover:bg-primary-container hover:text-on-primary text-on-surface font-label-md text-label-md uppercase tracking-wider self-start md:self-auto transition-colors whitespace-nowrap cursor-pointer" onclick="handleQuickAction('View Quotation', 'PRJ-2026-095', 'HNB Towers Backlit Monolith')" type="button">
+            View Quotation
+          </button>
+</div>
+<!-- Task Item 4: PRJ-2026-089 -->
+<div class="p-space-md bg-surface-container flex flex-col md:flex-row md:items-center justify-between gap-space-md transition-colors hover:bg-surface-container-high">
+<div class="flex flex-col gap-space-xs max-w-xl">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="font-label-md text-label-md font-code-tabular text-secondary font-semibold">PRJ-2026-089</span>
+<span class="text-outline text-label-sm">/</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Dialog Axiata 3D Acrylic Rooftop Pylon</span>
+<span class="px-space-xs py-0.5 bg-surface-container-highest text-primary font-label-sm text-label-sm uppercase">
+                Invoice Ready
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Quotation accepted &amp; 30% advance received. Ready to issue single final invoice.
+            </p>
+</div>
+<button class="px-space-md py-space-xs bg-surface-container-highest hover:bg-primary-container hover:text-on-primary text-on-surface font-label-md text-label-md uppercase tracking-wider self-start md:self-auto transition-colors whitespace-nowrap cursor-pointer" onclick="handleQuickAction('Create Invoice', 'PRJ-2026-089', 'Dialog Axiata 3D Acrylic Rooftop Pylon')" type="button">
+            Create Invoice
+          </button>
+</div>
+<!-- Task Item 5: PRJ-2026-081 -->
+<div class="p-space-md bg-surface-container flex flex-col md:flex-row md:items-center justify-between gap-space-md transition-colors hover:bg-surface-container-high">
+<div class="flex flex-col gap-space-xs max-w-xl">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="font-label-md text-label-md font-code-tabular text-secondary font-semibold">PRJ-2026-081</span>
+<span class="text-outline text-label-sm">/</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Odel Department Store Facia</span>
+<span class="px-space-xs py-0.5 bg-surface-container-highest text-secondary font-label-sm text-label-sm uppercase">
+                Payment Pending
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Final invoice issued (INV-044). Outstanding balance LKR 1,240,000 pending completion settlement.
+            </p>
+</div>
+<button class="px-space-md py-space-xs bg-primary-container hover:bg-secondary-container text-on-primary font-label-md text-label-md uppercase tracking-wider self-start md:self-auto transition-colors whitespace-nowrap cursor-pointer" onclick="openPaymentModalWithProject('PRJ-2026-081')" type="button">
+            Record Payment
+          </button>
+</div>
+</div>
+</div>
+<!-- RIGHT: Recent Financial Activities (4 cols = ~34%) -->
+<div class="lg:col-span-4 flex flex-col bg-surface-container-low p-space-md gap-space-md shadow-sm">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[22px]">history</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight">Recent Activities</h2>
+</div>
+<span class="px-space-xs py-0.5 bg-surface-container-highest text-outline font-label-sm text-label-sm uppercase">
+          Sample Feed
+        </span>
+</div>
+<!-- Chronological Activities with November 2026 Dates -->
+<div class="flex flex-col gap-space-sm">
+<!-- Activity 1 -->
+<div class="p-space-sm bg-surface-container flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Advance Payment Recorded</span>
+<span class="font-label-sm text-label-sm text-outline font-code-tabular">18 Nov 2026, 11:45 AM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+<span class="font-code-tabular text-secondary">PRJ-2026-089</span> (Dialog Axiata) — <strong class="text-on-surface font-code-tabular">LKR 726,000</strong> (30% advance via Bank Transfer).
+          </p>
+</div>
+<!-- Activity 2 -->
+<div class="p-space-sm bg-surface-container flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Final Single Invoice Issued</span>
+<span class="font-label-sm text-label-sm text-outline font-code-tabular">18 Nov 2026, 09:15 AM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+<span class="font-code-tabular text-secondary">PRJ-2026-081</span> (Odel Department Store) — <span class="font-code-tabular text-on-surface">INV-044</span> for <strong class="text-on-surface font-code-tabular">LKR 3,100,000</strong> (LKR 930k advance credited).
+          </p>
+</div>
+<!-- Activity 3 -->
+<div class="p-space-sm bg-surface-container flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Budget Approved by Owner</span>
+<span class="font-label-sm text-label-sm text-outline font-code-tabular">17 Nov 2026, 04:30 PM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+<span class="font-code-tabular text-secondary">PRJ-2026-095</span> (HNB Towers) — Budget <span class="font-code-tabular text-on-surface">BDG-095</span> approved at <strong class="text-on-surface font-code-tabular">LKR 1,850,000</strong>. Quotation unlocked.
+          </p>
+</div>
+<!-- Activity 4 -->
+<div class="p-space-sm bg-surface-container flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Split Final Payment Recorded</span>
+<span class="font-label-sm text-label-sm text-outline font-code-tabular">16 Nov 2026, 02:10 PM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+<span class="font-code-tabular text-secondary">PRJ-2026-081</span> (Odel Department Store) — <strong class="text-on-surface font-code-tabular">LKR 930,000</strong> received via Bank Transfer.
+          </p>
+</div>
+</div>
+</div>
+</div>
+<!-- MODAL: RECORD PAYMENT QUICK ACTION -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-space-md bg-surface-container-lowest/80 backdrop-blur-sm hidden" id="paymentModal">
+<div class="bg-surface-container-low max-w-lg w-full p-space-lg flex flex-col gap-space-md shadow-2xl relative border border-outline-variant/30 max-h-[90vh] overflow-y-auto">
+<!-- Modal Header -->
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">payments</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface uppercase">Record Client Payment</h3>
+</div>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">
+            Sample Prototype Demo Simulation
+          </span>
+</div>
+<button aria-label="Close modal" class="p-space-xs text-outline hover:text-on-surface hover:bg-surface-container transition-colors cursor-pointer" onclick="closePaymentModal()" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Payment Form -->
+<form class="flex flex-col gap-space-md" id="paymentForm" onsubmit="handlePaymentSubmit(event)">
+<!-- Project Select -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-sm text-label-sm text-outline uppercase tracking-wider" for="projectSelect">Target Project</label>
+<select class="h-10 px-space-sm bg-surface-container text-on-surface font-body-md text-body-md focus:outline-none focus:bg-surface-container-high transition-colors" id="projectSelect" onchange="updateProjectCalculations()" required="">
+<option selected="" value="PRJ-2026-081">PRJ-2026-081 | Odel Department Store Facia (INV-044 issued: LKR 1,240,000 Due)</option>
+<option value="PRJ-2026-089">PRJ-2026-089 | Dialog Axiata 3D Acrylic Rooftop Pylon (Quote Accepted | 30% Advance Settled)</option>
+<option value="PRJ-2026-095">PRJ-2026-095 | HNB Towers Backlit Monolith (Quotation Sent - Awaiting Acceptance)</option>
+</select>
+</div>
+<!-- Project Status & Rules Notice Banner -->
+<div class="p-space-sm bg-surface-container border-l-2 border-secondary flex flex-col gap-0.5" id="eligibilityNoticeContainer">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold" id="eligibilityNoticeTitle">Eligibility Status</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant" id="eligibilityNoticeText">Final invoice INV-044 issued. Eligible for Final Payment settlement up to outstanding balance.</p>
+</div>
+<!-- Payment Type -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Payment Allocation Type</label>
+<div class="grid grid-cols-2 gap-space-sm">
+<label class="flex items-center gap-space-sm p-space-sm bg-surface-container cursor-pointer hover:bg-surface-container-high">
+<input class="accent-primary" id="radioAdvance" name="paymentType" onchange="updateProjectCalculations()" type="radio" value="ADVANCE"/>
+<span class="font-label-md text-label-md text-on-surface">30% Advance Deposit</span>
+</label>
+<label class="flex items-center gap-space-sm p-space-sm bg-surface-container cursor-pointer hover:bg-surface-container-high">
+<input checked="" class="accent-primary" id="radioFinal" name="paymentType" onchange="updateProjectCalculations()" type="radio" value="FINAL"/>
+<span class="font-label-md text-label-md text-on-surface">Final / Balance Payment</span>
+</label>
+</div>
+</div>
+<!-- Amount and Max helper -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm text-outline uppercase tracking-wider" for="paymentAmount">Amount (LKR)</label>
+<span class="font-label-sm text-label-sm font-code-tabular text-secondary" id="maxBalanceHint">Outstanding Balance Due: LKR 1,240,000</span>
+</div>
+<div class="relative flex items-center">
+<span class="absolute left-space-sm font-label-md text-label-md text-outline font-code-tabular">LKR</span>
+<input class="w-full h-10 pl-12 pr-space-sm bg-surface-container text-on-surface font-code-tabular text-body-md focus:outline-none focus:bg-surface-container-high transition-colors" id="paymentAmount" min="1" required="" type="number" value="1240000"/>
+</div>
+<span class="font-label-sm text-label-sm text-error hidden p-space-xs bg-error-container/20 border-l border-error" id="validationWarning"></span>
+</div>
+<!-- Payment Method (EXACTLY CASH and BANK_TRANSFER only) -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-sm text-label-sm text-outline uppercase tracking-wider" for="paymentMethod">Payment Method</label>
+<select class="h-10 px-space-sm bg-surface-container text-on-surface font-body-md text-body-md focus:outline-none focus:bg-surface-container-high transition-colors" id="paymentMethod" required="">
+<option value="BANK_TRANSFER">BANK_TRANSFER</option>
+<option value="CASH">CASH</option>
+</select>
+</div>
+<!-- Reference / Voucher Note (Optional, no fake prefill) -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-sm text-label-sm text-outline uppercase tracking-wider" for="voucherNote">Payment / Voucher Reference (Optional)</label>
+<input class="h-10 px-space-sm bg-surface-container text-on-surface font-body-md text-body-md focus:outline-none focus:bg-surface-container-high transition-colors placeholder:text-outline/60" id="voucherNote" placeholder="e.g., SL-TRX-XXXX or leave blank" type="text" value=""/>
+</div>
+<!-- Payment Evidence Upload (Optional Demo Prototype) -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-sm text-label-sm text-outline uppercase tracking-wider" for="evidenceUpload">Payment Evidence (Optional - Demo Prototype)</label>
+<div class="flex items-center gap-space-sm">
+<input class="block w-full text-body-sm text-outline file:mr-4 file:py-2 file:px-4 file:border-0 file:text-label-sm file:font-semibold file:bg-surface-container-high file:text-on-surface hover:file:bg-surface-container-highest cursor-pointer bg-surface-container" id="evidenceUpload" type="file"/>
+</div>
+</div>
+<!-- Buttons -->
+<div class="flex items-center justify-end gap-space-sm pt-space-xs">
+<button class="px-space-md py-space-sm bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md uppercase tracking-wider transition-colors cursor-pointer" onclick="closePaymentModal()" type="button">
+            Cancel
+          </button>
+<button class="px-space-md py-space-sm bg-primary-container hover:bg-secondary-container text-on-primary font-label-md text-label-md uppercase tracking-wider transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed" id="submitPaymentBtn" type="submit">
+            Confirm &amp; Post to Ledger
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- TOAST NOTIFICATION CONTAINER -->
+<div class="fixed bottom-space-md right-space-md px-space-md py-space-sm bg-surface-container-highest text-on-surface font-body-md text-body-md shadow-xl transition-all duration-300 transform translate-y-12 opacity-0 pointer-events-none z-50 flex items-center gap-space-sm border border-outline-variant/40" id="toastMessage">
+<span class="material-symbols-outlined text-secondary text-[20px]" id="toastIcon">check_circle</span>
+<span id="toastText">Transaction updated successfully.</span>
+</div>
+</div>
+<script>
+  // Project balances and ERP status state
+  const demoBalances = {
+    'PRJ-2026-081': {
+      status: 'INVOICED',
+      invoiceIssued: true,
+      quotationAccepted: true,
+      advanceReceived: 930000,
+      maxAdvance: 930000,
+      totalQuote: 3100000,
+      balanceDue: 1240000,
+      invoiceRef: 'INV-044'
+    },
+    'PRJ-2026-089': {
+      status: 'QUOTE_ACCEPTED_ADVANCE_RECEIVED',
+      invoiceIssued: false,
+      quotationAccepted: true,
+      advanceReceived: 726000,
+      maxAdvance: 726000,
+      totalQuote: 2420000,
+      balanceDue: 1694000,
+      invoiceRef: null
+    },
+    'PRJ-2026-095': {
+      status: 'QUOTATION_SENT',
+      invoiceIssued: false,
+      quotationAccepted: false,
+      advanceReceived: 0,
+      maxAdvance: 555000,
+      totalQuote: 1850000,
+      balanceDue: 1850000,
+      invoiceRef: null
+    }
+  };
+
+  function toggleMobileMenu() {
+    const sidebar = document.getElementById('sidebarDrawer');
+    const backdrop = document.getElementById('mobileDrawerBackdrop');
+    if (!sidebar || !backdrop) return;
+    const isClosed = sidebar.classList.contains('-translate-x-full');
+    if (isClosed) {
+      sidebar.classList.remove('-translate-x-full');
+      backdrop.classList.remove('hidden');
+    } else {
+      sidebar.classList.add('-translate-x-full');
+      backdrop.classList.add('hidden');
+    }
+  }
+
+  function openPaymentModal() {
+    document.getElementById('paymentModal').classList.remove('hidden');
+    updateProjectCalculations();
+  }
+
+  function openPaymentModalWithProject(projectId) {
+    const sel = document.getElementById('projectSelect');
+    if (sel) sel.value = projectId;
+    openPaymentModal();
+  }
+
+  function closePaymentModal() {
+    document.getElementById('paymentModal').classList.add('hidden');
+    document.getElementById('validationWarning').classList.add('hidden');
+  }
+
+  function updateProjectCalculations() {
+    const prjId = document.getElementById('projectSelect').value;
+    const typeRadios = document.getElementsByName('paymentType');
+    let paymentType = 'FINAL';
+    for (const r of typeRadios) {
+      if (r.checked) paymentType = r.value;
+    }
+
+    const prj = demoBalances[prjId];
+    const hint = document.getElementById('maxBalanceHint');
+    const amountInput = document.getElementById('paymentAmount');
+    const warn = document.getElementById('validationWarning');
+    const noticeText = document.getElementById('eligibilityNoticeText');
+    const noticeContainer = document.getElementById('eligibilityNoticeContainer');
+    const noticeTitle = document.getElementById('eligibilityNoticeTitle');
+    const submitBtn = document.getElementById('submitPaymentBtn');
+
+    warn.classList.add('hidden');
+    submitBtn.disabled = false;
+    noticeContainer.classList.remove('border-error', 'border-secondary', 'border-tertiary');
+
+    if (!prj) return;
+
+    if (prjId === 'PRJ-2026-095') {
+      // HNB: Quotation sent, awaiting client acceptance
+      noticeContainer.classList.add('border-error');
+      noticeTitle.textContent = 'Action Blocked: Awaiting Acceptance';
+      noticeText.textContent = 'Quotation is awaiting client acceptance. Payments cannot be recorded prior to client acceptance.';
+      hint.textContent = 'Allowed Amount: LKR 0';
+      amountInput.value = '0';
+      amountInput.disabled = true;
+      submitBtn.disabled = true;
+      warn.textContent = 'Payments cannot be recorded prior to client acceptance.';
+      warn.classList.remove('hidden');
+      return;
+    }
+
+    if (prjId === 'PRJ-2026-089') {
+      // Dialog: Accepted quote, 30% advance received, final invoice not yet issued
+      amountInput.disabled = false;
+      if (paymentType === 'ADVANCE') {
+        noticeContainer.classList.add('border-error');
+        noticeTitle.textContent = 'Advance Target Fulfilled';
+        noticeText.textContent = '30% Advance already fully settled (LKR 726,000). Remaining advance eligible is LKR 0.';
+        hint.textContent = 'Remaining 30% Advance: LKR 0';
+        amountInput.value = '0';
+        submitBtn.disabled = true;
+        warn.textContent = 'Duplicate Advance restriction: 30% advance is already 100% collected.';
+        warn.classList.remove('hidden');
+      } else {
+        // Final payment requested but invoice not issued
+        noticeContainer.classList.add('border-error');
+        noticeTitle.textContent = 'Invoice Not Yet Issued';
+        noticeText.textContent = '30% Advance already fully settled (LKR 726,000). Final single invoice has not yet been issued; final payment cannot be recorded before invoice creation.';
+        hint.textContent = 'Allowed Final Payment: LKR 0';
+        amountInput.value = '0';
+        submitBtn.disabled = true;
+        warn.textContent = 'Final payments strictly require an issued invoice.';
+        warn.classList.remove('hidden');
+      }
+      return;
+    }
+
+    if (prjId === 'PRJ-2026-081') {
+      // Odel: Final Invoice INV-044 issued, balance LKR 1,240,000
+      amountInput.disabled = false;
+      if (paymentType === 'ADVANCE') {
+        noticeContainer.classList.add('border-tertiary');
+        noticeTitle.textContent = 'Advance Already Credited';
+        noticeText.textContent = 'Advance deposit of LKR 930,000 was already settled and credited against single final invoice INV-044.';
+        hint.textContent = 'Remaining 30% Advance: LKR 0';
+        amountInput.value = '0';
+        submitBtn.disabled = true;
+        warn.textContent = 'Advance quota fully settled. Please select "Final / Balance Payment" to settle outstanding balance.';
+        warn.classList.remove('hidden');
+      } else {
+        noticeContainer.classList.add('border-secondary');
+        noticeTitle.textContent = 'Invoice INV-044 Active';
+        noticeText.textContent = 'Final single invoice INV-044 is issued. Outstanding balance is LKR 1,240,000.';
+        hint.textContent = 'Outstanding Invoice Balance: LKR ' + prj.balanceDue.toLocaleString();
+        amountInput.value = prj.balanceDue;
+        submitBtn.disabled = false;
+      }
+    }
+  }
+
+  function handlePaymentSubmit(e) {
+    e.preventDefault();
+    const prjId = document.getElementById('projectSelect').value;
+    const amount = parseFloat(document.getElementById('paymentAmount').value) || 0;
+    const typeRadios = document.getElementsByName('paymentType');
+    let paymentType = 'FINAL';
+    for (const r of typeRadios) {
+      if (r.checked) paymentType = r.value;
+    }
+
+    const prj = demoBalances[prjId];
+    const warn = document.getElementById('validationWarning');
+
+    if (amount <= 0) {
+      warn.textContent = 'Validation Error: Please enter a valid amount greater than LKR 0.';
+      warn.classList.remove('hidden');
+      return;
+    }
+
+    if (prjId === 'PRJ-2026-095') {
+      warn.textContent = 'Validation Blocked: Quotation is awaiting client acceptance.';
+      warn.classList.remove('hidden');
+      return;
+    }
+
+    if (prjId === 'PRJ-2026-089') {
+      if (paymentType === 'ADVANCE') {
+        warn.textContent = 'Validation Error: 30% Advance already fully settled (LKR 726,000).';
+      } else {
+        warn.textContent = 'Validation Error: Final single invoice has not yet been issued; cannot record final payment.';
+      }
+      warn.classList.remove('hidden');
+      return;
+    }
+
+    if (prjId === 'PRJ-2026-081') {
+      if (paymentType === 'ADVANCE') {
+        warn.textContent = 'Validation Error: 30% Advance already fully received for PRJ-2026-081.';
+        warn.classList.remove('hidden');
+        return;
+      }
+      if (amount > prj.balanceDue) {
+        warn.textContent = 'Overpayment restriction: Entered amount (LKR ' + amount.toLocaleString() + ') exceeds outstanding balance of LKR ' + prj.balanceDue.toLocaleString();
+        warn.classList.remove('hidden');
+        return;
+      }
+    }
+
+    // Success Prototype Simulation
+    closePaymentModal();
+    showToast('Payment of LKR ' + amount.toLocaleString() + ' recorded for ' + prjId + ' (Demo Prototype)');
+  }
+
+  function handleQuickAction(actionName, prjId, name) {
+    showToast(actionName + ' opened for ' + prjId + ' (' + name + ')');
+  }
+
+  function openInvoiceNotification() {
+    showToast('Redirecting to Invoice Management creation interface...');
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toastMessage');
+    const txt = document.getElementById('toastText');
+    txt.textContent = msg;
+    t.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
+    t.classList.add('translate-y-0', 'opacity-100');
+    setTimeout(() => {
+      t.classList.remove('translate-y-0', 'opacity-100');
+      t.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
+    }, 3800);
+  }
+</script></main></div></body></html>
