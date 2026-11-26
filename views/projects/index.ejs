@@ -1,0 +1,209 @@
+<%
+  var d = data || {};
+  var projects = Array.isArray(d.projects) ? d.projects : [];
+  var stages = Array.isArray(d.stages) ? d.stages : [];
+  var pagination = d.pagination || { page: 1, pageSize: 10, totalCount: 0, totalPages: 1 };
+  var filters = d.filters || { search: '', status: '', stageId: '' };
+  var pageTitle = user && user.role === 'OWNER' ? 'All Projects' : 'My Projects';
+  var totalCount = Number(pagination.totalCount) || 0;
+  var currentPage = Number(pagination.page) || 1;
+  var totalPages = Number(pagination.totalPages) || 1;
+  var pageSize = Number(pagination.pageSize) || 10;
+  var showFrom = totalCount === 0 ? 0 : ((currentPage - 1) * pageSize) + 1;
+  var showTo = Math.min(currentPage * pageSize, totalCount);
+
+  function statusBadge(status) {
+    if (status === 'ACTIVE') return 'bg-primary-container text-on-primary-container';
+    if (status === 'COMPLETED') return 'bg-surface-container-high text-on-surface';
+    if (status === 'CANCELLED') return 'bg-error-container text-on-error-container';
+    return 'bg-surface-container text-on-surface-variant';
+  }
+
+  function buildQuery(overrides) {
+    var q = {};
+    if (filters.search) q.search = filters.search;
+    if (filters.status) q.status = filters.status;
+    if (filters.stageId) q.stage = filters.stageId;
+    if (currentPage) q.page = currentPage;
+    Object.assign(q, overrides);
+    var parts = [];
+    Object.keys(q).forEach(function(k) {
+      if (q[k] !== '' && q[k] != null) {
+        parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(q[k]));
+      }
+    });
+    return parts.length > 0 ? '?' + parts.join('&') : '';
+  }
+
+  function fmtDate(val) {
+    if (!val) return '—';
+    try {
+      var dt = new Date(val);
+      if (isNaN(dt.getTime())) return String(val);
+      return dt.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    } catch(e) { return String(val); }
+  }
+%>
+<%- include('../partials/head-theme', { title: pageTitle }) %>
+<%- include('../partials/project-shell-start', { user: user, csrfToken: csrfToken, activePath: 'projects' }) %>
+
+<div class="px-space-md lg:px-space-lg py-space-md lg:py-space-lg flex flex-col space-y-space-lg">
+
+  <!-- PAGE HEADER -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+    <div>
+      <h1 class="font-headline-md text-headline-md text-on-surface tracking-tight"><%= pageTitle %></h1>
+      <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+        <% if (user.role === 'PROJECT_MANAGER') { %>Showing projects actively assigned to you.<% } else { %>System-wide project portfolio.<% } %>
+      </p>
+    </div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <form method="GET" action="/projects" class="bg-surface-container-lowest border border-outline-variant/30 p-space-md flex flex-col sm:flex-row flex-wrap items-end gap-space-sm">
+    <!-- Search -->
+    <div class="flex flex-col gap-1 flex-1 min-w-[180px]">
+      <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider" for="f-search">Search</label>
+      <div class="relative">
+        <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline text-[16px]">search</span>
+        <input
+          id="f-search"
+          type="text"
+          name="search"
+          value="<%= filters.search %>"
+          placeholder="Project code or name…"
+          maxlength="200"
+          class="w-full h-9 pl-8 pr-3 bg-surface-container border border-outline-variant/50 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary"
+        >
+      </div>
+    </div>
+    <!-- Status -->
+    <div class="flex flex-col gap-1 min-w-[140px]">
+      <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider" for="f-status">Status</label>
+      <select id="f-status" name="status" class="h-9 px-2 bg-surface-container border border-outline-variant/50 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary">
+        <option value="" <%= filters.status === '' ? 'selected' : '' %>>All Statuses</option>
+        <option value="ACTIVE" <%= filters.status === 'ACTIVE' ? 'selected' : '' %>>Active</option>
+        <option value="COMPLETED" <%= filters.status === 'COMPLETED' ? 'selected' : '' %>>Completed</option>
+        <option value="CANCELLED" <%= filters.status === 'CANCELLED' ? 'selected' : '' %>>Cancelled</option>
+      </select>
+    </div>
+    <!-- Stage -->
+    <div class="flex flex-col gap-1 min-w-[180px]">
+      <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider" for="f-stage">Stage</label>
+      <select id="f-stage" name="stage" class="h-9 px-2 bg-surface-container border border-outline-variant/50 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary">
+        <option value="">All Stages</option>
+        <% stages.forEach(function(s) { %>
+        <option value="<%= s.stageId %>" <%= String(filters.stageId) === String(s.stageId) ? 'selected' : '' %>>Stg <%= s.stageOrder %>: <%= s.stageName %></option>
+        <% }); %>
+      </select>
+    </div>
+    <!-- Hidden page reset -->
+    <input type="hidden" name="page" value="1">
+    <!-- Buttons -->
+    <div class="flex gap-2 items-end">
+      <button type="submit" class="h-9 px-4 bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary/90 transition-colors">Apply</button>
+      <a href="/projects" class="h-9 px-4 flex items-center bg-surface-container-high text-on-surface font-label-lg text-label-lg hover:bg-surface-container-highest transition-colors">Reset</a>
+    </div>
+  </form>
+
+  <!-- PROJECTS TABLE -->
+  <div class="bg-surface-container-lowest border border-outline-variant/30 overflow-x-auto">
+    <% if (projects.length === 0) { %>
+    <div class="flex flex-col items-center justify-center py-16 gap-space-md text-on-surface-variant">
+      <span class="material-symbols-outlined text-[48px] text-outline">folder_off</span>
+      <div class="text-center">
+        <p class="font-headline-sm text-headline-sm text-on-surface">No projects found</p>
+        <p class="font-body-sm text-body-sm mt-1">
+          <% if (filters.search || filters.status || filters.stageId) { %>
+            Try adjusting your filters. <a href="/projects" class="text-primary hover:underline">Clear all filters</a>
+          <% } else if (user.role === 'PROJECT_MANAGER') { %>
+            You have no actively assigned projects at this time.
+          <% } else { %>
+            No projects have been registered yet.
+          <% } %>
+        </p>
+      </div>
+    </div>
+    <% } else { %>
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="border-b border-outline-variant/30 bg-surface-container-low">
+          <th class="px-space-sm py-2.5 font-label-sm text-label-sm uppercase tracking-wider text-outline whitespace-nowrap">Code</th>
+          <th class="px-space-sm py-2.5 font-label-sm text-label-sm uppercase tracking-wider text-outline">Project Name</th>
+          <th class="px-space-sm py-2.5 font-label-sm text-label-sm uppercase tracking-wider text-outline whitespace-nowrap">Customer</th>
+          <th class="px-space-sm py-2.5 font-label-sm text-label-sm uppercase tracking-wider text-outline whitespace-nowrap">Stage</th>
+          <th class="px-space-sm py-2.5 font-label-sm text-label-sm uppercase tracking-wider text-outline whitespace-nowrap">Status</th>
+          <th class="px-space-sm py-2.5 font-label-sm text-label-sm uppercase tracking-wider text-outline whitespace-nowrap">Created</th>
+          <th class="px-space-sm py-2.5 font-label-sm text-label-sm uppercase tracking-wider text-outline whitespace-nowrap">Updated</th>
+          <th class="px-space-sm py-2.5 font-label-sm text-label-sm uppercase tracking-wider text-outline text-right whitespace-nowrap">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% projects.forEach(function(p) { %>
+        <tr class="border-b border-outline-variant/20 hover:bg-surface-container/40 transition-colors">
+          <td class="px-space-sm py-3 font-code-tabular text-primary font-bold whitespace-nowrap"><%= p.projectCode %></td>
+          <td class="px-space-sm py-3 max-w-[220px]">
+            <span class="font-body-md text-body-md text-on-surface font-semibold block leading-tight truncate"><%= p.projectName %></span>
+          </td>
+          <td class="px-space-sm py-3 font-body-md text-body-md text-on-surface whitespace-nowrap"><%= p.customerName %></td>
+          <td class="px-space-sm py-3 whitespace-nowrap">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-surface-container-highest text-primary font-code-tabular text-label-sm font-semibold">
+              <span class="w-1.5 h-1.5 bg-primary"></span>
+              Stg <%= p.stageOrder %>: <%= p.stageName %>
+            </span>
+          </td>
+          <td class="px-space-sm py-3 whitespace-nowrap">
+            <span class="inline-flex items-center px-2.5 py-0.5 font-label-sm text-label-sm <%= statusBadge(p.projectStatus) %>">
+              <%= p.projectStatus %>
+            </span>
+          </td>
+          <td class="px-space-sm py-3 font-code-tabular text-label-sm text-outline whitespace-nowrap"><%= fmtDate(p.createdAt) %></td>
+          <td class="px-space-sm py-3 font-code-tabular text-label-sm text-outline whitespace-nowrap"><%= fmtDate(p.updatedAt) %></td>
+          <td class="px-space-sm py-3 text-right whitespace-nowrap">
+            <a href="/projects/<%= p.projectId %>" class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-primary-container/20 hover:bg-primary-container text-primary hover:text-on-primary font-label-sm text-label-sm transition-colors">
+              <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+              View Details
+            </a>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+    <% } %>
+  </div>
+
+  <!-- PAGINATION BAR -->
+  <% if (totalCount > 0) { %>
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+    <div class="font-body-sm text-body-sm text-on-surface-variant font-code-tabular">
+      Showing <span class="text-on-surface font-semibold"><%= showFrom %>–<%= showTo %></span> of <span class="text-on-surface font-semibold"><%= totalCount %></span> projects
+    </div>
+    <div class="flex items-center gap-2">
+      <% if (currentPage > 1) { %>
+      <a href="/projects<%= buildQuery({ page: currentPage - 1 }) %>" class="px-3 py-1.5 bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1">
+        <span class="material-symbols-outlined text-[16px]">chevron_left</span> Prev
+      </a>
+      <% } else { %>
+      <span class="px-3 py-1.5 bg-surface-container text-outline font-label-sm text-label-sm flex items-center gap-1 cursor-not-allowed">
+        <span class="material-symbols-outlined text-[16px]">chevron_left</span> Prev
+      </span>
+      <% } %>
+      <span class="px-3 py-1.5 bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold">
+        Page <%= currentPage %> of <%= totalPages %>
+      </span>
+      <% if (currentPage < totalPages) { %>
+      <a href="/projects<%= buildQuery({ page: currentPage + 1 }) %>" class="px-3 py-1.5 bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1">
+        Next <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+      </a>
+      <% } else { %>
+      <span class="px-3 py-1.5 bg-surface-container text-outline font-label-sm text-label-sm flex items-center gap-1 cursor-not-allowed">
+        Next <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+      </span>
+      <% } %>
+    </div>
+  </div>
+  <% } %>
+
+</div>
+
+<%- include('../partials/project-shell-end') %>

@@ -61,13 +61,232 @@
     }
   };
 %>
-<!DOCTYPE html><html class="dark" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<!DOCTYPE html><html class="dark" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><link rel="stylesheet" href="/css/theme.css"><script>(function(){try{var t=localStorage.getItem('sbl-theme');if(t==='light'){document.documentElement.setAttribute('data-theme','light');document.documentElement.classList.remove('dark');document.documentElement.classList.add('light');}else{document.documentElement.setAttribute('data-theme','dark');document.documentElement.classList.add('dark');document.documentElement.classList.remove('light');}}catch(e){document.documentElement.setAttribute('data-theme','dark');document.documentElement.classList.add('dark');}})();</script><script src="/js/theme.js" defer></script><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Space+Grotesk:wght@100..900&amp;display=swap" rel="stylesheet"><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "primary-fixed-dim": "#b7c4ff", "on-background": "#dae2fd", "outline": "#8e90a0", "secondary-fixed": "#d8e2ff", "on-error-container": "#ffdad6", "on-primary-fixed-variant": "#0039b5", "background": "#0b1326", "inverse-on-surface": "#283044", "on-secondary": "#002e6a", "on-tertiary-fixed": "#0c1b33", "secondary": "#adc6ff", "inverse-surface": "#dae2fd", "inverse-primary": "#2151da", "error": "#ffb4ab", "error-container": "#93000a", "surface-container-high": "#222a3d", "on-error": "#690005", "secondary-fixed-dim": "#adc6ff", "on-tertiary-fixed-variant": "#394761", "surface-container": "#171f33", "on-primary-fixed": "#001551", "surface-tint": "#b7c4ff", "surface-variant": "#2d3449", "surface-container-lowest": "#060e20", "on-primary-container": "#cad3ff", "on-secondary-container": "#e6ecff", "tertiary-container": "#4e5c77", "primary": "#b7c4ff", "on-surface": "#dae2fd", "outline-variant": "#434655", "surface-dim": "#0b1326", "surface": "#0b1326", "on-secondary-fixed": "#001a42", "tertiary-fixed": "#d7e3ff", "surface-container-highest": "#2d3449", "on-tertiary": "#223149", "surface-bright": "#31394d", "tertiary-fixed-dim": "#b8c7e6", "surface-container-low": "#131b2e", "on-surface-variant": "#c4c5d7", "secondary-container": "#0566d9", "primary-container": "#1d4ed8", "tertiary": "#b8c7e6", "on-tertiary-container": "#c6d5f5", "on-secondary-fixed-variant": "#004395", "on-primary": "#002682", "primary-fixed": "#dce1ff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1.5rem", "gutter": "1rem", "gutter-desktop": "1.5rem", "space-md": "1rem", "space-xs": "0.25rem", "margin": "1rem", "space-xl": "2.5rem", "space-sm": "0.5rem", "margin-desktop": "2rem" }, "fontFamily": { "body-sm": ["Geist"], "headline-lg-mobile": ["Space Grotesk"], "label-lg": ["Geist"], "headline-xl-mobile": ["Space Grotesk"], "label-md": ["Geist"], "headline-xl": ["Space Grotesk"], "label-sm": ["Geist"], "code-tabular": ["Geist"], "body-lg": ["Geist"], "headline-sm": ["Space Grotesk"], "body-md": ["Geist"], "headline-lg": ["Space Grotesk"], "headline-md": ["Space Grotesk"] }, "fontSize": { "body-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400"}], "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}], "label-lg": ["14px", {"lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "600"}], "headline-xl-mobile": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}], "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}], "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700"}], "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "600"}], "code-tabular": ["13px", {"lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500"}], "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400"}], "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600"}], "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}], "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}], "headline-md": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Space+Grotesk:wght@100..900&amp;display=swap" rel="stylesheet"><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = {
+  "darkMode": "class",
+  "theme": {
+    "extend": {
+      "colors": {
+        "background": "rgb(var(--sbl-background) / <alpha-value>)",
+        "error": "rgb(var(--sbl-error) / <alpha-value>)",
+        "error-container": "rgb(var(--sbl-error-container) / <alpha-value>)",
+        "inverse-on-surface": "rgb(var(--sbl-inverse-on-surface) / <alpha-value>)",
+        "inverse-primary": "rgb(var(--sbl-inverse-primary) / <alpha-value>)",
+        "inverse-surface": "rgb(var(--sbl-inverse-surface) / <alpha-value>)",
+        "on-background": "rgb(var(--sbl-on-background) / <alpha-value>)",
+        "on-error": "rgb(var(--sbl-on-error) / <alpha-value>)",
+        "on-error-container": "rgb(var(--sbl-on-error-container) / <alpha-value>)",
+        "on-primary": "rgb(var(--sbl-on-primary) / <alpha-value>)",
+        "on-primary-container": "rgb(var(--sbl-on-primary-container) / <alpha-value>)",
+        "on-primary-fixed": "rgb(var(--sbl-on-primary-fixed) / <alpha-value>)",
+        "on-primary-fixed-variant": "rgb(var(--sbl-on-primary-fixed-variant) / <alpha-value>)",
+        "on-secondary": "rgb(var(--sbl-on-secondary) / <alpha-value>)",
+        "on-secondary-container": "rgb(var(--sbl-on-secondary-container) / <alpha-value>)",
+        "on-secondary-fixed": "rgb(var(--sbl-on-secondary-fixed) / <alpha-value>)",
+        "on-secondary-fixed-variant": "rgb(var(--sbl-on-secondary-fixed-variant) / <alpha-value>)",
+        "on-surface": "rgb(var(--sbl-on-surface) / <alpha-value>)",
+        "on-surface-variant": "rgb(var(--sbl-on-surface-variant) / <alpha-value>)",
+        "on-tertiary": "rgb(var(--sbl-on-tertiary) / <alpha-value>)",
+        "on-tertiary-container": "rgb(var(--sbl-on-tertiary-container) / <alpha-value>)",
+        "on-tertiary-fixed": "rgb(var(--sbl-on-tertiary-fixed) / <alpha-value>)",
+        "on-tertiary-fixed-variant": "rgb(var(--sbl-on-tertiary-fixed-variant) / <alpha-value>)",
+        "outline": "rgb(var(--sbl-outline) / <alpha-value>)",
+        "outline-variant": "rgb(var(--sbl-outline-variant) / <alpha-value>)",
+        "primary": "rgb(var(--sbl-primary) / <alpha-value>)",
+        "primary-container": "rgb(var(--sbl-primary-container) / <alpha-value>)",
+        "primary-fixed": "rgb(var(--sbl-primary-fixed) / <alpha-value>)",
+        "primary-fixed-dim": "rgb(var(--sbl-primary-fixed-dim) / <alpha-value>)",
+        "secondary": "rgb(var(--sbl-secondary) / <alpha-value>)",
+        "secondary-container": "rgb(var(--sbl-secondary-container) / <alpha-value>)",
+        "secondary-fixed": "rgb(var(--sbl-secondary-fixed) / <alpha-value>)",
+        "secondary-fixed-dim": "rgb(var(--sbl-secondary-fixed-dim) / <alpha-value>)",
+        "surface": "rgb(var(--sbl-surface) / <alpha-value>)",
+        "surface-bright": "rgb(var(--sbl-surface-bright) / <alpha-value>)",
+        "surface-container": "rgb(var(--sbl-surface-container) / <alpha-value>)",
+        "surface-container-high": "rgb(var(--sbl-surface-container-high) / <alpha-value>)",
+        "surface-container-highest": "rgb(var(--sbl-surface-container-highest) / <alpha-value>)",
+        "surface-container-low": "rgb(var(--sbl-surface-container-low) / <alpha-value>)",
+        "surface-container-lowest": "rgb(var(--sbl-surface-container-lowest) / <alpha-value>)",
+        "surface-dim": "rgb(var(--sbl-surface-dim) / <alpha-value>)",
+        "surface-tint": "rgb(var(--sbl-surface-tint) / <alpha-value>)",
+        "surface-variant": "rgb(var(--sbl-surface-variant) / <alpha-value>)",
+        "tertiary": "rgb(var(--sbl-tertiary) / <alpha-value>)",
+        "tertiary-container": "rgb(var(--sbl-tertiary-container) / <alpha-value>)",
+        "tertiary-fixed": "rgb(var(--sbl-tertiary-fixed) / <alpha-value>)",
+        "tertiary-fixed-dim": "rgb(var(--sbl-tertiary-fixed-dim) / <alpha-value>)"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-lg": "1.5rem",
+        "gutter": "1rem",
+        "gutter-desktop": "1.5rem",
+        "space-md": "1rem",
+        "space-xs": "0.25rem",
+        "margin": "1rem",
+        "space-xl": "2.5rem",
+        "space-sm": "0.5rem",
+        "margin-desktop": "2rem"
+      },
+      "fontFamily": {
+        "body-sm": [
+          "Geist"
+        ],
+        "headline-lg-mobile": [
+          "Space Grotesk"
+        ],
+        "label-lg": [
+          "Geist"
+        ],
+        "headline-xl-mobile": [
+          "Space Grotesk"
+        ],
+        "label-md": [
+          "Geist"
+        ],
+        "headline-xl": [
+          "Space Grotesk"
+        ],
+        "label-sm": [
+          "Geist"
+        ],
+        "code-tabular": [
+          "Geist"
+        ],
+        "body-lg": [
+          "Geist"
+        ],
+        "headline-sm": [
+          "Space Grotesk"
+        ],
+        "body-md": [
+          "Geist"
+        ],
+        "headline-lg": [
+          "Space Grotesk"
+        ],
+        "headline-md": [
+          "Space Grotesk"
+        ]
+      },
+      "fontSize": {
+        "body-sm": [
+          "12px",
+          {
+            "lineHeight": "16px",
+            "letterSpacing": "0.01em",
+            "fontWeight": "400"
+          }
+        ],
+        "headline-lg-mobile": [
+          "24px",
+          {
+            "lineHeight": "32px",
+            "letterSpacing": "-0.01em",
+            "fontWeight": "600"
+          }
+        ],
+        "label-lg": [
+          "14px",
+          {
+            "lineHeight": "18px",
+            "letterSpacing": "0.02em",
+            "fontWeight": "600"
+          }
+        ],
+        "headline-xl-mobile": [
+          "30px",
+          {
+            "lineHeight": "36px",
+            "letterSpacing": "-0.02em",
+            "fontWeight": "700"
+          }
+        ],
+        "label-md": [
+          "12px",
+          {
+            "lineHeight": "16px",
+            "letterSpacing": "0.04em",
+            "fontWeight": "500"
+          }
+        ],
+        "headline-xl": [
+          "40px",
+          {
+            "lineHeight": "48px",
+            "letterSpacing": "-0.03em",
+            "fontWeight": "700"
+          }
+        ],
+        "label-sm": [
+          "11px",
+          {
+            "lineHeight": "14px",
+            "letterSpacing": "0.06em",
+            "fontWeight": "600"
+          }
+        ],
+        "code-tabular": [
+          "13px",
+          {
+            "lineHeight": "18px",
+            "letterSpacing": "0.01em",
+            "fontWeight": "500"
+          }
+        ],
+        "body-lg": [
+          "16px",
+          {
+            "lineHeight": "24px",
+            "letterSpacing": "-0.01em",
+            "fontWeight": "400"
+          }
+        ],
+        "headline-sm": [
+          "18px",
+          {
+            "lineHeight": "24px",
+            "letterSpacing": "0em",
+            "fontWeight": "600"
+          }
+        ],
+        "body-md": [
+          "14px",
+          {
+            "lineHeight": "20px",
+            "letterSpacing": "0em",
+            "fontWeight": "400"
+          }
+        ],
+        "headline-lg": [
+          "32px",
+          {
+            "lineHeight": "40px",
+            "letterSpacing": "-0.02em",
+            "fontWeight": "600"
+          }
+        ],
+        "headline-md": [
+          "22px",
+          {
+            "lineHeight": "28px",
+            "letterSpacing": "-0.01em",
+            "fontWeight": "600"
+          }
+        ]
+      }
+    }
+  }
+};</script></head><body class="bg-surface font-body-md text-on-surface antialiased">
 <!-- Mobile Backdrop -->
 <div class="fixed inset-0 bg-surface-container-lowest/80 backdrop-blur-sm z-40 hidden transition-opacity lg:hidden" id="mobileDrawerBackdrop" onclick="toggleMobileMenu()"></div>
 <!-- ASIDE / NAVIGATION DRAWER -->
-<aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest border-r border-outline-variant/30 z-50 flex flex-col justify-between transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out select-none" id="sidebarDrawer"><div class="flex flex-col flex-1 min-h-0"><div class="h-16 px-space-md flex items-center justify-between border-b border-outline-variant/20 bg-surface-container-low/40"><div class="flex items-center gap-3 min-w-0"><div class="w-9 h-9 bg-primary-container border border-primary/40 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary-container text-[20px]">precision_manufacturing</span></div><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm uppercase tracking-wider text-on-surface truncate leading-tight">Sign Board LKA</span><div class="flex items-center gap-1.5 mt-0.5"><span class="w-1.5 h-1.5 bg-primary rounded-none"></span><span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">PM Console</span></div></div></div><button aria-label="Close menu" class="p-space-xs text-outline hover:text-on-surface lg:hidden cursor-pointer" onclick="toggleMobileMenu()" type="button"><span class="material-symbols-outlined text-[20px]">close</span></button></div><div class="px-space-md py-space-sm"><div class="flex items-center justify-between px-2 py-1 bg-surface-container-high/40 border border-outline-variant/30 text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider"><span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[13px] text-primary">account_tree</span>Fabrication PM</span><span class="font-code-tabular text-code-tabular text-on-surface">PM-OPS</span></div></div><nav class="flex-1 overflow-y-auto px-space-xs space-y-0.5" data-active-classes="bg-primary-container text-on-primary-container font-semibold border-l-2 border-primary"><a aria-current="page" class="flex items-center gap-3 px-space-md py-2.5 transition-colors bg-primary-container text-on-primary-container font-semibold border-l-2 border-primary" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span>Dashboard</span></a><a class="flex items-center gap-3 px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="my-projects" href="#"><span class="material-symbols-outlined text-[20px]">assignment</span><span>My Projects</span></a><a class="flex items-center gap-3 px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="site-visits" href="#"><span class="material-symbols-outlined text-[20px]">location_on</span><span>Site Visits</span></a><a class="flex items-center gap-3 px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="designs" href="#"><span class="material-symbols-outlined text-[20px]">draw</span><span>Designs</span></a><a class="flex items-center justify-between px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="budgets" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">monetization_on</span><span>Budgets</span></div><span class="font-code-tabular text-[10px] uppercase text-outline bg-surface-container-highest px-1.5 py-0.5">View Only</span></a><a class="flex items-center justify-between px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="quotations" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">request_quote</span><span>Quotations</span></div><span class="font-code-tabular text-[10px] uppercase text-outline bg-surface-container-highest px-1.5 py-0.5">View Only</span></a><a class="flex items-center gap-3 px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="quality-and-installation" href="#"><span class="material-symbols-outlined text-[20px]">verified</span><span>Quality &amp; Installation</span></a><a class="flex items-center gap-3 px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="documents-and-feedback" href="#"><span class="material-symbols-outlined text-[20px]">folder_shared</span><span>Documents &amp; Feedback</span></a><a class="flex items-center gap-3 px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="reports-and-history" href="#"><span class="material-symbols-outlined text-[20px]">history_edu</span><span>Reports &amp; History</span></a></nav></div><div class="p-space-md border-t border-outline-variant/30 bg-surface-container-low/60 space-y-3"><div class="flex items-center justify-between px-2.5 py-1.5 bg-surface-container border border-outline-variant/40"><div class="flex items-center gap-2"><span class="w-2 h-2 bg-emerald-400"></span><span class="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase">System</span></div><span class="px-1.5 py-0.5 bg-surface-container-high text-on-surface font-label-sm text-label-sm tracking-widest uppercase border border-outline-variant/40">ONLINE</span></div><form action="/logout" method="POST" class="m-0 p-0 block w-full">
+<aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest border-r border-outline-variant/30 z-50 flex flex-col justify-between transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out select-none" id="sidebarDrawer"><div class="flex flex-col flex-1 min-h-0"><div class="h-16 px-space-md flex items-center justify-between border-b border-outline-variant/20 bg-surface-container-low/40"><div class="flex items-center gap-3 min-w-0"><div class="w-9 h-9 bg-primary-container border border-primary/40 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary-container text-[20px]">precision_manufacturing</span></div><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm uppercase tracking-wider text-on-surface truncate leading-tight">Sign Board LKA</span><div class="flex items-center gap-1.5 mt-0.5"><span class="w-1.5 h-1.5 bg-primary rounded-none"></span><span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">PM Console</span></div></div></div><button aria-label="Close menu" class="p-space-xs text-outline hover:text-on-surface lg:hidden cursor-pointer" onclick="toggleMobileMenu()" type="button"><span class="material-symbols-outlined text-[20px]">close</span></button></div><div class="px-space-md py-space-sm"><div class="flex items-center justify-between px-2 py-1 bg-surface-container-high/40 border border-outline-variant/30 text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider"><span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[13px] text-primary">account_tree</span>Fabrication PM</span><span class="font-code-tabular text-code-tabular text-on-surface">PM-OPS</span></div></div><nav class="flex-1 overflow-y-auto px-space-xs space-y-0.5" data-active-classes="bg-primary-container text-on-primary-container font-semibold border-l-2 border-primary"><a aria-current="page" class="flex items-center gap-3 px-space-md py-2.5 transition-colors bg-primary-container text-on-primary-container font-semibold border-l-2 border-primary" data-path="dashboard" href="/dashboard"><span class="material-symbols-outlined text-[20px]">dashboard</span><span>Dashboard</span></a><a class="flex items-center gap-3 px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="my-projects" href="/projects"><span class="material-symbols-outlined text-[20px]">assignment</span><span>My Projects</span></a><a class="flex items-center gap-3 px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="site-visits" href="#"><span class="material-symbols-outlined text-[20px]">location_on</span><span>Site Visits</span></a><a class="flex items-center gap-3 px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="designs" href="#"><span class="material-symbols-outlined text-[20px]">draw</span><span>Designs</span></a><a class="flex items-center justify-between px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="budgets" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">monetization_on</span><span>Budgets</span></div><span class="font-code-tabular text-[10px] uppercase text-outline bg-surface-container-highest px-1.5 py-0.5">View Only</span></a><a class="flex items-center justify-between px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="quotations" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">request_quote</span><span>Quotations</span></div><span class="font-code-tabular text-[10px] uppercase text-outline bg-surface-container-highest px-1.5 py-0.5">View Only</span></a><a class="flex items-center gap-3 px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="quality-and-installation" href="#"><span class="material-symbols-outlined text-[20px]">verified</span><span>Quality &amp; Installation</span></a><a class="flex items-center gap-3 px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="documents-and-feedback" href="#"><span class="material-symbols-outlined text-[20px]">folder_shared</span><span>Documents &amp; Feedback</span></a><a class="flex items-center gap-3 px-space-md py-2.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="reports-and-history" href="#"><span class="material-symbols-outlined text-[20px]">history_edu</span><span>Reports &amp; History</span></a></nav></div><div class="p-space-md border-t border-outline-variant/30 bg-surface-container-low/60 space-y-3"><div class="flex items-center justify-between px-2.5 py-1.5 bg-surface-container border border-outline-variant/40"><div class="flex items-center gap-2"><span class="w-2 h-2 bg-emerald-400"></span><span class="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase">System</span></div><span class="px-1.5 py-0.5 bg-surface-container-high text-on-surface font-label-sm text-label-sm tracking-widest uppercase border border-outline-variant/40">ONLINE</span></div><form action="/logout" method="POST" class="m-0 p-0 block w-full">
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
   <button type="submit" class="flex items-center justify-between w-full px-3 py-2 bg-surface-container-high hover:bg-error-container/40 text-on-surface hover:text-error border border-outline-variant/30 transition-colors cursor-pointer text-left font-inherit">
     <div class="flex items-center gap-2">
@@ -79,7 +298,7 @@
 </form></div></aside>
 <!-- MAIN WRAPPER -->
 <div class="lg:pl-72 flex flex-col min-h-screen overflow-x-hidden">
-<header class="fixed top-0 left-0 right-0 lg:left-72 h-16 bg-surface-container-lowest/95 backdrop-blur-md border-b border-outline-variant/30 z-40 px-space-md flex items-center justify-between gap-space-md"><div class="flex items-center gap-2 flex-1 max-w-xl"><button aria-label="Open sidebar menu" class="p-space-xs text-outline hover:text-on-surface lg:hidden cursor-pointer flex items-center justify-center shrink-0" onclick="toggleMobileMenu()" type="button"><span class="material-symbols-outlined text-[24px]">menu</span></button><div class="relative flex items-center flex-1"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full h-10 pl-9 pr-14 bg-surface-container-lowest border border-outline-variant text-on-surface placeholder:text-outline font-body-md text-body-md focus:outline-none focus:border-primary" placeholder="Search assigned projects, site visits, client specs..." type="text"><div class="absolute right-2 px-1.5 py-0.5 bg-surface-container border border-outline-variant/40 font-code-tabular text-label-sm text-outline hidden sm:block">CTRL+K</div></div></div><div class="flex items-center gap-space-md"><button class="relative p-2 bg-surface-container-low hover:bg-surface-container border border-outline-variant/40 text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 bg-primary text-on-primary font-code-tabular text-label-sm flex items-center justify-center border border-surface-container-lowest"><%= attentionCount %></span></button><div class="h-6 w-px bg-outline-variant/30 hidden sm:block"></div><div class="px-2.5 py-1 bg-surface-container-low border border-outline-variant/40 hidden sm:flex items-center gap-2"><span class="w-1.5 h-1.5 bg-secondary"></span><span class="font-label-sm text-label-sm text-on-surface tracking-wider uppercase font-semibold">ROLE: <%= user.role %></span></div><div class="h-6 w-px bg-outline-variant/30 hidden sm:block"></div><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col text-left"><span class="font-label-md text-label-md text-on-surface leading-tight font-semibold"><%= user.fullName %></span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">Project Manager</span></div></div></div></header><main class="w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<header class="fixed top-0 left-0 right-0 lg:left-72 h-16 bg-surface-container-lowest/95 backdrop-blur-md border-b border-outline-variant/30 z-40 px-space-md flex items-center justify-between gap-space-md"><div class="flex items-center gap-2 flex-1 max-w-xl"><button aria-label="Open sidebar menu" class="p-space-xs text-outline hover:text-on-surface lg:hidden cursor-pointer flex items-center justify-center shrink-0" onclick="toggleMobileMenu()" type="button"><span class="material-symbols-outlined text-[24px]">menu</span></button><div class="relative flex items-center flex-1"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full h-10 pl-9 pr-14 bg-surface-container-lowest border border-outline-variant text-on-surface placeholder:text-outline font-body-md text-body-md focus:outline-none focus:border-primary" placeholder="Search assigned projects, site visits, client specs..." type="text"><div class="absolute right-2 px-1.5 py-0.5 bg-surface-container border border-outline-variant/40 font-code-tabular text-label-sm text-outline hidden sm:block">CTRL+K</div></div></div><div class="flex items-center gap-space-md"><button id="theme-toggle" data-theme-toggle type="button" aria-label="Switch to light theme" title="Switch to light theme" class="w-9 h-9 flex items-center justify-center bg-surface-container-low hover:bg-surface-container border border-outline-variant/40 text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer"><span id="theme-toggle-icon" data-theme-icon class="material-symbols-outlined text-[20px]">light_mode</span></button><button class="relative p-2 bg-surface-container-low hover:bg-surface-container border border-outline-variant/40 text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 bg-primary text-on-primary font-code-tabular text-label-sm flex items-center justify-center border border-surface-container-lowest"><%= attentionCount %></span></button><div class="h-6 w-px bg-outline-variant/30 hidden sm:block"></div><div class="px-2.5 py-1 bg-surface-container-low border border-outline-variant/40 hidden sm:flex items-center gap-2"><span class="w-1.5 h-1.5 bg-secondary"></span><span class="font-label-sm text-label-sm text-on-surface tracking-wider uppercase font-semibold">ROLE: <%= user.role %></span></div><div class="h-6 w-px bg-outline-variant/30 hidden sm:block"></div><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col text-left"><span class="font-label-md text-label-md text-on-surface leading-tight font-semibold"><%= user.fullName %></span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">Project Manager</span></div></div></div></header><main class="w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full">
 <!-- 1. WELCOME & OPERATIONAL CONTEXT BANNER -->
 <section class="w-full bg-surface-container-low px-space-md py-space-lg lg:px-margin-desktop lg:py-space-xl">
 <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md">
@@ -479,9 +698,9 @@
       <span class="px-2 py-0.5 bg-surface-container-high text-on-surface font-code-tabular text-[10px] font-semibold uppercase"><%= p.projectStatus || 'ACTIVE' %></span>
     </td>
     <td class="p-3 text-right whitespace-nowrap">
-      <button class="px-2.5 py-1 bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-headline-sm text-label-sm uppercase font-semibold" onclick="triggerDemoAction('Details for <%= p.projectCode %>')">
+      <a href="/projects/<%= p.projectId %>" class="px-2.5 py-1 bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-headline-sm text-label-sm uppercase font-semibold">
         View Details
-      </button>
+      </a>
     </td>
   </tr>
   <% }); %>

@@ -1,0 +1,221 @@
+/*
+ * Sign Board Lanka ERP — shared theme tokens.
+ *
+ * Dark is the default (:root, no data-theme required).
+ * Light applies only when html[data-theme="light"].
+ *
+ * Values are space-separated RGB channels so a later Tailwind mapping can use:
+ *   rgb(var(--sbl-primary) / <alpha-value>)
+ *
+ * This file does not style dashboard components. Dashboards do not load it yet.
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* Dark Mode — existing dashboard hex values, unchanged. */
+
+  /* Background and surface levels */
+  --sbl-background: 11 19 38; /* #0b1326 surface / background */
+  --sbl-surface-lowest: 6 14 32; /* #060e20 */
+  --sbl-surface-low: 19 27 46; /* #131b2e */
+  --sbl-surface: 23 31 51; /* #171f33 */
+  --sbl-surface-high: 34 42 61; /* #222a3d */
+  --sbl-surface-highest: 45 52 73; /* #2d3449 */
+
+  /* Text */
+  --sbl-text: 218 226 253; /* #dae2fd on-surface */
+  --sbl-text-muted: 196 197 215; /* #c4c5d7 on-surface-variant */
+  --sbl-text-faint: 142 144 160; /* #8e90a0 outline */
+
+  /* Primary and secondary */
+  --sbl-primary: 183 196 255; /* #b7c4ff */
+  --sbl-on-primary: 0 38 130; /* #002682 */
+  --sbl-primary-container: 29 78 216; /* #1d4ed8 */
+  --sbl-on-primary-container: 202 211 255; /* #cad3ff */
+  --sbl-primary-hover: 33 81 218; /* #2151da inverse-primary */
+  --sbl-secondary: 173 198 255; /* #adc6ff */
+  --sbl-secondary-container: 5 102 217; /* #0566d9 */
+  --sbl-on-secondary-container: 230 236 255; /* #e6ecff */
+
+  /* Borders, inputs, buttons */
+  --sbl-border: 67 70 85; /* #434655 outline-variant */
+  --sbl-input: 23 31 51; /* same channels as --sbl-surface */
+  --sbl-button-primary: 29 78 216; /* same channels as --sbl-primary-container */
+  --sbl-button-secondary: 34 42 61; /* same channels as --sbl-surface-high */
+
+  /* Status */
+  --sbl-success: 52 211 153; /* #34d399 emerald-400 */
+  --sbl-success-container: 2 44 34; /* #022c22 emerald-950 */
+  --sbl-warning: 251 191 36; /* #fbbf24 */
+  --sbl-warning-container: 63 46 10; /* #3f2e0a */
+  --sbl-error: 255 180 171; /* #ffb4ab */
+  --sbl-error-container: 147 0 10; /* #93000a */
+  --sbl-on-error-container: 255 218 214; /* #ffdad6 */
+  --sbl-info: 173 198 255; /* same channels as --sbl-secondary */
+
+  /* Neutral badge fill. Badge text uses --sbl-text-muted. */
+  --sbl-badge-neutral: 45 52 73; /* same channels as --sbl-surface-highest */
+
+  /* Scrim color. Strength stays with the consumer (dark 80%, light 40%). */
+  --sbl-overlay: 6 14 32; /* same channels as --sbl-surface-lowest */
+
+  /* Additional Tailwind M3 color tokens (Step 9.8.2.2 review) */
+
+  /* Surface and Inverse expansions */
+  --sbl-surface-container-lowest: 6 14 32; /* #060e20 */
+  --sbl-surface-container-low: 19 27 46; /* #131b2e */
+  --sbl-surface-container: 23 31 51; /* #171f33 */
+  --sbl-surface-container-high: 34 42 61; /* #222a3d */
+  --sbl-surface-container-highest: 45 52 73; /* #2d3449 */
+  --sbl-surface-dim: 11 19 38; /* #0b1326 */
+  --sbl-surface-bright: 49 57 77; /* #31394d */
+  --sbl-surface-variant: 45 52 73; /* #2d3449 */
+  --sbl-surface-tint: 183 196 255; /* #b7c4ff */
+  --sbl-inverse-surface: 218 226 253; /* #dae2fd */
+  --sbl-inverse-on-surface: 40 48 68; /* #283044 */
+
+  /* Text and Outline canonical tokens */
+  --sbl-on-surface: 218 226 253; /* #dae2fd */
+  --sbl-on-surface-variant: 196 197 215; /* #c4c5d7 */
+  --sbl-on-background: 218 226 253; /* #dae2fd */
+  --sbl-outline: 142 144 160; /* #8e90a0 */
+  --sbl-outline-variant: 67 70 85; /* #434655 */
+
+  /* Primary fixed and inverse tokens */
+  --sbl-inverse-primary: 33 81 218; /* #2151da */
+  --sbl-primary-fixed: 220 225 255; /* #dce1ff */
+  --sbl-primary-fixed-dim: 183 196 255; /* #b7c4ff */
+  --sbl-on-primary-fixed: 0 21 81; /* #001551 */
+  --sbl-on-primary-fixed-variant: 0 57 181; /* #0039b5 */
+
+  /* Secondary fixed and on-secondary tokens */
+  --sbl-on-secondary: 0 46 106; /* #002e6a */
+  --sbl-secondary-fixed: 216 226 255; /* #d8e2ff */
+  --sbl-secondary-fixed-dim: 173 198 255; /* #adc6ff */
+  --sbl-on-secondary-fixed: 0 26 66; /* #001a42 */
+  --sbl-on-secondary-fixed-variant: 0 67 149; /* #004395 */
+
+  /* Tertiary tonal palette tokens */
+  --sbl-tertiary: 184 199 230; /* #b8c7e6 */
+  --sbl-on-tertiary: 34 49 73; /* #223149 */
+  --sbl-tertiary-container: 78 92 119; /* #4e5c77 */
+  --sbl-on-tertiary-container: 198 213 245; /* #c6d5f5 */
+  --sbl-tertiary-fixed: 215 227 255; /* #d7e3ff */
+  --sbl-tertiary-fixed-dim: 184 199 230; /* #b8c7e6 */
+  --sbl-on-tertiary-fixed: 12 27 51; /* #0c1b33 */
+  --sbl-on-tertiary-fixed-variant: 57 71 97; /* #394761 */
+
+  /* Error token expansions */
+  --sbl-on-error: 105 0 5; /* #690005 */
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+
+  /* Light Mode — approved proposals from Step 9.8.2.1. */
+
+  /* Background and surface levels */
+  --sbl-background: 244 246 251; /* #f4f6fb */
+  --sbl-surface-lowest: 255 255 255; /* #ffffff */
+  --sbl-surface-low: 232 237 248; /* #e8edf8 */
+  --sbl-surface: 221 228 244; /* #dde4f4 */
+  --sbl-surface-high: 208 216 239; /* #d0d8ef */
+  --sbl-surface-highest: 195 204 230; /* #c3cce6 */
+
+  /* Text */
+  --sbl-text: 27 36 64; /* #1b2440 */
+  --sbl-text-muted: 62 72 100; /* #3e4864 */
+  --sbl-text-faint: 92 100 124; /* #5c647c */
+
+  /* Primary and secondary */
+  --sbl-primary: 33 81 218; /* #2151da */
+  --sbl-on-primary: 255 255 255; /* #ffffff */
+  --sbl-primary-container: 220 225 255; /* #dce1ff */
+  --sbl-on-primary-container: 0 21 81; /* #001551 */
+  --sbl-primary-hover: 195 207 252; /* #c3cffc */
+  --sbl-secondary: 0 67 149; /* #004395 */
+  --sbl-secondary-container: 216 226 255; /* #d8e2ff */
+  --sbl-on-secondary-container: 0 26 66; /* #001a42 */
+
+  /* Borders, inputs, buttons */
+  --sbl-border: 197 203 224; /* #c5cbe0 */
+  --sbl-input: 221 228 244; /* same channels as --sbl-surface */
+  --sbl-button-primary: 220 225 255; /* same channels as --sbl-primary-container */
+  --sbl-button-secondary: 208 216 239; /* same channels as --sbl-surface-high */
+
+  /* Status */
+  --sbl-success: 4 120 87; /* #047857 */
+  --sbl-success-container: 209 250 229; /* #d1fae5 */
+  --sbl-warning: 146 64 14; /* #92400e */
+  --sbl-warning-container: 254 243 199; /* #fef3c7 */
+  --sbl-error: 186 26 26; /* #ba1a1a */
+  --sbl-error-container: 255 218 214; /* #ffdad6 */
+  --sbl-on-error-container: 105 0 5; /* #690005 */
+  --sbl-info: 0 67 149; /* same channels as --sbl-secondary */
+
+  /* Neutral badge fill. Badge text uses --sbl-text-muted. */
+  --sbl-badge-neutral: 195 204 230; /* same channels as --sbl-surface-highest */
+
+  /* Scrim color. Intended consumer alpha is 40%. */
+  --sbl-overlay: 15 23 42; /* #0f172a */
+
+  /* Additional Tailwind M3 color tokens (Step 9.8.2.2 review) */
+
+  /* Surface and Inverse expansions */
+  --sbl-surface-container-lowest: 255 255 255; /* #ffffff, reused --sbl-surface-lowest */
+  --sbl-surface-container-low: 232 237 248; /* #e8edf8, reused --sbl-surface-low */
+  --sbl-surface-container: 221 228 244; /* #dde4f4, reused --sbl-surface */
+  --sbl-surface-container-high: 208 216 239; /* #d0d8ef, reused --sbl-surface-high */
+  --sbl-surface-container-highest: 195 204 230; /* #c3cce6, reused --sbl-surface-highest */
+  --sbl-surface-dim: 208 216 239; /* #d0d8ef, reused --sbl-surface-high */
+  --sbl-surface-bright: 255 255 255; /* #ffffff, reused --sbl-surface-lowest */
+  --sbl-surface-variant: 195 204 230; /* #c3cce6, reused --sbl-surface-highest */
+  --sbl-surface-tint: 33 81 218; /* #2151da, reused --sbl-primary */
+  --sbl-inverse-surface: 27 36 64; /* #1b2440, reused --sbl-text */
+  --sbl-inverse-on-surface: 244 246 251; /* #f4f6fb, reused --sbl-background */
+
+  /* Text and Outline canonical tokens */
+  --sbl-on-surface: 27 36 64; /* #1b2440, reused --sbl-text */
+  --sbl-on-surface-variant: 62 72 100; /* #3e4864, reused --sbl-text-muted */
+  --sbl-on-background: 27 36 64; /* #1b2440, reused --sbl-text */
+  --sbl-outline: 92 100 124; /* #5c647c, reused --sbl-text-faint */
+  --sbl-outline-variant: 197 203 224; /* #c5cbe0, reused --sbl-border */
+
+  /* Primary fixed and inverse tokens */
+  --sbl-inverse-primary: 195 207 252; /* #c3cffc, reused --sbl-primary-hover */
+  --sbl-primary-fixed: 220 225 255; /* #dce1ff, reused --sbl-primary-container */
+  --sbl-primary-fixed-dim: 183 196 255; /* #b7c4ff [Requires Approval] M3 fixed Tone 80 */
+  --sbl-on-primary-fixed: 0 21 81; /* #001551, reused --sbl-on-primary-container */
+  --sbl-on-primary-fixed-variant: 0 57 181; /* #0039b5 [Requires Approval] M3 fixed Tone 30 */
+
+  /* Secondary fixed and on-secondary tokens */
+  --sbl-on-secondary: 255 255 255; /* #ffffff [Requires Approval] Accessible Tone 100 on #004395 */
+  --sbl-secondary-fixed: 216 226 255; /* #d8e2ff, reused --sbl-secondary-container */
+  --sbl-secondary-fixed-dim: 173 198 255; /* #adc6ff [Requires Approval] M3 fixed Tone 80 */
+  --sbl-on-secondary-fixed: 0 26 66; /* #001a42, reused --sbl-on-secondary-container */
+  --sbl-on-secondary-fixed-variant: 0 67 149; /* #004395, reused --sbl-secondary */
+
+  /* Tertiary tonal palette tokens */
+  --sbl-tertiary: 57 71 97; /* #394761 [Requires Approval] Accessible Tone 30, 7.5:1 on white */
+  --sbl-on-tertiary: 255 255 255; /* #ffffff [Requires Approval] Accessible Tone 100 on #394761 */
+  --sbl-tertiary-container: 215 227 255; /* #d7e3ff [Requires Approval] Palette Tone 90 */
+  --sbl-on-tertiary-container: 12 27 51; /* #0c1b33 [Requires Approval] Palette Tone 10 */
+  --sbl-tertiary-fixed: 215 227 255; /* #d7e3ff [Requires Approval] M3 fixed Tone 90 */
+  --sbl-tertiary-fixed-dim: 184 199 230; /* #b8c7e6 [Requires Approval] M3 fixed Tone 80 */
+  --sbl-on-tertiary-fixed: 12 27 51; /* #0c1b33 [Requires Approval] M3 fixed Tone 10 */
+  --sbl-on-tertiary-fixed-variant: 57 71 97; /* #394761 [Requires Approval] M3 fixed Tone 30 */
+
+  /* Error token expansions */
+  --sbl-on-error: 255 255 255; /* #ffffff [Requires Approval] Accessible Tone 100 on #ba1a1a */
+}
+
+/*
+ * Paint a theme background before dashboard CSS arrives.
+ * Does not set layout, type, or component size.
+ */
+html,
+body {
+  background-color: rgb(var(--sbl-background));
+  color: rgb(var(--sbl-text));
+}

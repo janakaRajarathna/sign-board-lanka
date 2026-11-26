@@ -1,0 +1,226 @@
+<%
+  var stage = p.stage || {};
+  var customer = p.customer || {};
+  var history = Array.isArray(p.history) ? p.history : [];
+
+  function statusBadge(status) {
+    if (status === 'ACTIVE') return 'bg-primary-container text-on-primary-container';
+    if (status === 'COMPLETED') return 'bg-surface-container-high text-on-surface';
+    if (status === 'CANCELLED') return 'bg-error-container text-on-error-container';
+    return 'bg-surface-container text-on-surface-variant';
+  }
+
+  function fmtDate(val) {
+    if (!val) return '—';
+    try {
+      var dt = new Date(val);
+      if (isNaN(dt.getTime())) return String(val);
+      return dt.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    } catch(e) { return String(val); }
+  }
+
+  function fmtDateTime(val) {
+    if (!val) return '—';
+    try {
+      var dt = new Date(val);
+      if (isNaN(dt.getTime())) return String(val);
+      return dt.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' +
+             dt.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    } catch(e) { return String(val); }
+  }
+
+  function changeTypeLabel(ct) {
+    var map = {
+      'STAGE_CHANGE': 'Stage Transition',
+      'MANUAL_STAGE_CHANGE': 'Manual Stage Override',
+      'PROJECT_CANCELLED': 'Project Cancelled',
+      'PROJECT_REACTIVATED': 'Project Reactivated',
+      'PROJECT_COMPLETED': 'Project Completed'
+    };
+    return map[ct] || ct;
+  }
+%>
+<%- include('../partials/head-theme', { title: p.projectCode + ' – Project Details' }) %>
+<%- include('../partials/project-shell-start', { user: user, csrfToken: csrfToken, activePath: 'projects' }) %>
+
+<div class="px-space-md lg:px-space-lg py-space-md lg:py-space-lg flex flex-col space-y-space-lg">
+
+  <!-- BACK LINK -->
+  <div>
+    <a href="/projects" class="inline-flex items-center gap-1.5 font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors">
+      <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+      Back to Projects
+    </a>
+  </div>
+
+  <!-- HEADER -->
+  <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-space-md">
+    <div class="space-y-space-xs">
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="font-code-tabular text-label-sm text-on-surface-variant uppercase tracking-wider bg-surface-container-high px-2 py-0.5">
+          <%= p.projectCode %>
+        </span>
+        <span class="inline-flex items-center px-2.5 py-0.5 font-label-sm text-label-sm <%= statusBadge(p.projectStatus) %>">
+          <%= p.projectStatus %>
+        </span>
+        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-surface-container-highest text-primary font-code-tabular text-label-sm font-semibold">
+          <span class="w-1.5 h-1.5 bg-primary"></span>
+          Stg <%= stage.stageOrder %>: <%= stage.stageName %>
+        </span>
+      </div>
+      <h1 class="font-headline-md text-headline-md text-on-surface tracking-tight"><%= p.projectName %></h1>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-space-lg">
+
+    <!-- PROJECT INFO CARD -->
+    <div class="bg-surface-container-lowest border border-outline-variant/30 p-space-md space-y-space-md">
+      <h2 class="font-headline-sm text-headline-sm text-on-surface border-b border-outline-variant/30 pb-space-sm">Project Information</h2>
+      <dl class="space-y-space-sm">
+        <% if (p.description) { %>
+        <div>
+          <dt class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-0.5">Description</dt>
+          <dd class="font-body-md text-body-md text-on-surface"><%= p.description %></dd>
+        </div>
+        <% } %>
+        <% if (p.projectAddress) { %>
+        <div>
+          <dt class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-0.5">Address</dt>
+          <dd class="font-body-md text-body-md text-on-surface"><%= p.projectAddress %></dd>
+        </div>
+        <% } %>
+        <% if (p.projectLocation) { %>
+        <div>
+          <dt class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-0.5">Location</dt>
+          <dd class="font-body-md text-body-md text-on-surface"><%= p.projectLocation %></dd>
+        </div>
+        <% } %>
+        <div class="grid grid-cols-2 gap-space-sm pt-space-xs">
+          <div>
+            <dt class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-0.5">Assigned PM</dt>
+            <dd class="font-body-md text-body-md text-on-surface">
+              <% if (p.assignedPmName) { %>
+              <span class="text-primary font-semibold"><%= p.assignedPmName %></span>
+              <% } else { %>
+              <span class="text-outline italic">Unassigned</span>
+              <% } %>
+            </dd>
+          </div>
+          <div>
+            <dt class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-0.5">Created By</dt>
+            <dd class="font-body-md text-body-md text-on-surface"><%= p.createdByName || '—' %></dd>
+          </div>
+          <div>
+            <dt class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-0.5">Created</dt>
+            <dd class="font-code-tabular text-label-sm text-on-surface"><%= fmtDate(p.createdAt) %></dd>
+          </div>
+          <div>
+            <dt class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-0.5">Last Updated</dt>
+            <dd class="font-code-tabular text-label-sm text-on-surface"><%= fmtDate(p.updatedAt) %></dd>
+          </div>
+          <% if (p.completedAt) { %>
+          <div class="col-span-2">
+            <dt class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-0.5">Completed</dt>
+            <dd class="font-code-tabular text-label-sm text-on-surface"><%= fmtDate(p.completedAt) %></dd>
+          </div>
+          <% } %>
+        </div>
+      </dl>
+    </div>
+
+    <!-- CUSTOMER INFO CARD -->
+    <div class="bg-surface-container-lowest border border-outline-variant/30 p-space-md space-y-space-md">
+      <h2 class="font-headline-sm text-headline-sm text-on-surface border-b border-outline-variant/30 pb-space-sm">Customer</h2>
+      <dl class="space-y-space-sm">
+        <div>
+          <dt class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-0.5">Name</dt>
+          <dd class="font-headline-sm text-headline-sm text-on-surface font-semibold"><%= customer.fullName %></dd>
+        </div>
+        <% if (customer.email) { %>
+        <div>
+          <dt class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-0.5">Email</dt>
+          <dd class="font-body-md text-body-md text-on-surface"><%= customer.email %></dd>
+        </div>
+        <% } %>
+        <% if (customer.phone) { %>
+        <div>
+          <dt class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-0.5">Phone</dt>
+          <dd class="font-body-md text-body-md text-on-surface"><%= customer.phone %></dd>
+        </div>
+        <% } %>
+        <% if (customer.address) { %>
+        <div>
+          <dt class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-0.5">Address</dt>
+          <dd class="font-body-md text-body-md text-on-surface"><%= customer.address %></dd>
+        </div>
+        <% } %>
+      </dl>
+    </div>
+
+  </div>
+
+  <!-- HISTORY TIMELINE -->
+  <div class="bg-surface-container-lowest border border-outline-variant/30 p-space-md space-y-space-md">
+    <h2 class="font-headline-sm text-headline-sm text-on-surface border-b border-outline-variant/30 pb-space-sm">
+      Project History
+      <span class="ml-2 font-label-sm text-label-sm text-outline font-normal">(<%= history.length %> event<%= history.length !== 1 ? 's' : '' %>)</span>
+    </h2>
+    <% if (history.length === 0) { %>
+    <div class="flex flex-col items-center py-8 text-on-surface-variant gap-2">
+      <span class="material-symbols-outlined text-[36px] text-outline">history</span>
+      <p class="font-body-sm text-body-sm">No history events recorded for this project yet.</p>
+    </div>
+    <% } else { %>
+    <div class="space-y-space-sm">
+      <% history.forEach(function(h, idx) { %>
+      <div class="flex gap-space-md">
+        <!-- Timeline dot -->
+        <div class="flex flex-col items-center">
+          <div class="w-2.5 h-2.5 rounded-full mt-1.5 shrink-0 <%= h.isManualChange ? 'bg-primary' : 'bg-outline' %>"></div>
+          <% if (idx < history.length - 1) { %><div class="w-px flex-1 bg-outline-variant/40 my-1"></div><% } %>
+        </div>
+        <!-- Event content -->
+        <div class="flex-1 pb-space-sm">
+          <div class="flex flex-wrap items-center gap-2 mb-1">
+            <span class="font-label-sm text-label-sm uppercase tracking-wider <%= h.isManualChange ? 'text-primary font-bold' : 'text-on-surface' %>">
+              <%= changeTypeLabel(h.changeType) %>
+            </span>
+            <% if (h.isManualChange) { %>
+            <span class="px-1.5 py-0.5 bg-primary-container text-on-primary-container font-label-sm text-[10px] uppercase tracking-wider">Manual</span>
+            <% } %>
+            <span class="font-code-tabular text-[10px] text-outline ml-auto"><%= fmtDateTime(h.changedAt) %></span>
+          </div>
+          <!-- Stage change -->
+          <% if (h.oldStageName || h.newStageName) { %>
+          <div class="font-body-sm text-body-sm text-on-surface-variant mb-0.5">
+            Stage: <% if (h.oldStageName) { %><span class="text-on-surface"><%= h.oldStageName %></span><% } %>
+            <% if (h.oldStageName && h.newStageName) { %> <span class="material-symbols-outlined text-[13px] align-middle">arrow_forward</span> <% } %>
+            <% if (h.newStageName) { %><span class="text-on-surface font-semibold"><%= h.newStageName %></span><% } %>
+          </div>
+          <% } %>
+          <!-- Status change -->
+          <% if (h.oldProjectStatus || h.newProjectStatus) { %>
+          <div class="font-body-sm text-body-sm text-on-surface-variant mb-0.5">
+            Status: <% if (h.oldProjectStatus) { %><%= h.oldProjectStatus %><% } %>
+            <% if (h.oldProjectStatus && h.newProjectStatus) { %> → <% } %>
+            <% if (h.newProjectStatus) { %><span class="font-semibold text-on-surface"><%= h.newProjectStatus %></span><% } %>
+          </div>
+          <% } %>
+          <!-- Reason (manual only) -->
+          <% if (h.changeReason) { %>
+          <div class="mt-1 px-2 py-1.5 bg-surface-container border-l-2 border-primary/40 font-body-sm text-body-sm text-on-surface-variant italic">
+            &ldquo;<%= h.changeReason %>&rdquo;
+          </div>
+          <% } %>
+          <div class="font-label-sm text-label-sm text-outline mt-1">By: <%= h.changedByName %></div>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+    <% } %>
+  </div>
+
+</div>
+
+<%- include('../partials/project-shell-end') %>

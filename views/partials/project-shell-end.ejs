@@ -1,0 +1,28 @@
+</main></div>
+<script>
+  function toggleMobileMenu() {
+    var sidebar = document.getElementById('sidebarDrawer');
+    var backdrop = document.getElementById('mobileDrawerBackdrop');
+    if (!sidebar || !backdrop) return;
+    var isClosed = sidebar.classList.contains('-translate-x-full');
+    if (isClosed) {
+      sidebar.classList.remove('-translate-x-full');
+      backdrop.classList.remove('hidden');
+    } else {
+      sidebar.classList.add('-translate-x-full');
+      backdrop.classList.add('hidden');
+    }
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var sidebar = document.getElementById('sidebarDrawer');
+      var backdrop = document.getElementById('mobileDrawerBackdrop');
+      if (sidebar && !sidebar.classList.contains('-translate-x-full')) {
+        sidebar.classList.add('-translate-x-full');
+        if (backdrop) backdrop.classList.add('hidden');
+      }
+    }
+  });
+</script>
+</body></html>
