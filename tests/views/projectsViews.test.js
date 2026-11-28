@@ -8,6 +8,7 @@ const ejs = require('ejs');
 
 const indexTemplatePath = path.resolve(__dirname, '../../views/projects/index.ejs');
 const detailTemplatePath = path.resolve(__dirname, '../../views/projects/detail.ejs');
+const newTemplatePath = path.resolve(__dirname, '../../views/projects/new.ejs');
 const ownerDashboardPath = path.resolve(__dirname, '../../views/dashboards/owner.ejs');
 const pmDashboardPath = path.resolve(__dirname, '../../views/dashboards/pm.ejs');
 
@@ -224,13 +225,13 @@ describe('Step 9.8.6 – Projects EJS Views Tests', () => {
       assert.ok(html.includes('id="sidebarDrawer"'));
     });
 
-    it('7. Renders empty history state and Unassigned PM fallback', async () => {
+    it('7. Renders empty history state and Not Assigned PM fallback', async () => {
       const html = await ejs.renderFile(detailTemplatePath, {
         user: { userId: '1', fullName: 'Owner User', role: 'OWNER' },
         csrfToken: 'csrf_123',
         p: createSampleProjectDetail({ assignedPmName: null, history: [] }),
       });
-      assert.ok(html.includes('Unassigned'));
+      assert.ok(html.includes('Not Assigned'));
       assert.ok(html.includes('No history events recorded for this project yet.'));
     });
 
@@ -268,11 +269,159 @@ describe('Step 9.8.6 – Projects EJS Views Tests', () => {
       assert.ok(ownerRaw.includes('data-path="projects" href="/projects"'));
       assert.ok(ownerRaw.includes("'projects': '/projects'"), 'Owner IMPLEMENTED_PATHS must include projects');
       assert.ok(ownerRaw.includes('href="/projects/<%= p.projectId %>"'));
+      assert.ok(ownerRaw.includes('href="/projects/new" id="btn-new-project"'));
+      assert.ok(!ownerRaw.includes('Opening New Project Intake Specification Form'));
 
       const pmRaw = fs.readFileSync(pmDashboardPath, 'utf8');
       assert.ok(pmRaw.includes('data-path="dashboard" href="/dashboard"'));
       assert.ok(pmRaw.includes('data-path="my-projects" href="/projects"'));
       assert.ok(pmRaw.includes('href="/projects/<%= p.projectId %>"'));
+    });
+  });
+
+  describe('views/projects/new.ejs', () => {
+    it('10. Renders all three registration sections, form POST/CSRF, PM options, and theme/mobile shell', async () => {
+      const html = await ejs.renderFile(newTemplatePath, {
+        user: { userId: '1', fullName: 'Owner User', role: 'OWNER' },
+        csrfToken: 'csrf_123',
+        projectManagers: [{ userId: 7, fullName: 'Kasun Perera', email: 'kasun@test.local' }],
+        formValues: { customerMode: 'existing' },
+        errors: {},
+        formError: null,
+        duplicateCustomer: null,
+      });
+      assert.ok(html.includes('New Project Registration'));
+      assert.ok(html.includes('method="POST" action="/projects"'));
+      assert.ok(html.includes('name="_csrf" value="csrf_123"'));
+      assert.ok(html.includes('A. Customer Information'));
+      assert.ok(html.includes('Register New Customer'));
+      assert.ok(html.includes('Full Name'));
+      assert.ok(html.includes('Email'));
+      assert.ok(html.includes('Phone'));
+      assert.ok(html.includes('Address'));
+      assert.ok(html.includes('B. Project Information'));
+      assert.ok(html.includes('Automatically generated'));
+      assert.ok(html.includes('Project Name'));
+      assert.ok(html.includes('Description'));
+      assert.ok(html.includes('Project Address'));
+      assert.ok(html.includes('Project Location'));
+      assert.ok(html.includes('C. Project Assignment'));
+      assert.ok(html.includes('Kasun Perera'));
+      assert.ok(html.includes('href="/projects"'));
+      assert.ok(html.includes('Cancel'));
+      assert.ok(html.includes('id="btn-save-project"'));
+      assert.ok(!html.includes('UI only – submission not implemented'));
+      assert.ok(html.includes('/css/theme.css'));
+      assert.ok(html.includes('/js/theme.js'));
+      assert.ok(html.includes('id="theme-toggle"'));
+      assert.ok(html.includes('id="sidebarDrawer"'));
+      assert.ok(!html.includes('emerald-'));
+    });
+  });
+
+  describe('Project Cancellation UI visibility & dialog', () => {
+    it('11. detail.ejs shows Cancel button and dialog only for OWNER + ACTIVE project, and escapes cancelError', async () => {
+      const ownerActiveHtml = await ejs.renderFile(detailTemplatePath, {
+        user: { userId: '1', fullName: 'Owner User', role: 'OWNER' },
+        csrfToken: 'csrf_cancel_1',
+        p: createSampleProjectDetail({ projectStatus: 'ACTIVE' }),
+        cancelError: '<script>alert(1)</script>',
+      });
+      assert.ok(ownerActiveHtml.includes('id="btn-cancel-project"'));
+      assert.ok(ownerActiveHtml.includes('id="cancelProjectDialog"'));
+      assert.ok(ownerActiveHtml.includes('action="/projects/1/cancel"'));
+      assert.ok(ownerActiveHtml.includes('name="_csrf" value="csrf_cancel_1"'));
+      assert.ok(ownerActiveHtml.includes('id="cancelReason"'));
+      assert.ok(ownerActiveHtml.includes('maxlength="500"'));
+      assert.ok(ownerActiveHtml.includes('id="cancelReasonCount"'));
+      assert.ok(ownerActiveHtml.includes('id="cancelDialogAbort"'));
+      assert.ok(ownerActiveHtml.includes('id="cancelDialogSubmit"'));
+      assert.ok(!ownerActiveHtml.includes('<script>alert(1)</script>'));
+      assert.ok(ownerActiveHtml.includes('&lt;script&gt;alert(1)&lt;/script&gt;'));
+
+      const ownerCompletedHtml = await ejs.renderFile(detailTemplatePath, {
+        user: { userId: '1', fullName: 'Owner User', role: 'OWNER' },
+        csrfToken: 'csrf_cancel_2',
+        p: createSampleProjectDetail({ projectStatus: 'COMPLETED' }),
+      });
+      assert.ok(!ownerCompletedHtml.includes('id="btn-cancel-project"'));
+      assert.ok(!ownerCompletedHtml.includes('id="cancelProjectDialog"'));
+
+      const ownerCancelledHtml = await ejs.renderFile(detailTemplatePath, {
+        user: { userId: '1', fullName: 'Owner User', role: 'OWNER' },
+        csrfToken: 'csrf_cancel_3',
+        p: createSampleProjectDetail({ projectStatus: 'CANCELLED' }),
+      });
+      assert.ok(!ownerCancelledHtml.includes('id="btn-cancel-project"'));
+      assert.ok(!ownerCancelledHtml.includes('id="cancelProjectDialog"'));
+
+      const pmActiveHtml = await ejs.renderFile(detailTemplatePath, {
+        user: { userId: '2', fullName: 'PM User', role: 'PROJECT_MANAGER' },
+        csrfToken: 'csrf_cancel_4',
+        p: createSampleProjectDetail({ projectStatus: 'ACTIVE' }),
+      });
+      assert.ok(!pmActiveHtml.includes('id="btn-cancel-project"'));
+      assert.ok(!pmActiveHtml.includes('id="cancelProjectDialog"'));
+    });
+
+    it('12. index.ejs shows Cancel button only on ACTIVE rows for OWNER and hides for PM', async () => {
+      const ownerHtml = await ejs.renderFile(indexTemplatePath, {
+        user: { userId: '1', fullName: 'Owner User', role: 'OWNER' },
+        csrfToken: 'csrf_idx_1',
+        data: createSampleListData(),
+      });
+      assert.ok(ownerHtml.includes('data-cancel-project-id="1"'));
+      assert.ok(!ownerHtml.includes('data-cancel-project-id="2"'));
+      assert.ok(ownerHtml.includes('id="cancelProjectDialog"'));
+      assert.ok(ownerHtml.includes('name="_csrf" value="csrf_idx_1"'));
+
+      const pmHtml = await ejs.renderFile(indexTemplatePath, {
+        user: { userId: '2', fullName: 'PM User', role: 'PROJECT_MANAGER' },
+        csrfToken: 'csrf_idx_2',
+        data: createSampleListData(),
+      });
+      assert.ok(!pmHtml.includes('data-cancel-project-id='));
+      assert.ok(!pmHtml.includes('id="cancelProjectDialog"'));
+    });
+
+    it('13. owner.ejs renders Cancel button only for ACTIVE projects and includes cancel dialog', async () => {
+      const ownerDashHtml = await ejs.renderFile(ownerDashboardPath, {
+        user: { userId: '1', fullName: 'Owner User', role: 'OWNER' },
+        csrfToken: 'csrf_dash_1',
+        data: {
+          kpis: { activeProjects: 1, completedProjects: 1, cancelledProjects: 0, totalProjects: 2 },
+          recentProjects: [
+            {
+              projectId: 10,
+              projectCode: 'SBL-2026-0010',
+              projectName: 'Active Sign',
+              customerName: 'Cust A',
+              stageOrder: 1,
+              stageName: 'PROJECT_REGISTRATION',
+              projectStatus: 'ACTIVE',
+              assignedPmName: null,
+              updatedAt: '2026-11-28T10:00:00Z',
+            },
+            {
+              projectId: 11,
+              projectCode: 'SBL-2026-0011',
+              projectName: 'Done Sign',
+              customerName: 'Cust B',
+              stageOrder: 8,
+              stageName: 'FINAL_PAYMENT_AND_COMPLETION',
+              projectStatus: 'COMPLETED',
+              assignedPmName: null,
+              updatedAt: '2026-11-28T10:00:00Z',
+            },
+          ],
+          stageDistribution: [],
+          pendingActions: { pendingSiteVisits: 0, pendingDesigns: 0, pendingInvoices: 0 },
+        },
+      });
+      assert.ok(ownerDashHtml.includes('data-cancel-project-id="10"'));
+      assert.ok(!ownerDashHtml.includes('data-cancel-project-id="11"'));
+      assert.ok(ownerDashHtml.includes('id="cancelProjectDialog"'));
+      assert.ok(ownerDashHtml.includes('name="_csrf" value="csrf_dash_1"'));
     });
   });
 });

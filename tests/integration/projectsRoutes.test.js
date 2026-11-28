@@ -17,6 +17,10 @@ const originalAuthServiceCache = require.cache[authServicePath];
 const originalAppCache = require.cache[appPath];
 
 let mockDbQueryHandler = async () => ({ rows: [] });
+let mockDbConnectHandler = async () => ({
+  query: async (...args) => mockDbQueryHandler(...args),
+  release: () => {},
+});
 
 require.cache[databaseConfigPath] = {
   id: databaseConfigPath,
@@ -24,6 +28,7 @@ require.cache[databaseConfigPath] = {
   loaded: true,
   exports: {
     query: async (...args) => mockDbQueryHandler(...args),
+    connect: async (...args) => mockDbConnectHandler(...args),
   },
 };
 
@@ -362,5 +367,319 @@ describe('Step 9.8.6 – Projects Routes Integration Tests', () => {
     assert.ok(countQuery.params.includes('%Pylon%'));
     assert.ok(countQuery.params.includes('ACTIVE'));
     assert.ok(countQuery.params.includes(2));
+  });
+
+  it('13. Unauthenticated GET /projects/new redirects to /login', async () => {
+    const res = await fetch(`${baseUrl}/projects/new`, { redirect: 'manual' });
+    assert.strictEqual(res.status, 302);
+    assert.strictEqual(res.headers.get('location'), '/login');
+  });
+
+  it('14. OWNER gets 200 on GET /projects/new without hitting /projects/:projectId', async () => {
+    mockDbQueryHandler = async (sql) => {
+      if (sql.includes("r.role_name = 'PROJECT_MANAGER'")) {
+        return { rows: [{ user_id: 2, full_name: 'PM User', email: 'pm@test.local' }] };
+      }
+      return { rows: [] };
+    };
+    const login = await performLogin('owner@test.local', 'valid_owner_pwd');
+    const res = await fetch(`${baseUrl}/projects/new`, { headers: { Cookie: login.cookie } });
+    assert.strictEqual(res.status, 200);
+    const html = await res.text();
+    assert.ok(html.includes('New Project Registration'));
+    assert.ok(html.includes('A. Customer Information'));
+    assert.ok(html.includes('B. Project Information'));
+    assert.ok(html.includes('C. Project Assignment'));
+    assert.ok(html.includes('PM User'));
+    assert.ok(!html.includes('UI only – submission not implemented'));
+  });
+
+  it('15. PROJECT_MANAGER gets 403 on GET /projects/new', async () => {
+    const login = await performLogin('pm@test.local', 'valid_pm_pwd');
+    const res = await fetch(`${baseUrl}/projects/new`, { headers: { Cookie: login.cookie } });
+    assert.strictEqual(res.status, 403);
+  });
+
+  it('16. ACCOUNTS gets 403 on GET /projects/new', async () => {
+    const login = await performLogin('accounts@test.local', 'valid_accounts_pwd');
+    const res = await fetch(`${baseUrl}/projects/new`, { headers: { Cookie: login.cookie } });
+    assert.strictEqual(res.status, 403);
+  });
+
+  it('17. Customer search & PM list endpoints enforce OWNER-only access', async () => {
+    const pmLogin = await performLogin('pm@test.local', 'valid_pm_pwd');
+    const accLogin = await performLogin('accounts@test.local', 'valid_accounts_pwd');
+
+    const pmCust = await fetch(`${baseUrl}/projects/customers/search?q=colombo`, { headers: { Cookie: pmLogin.cookie } });
+    assert.strictEqual(pmCust.status, 403);
+
+    const accCust = await fetch(`${baseUrl}/projects/customers/search?q=colombo`, { headers: { Cookie: accLogin.cookie } });
+    assert.strictEqual(accCust.status, 403);
+
+    const pmMgrs = await fetch(`${baseUrl}/projects/managers`, { headers: { Cookie: pmLogin.cookie } });
+    assert.strictEqual(pmMgrs.status, 403);
+  });
+
+  it('18. OWNER can search active customers via GET /projects/customers/search', async () => {
+    mockDbQueryHandler = async (sql) => {
+      if (sql.includes('FROM public.customers')) {
+        return {
+          rows: [{
+            customer_id: 7,
+            full_name: 'Dialog Axiata PLC',
+            email: 'signage@dialog.lk',
+            phone: '+94112345678',
+            address: '475 Union Place, Colombo 02',
+          }],
+        };
+      }
+      return { rows: [] };
+    };
+    const login = await performLogin('owner@test.local', 'valid_owner_pwd');
+    const res = await fetch(`${baseUrl}/projects/customers/search?q=dialog`, { headers: { Cookie: login.cookie } });
+    assert.strictEqual(res.status, 200);
+    const data = await res.json();
+    assert.strictEqual(data.customers.length, 1);
+    assert.strictEqual(data.customers[0].customerId, 7);
+  });
+
+  it('19. POST /projects enforces CSRF and OWNER role', async () => {
+    const pmLogin = await performLogin('pm@test.local', 'valid_pm_pwd');
+    const pmRes = await fetch(`${baseUrl}/projects`, {
+      method: 'POST',
+      headers: {
+        Cookie: pmLogin.cookie,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({ _csrf: pmLogin.csrfToken, customerMode: 'existing', customerId: '1' }).toString(),
+    });
+    assert.strictEqual(pmRes.status, 403);
+
+    const ownerLogin = await performLogin('owner@test.local', 'valid_owner_pwd');
+    const noCsrfRes = await fetch(`${baseUrl}/projects`, {
+      method: 'POST',
+      headers: {
+        Cookie: ownerLogin.cookie,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({ customerMode: 'existing', customerId: '1' }).toString(),
+    });
+    assert.strictEqual(noCsrfRes.status, 403);
+  });
+
+  it('20. OWNER POST /projects creates project in transaction and redirects to /projects/:projectId', async () => {
+    const recordedInserts = [];
+    mockDbConnectHandler = async () => ({
+      query: async (sql, params) => {
+        if (sql.includes('FROM public.customers')) return { rows: [{ customer_id: 7, is_active: true }] };
+        if (sql.includes('MAX(')) return { rows: [{ max_seq: 1 }] };
+        if (sql.includes('INSERT INTO public.projects')) {
+          recordedInserts.push({ sql, params });
+          return { rows: [{ project_id: 88 }] };
+        }
+        return { rows: [] };
+      },
+      release: () => {},
+    });
+
+    mockDbQueryHandler = async (sql) => {
+      if (sql.includes('FROM public.projects p') && sql.includes('WHERE p.project_id = $1')) {
+        return {
+          rows: [{
+            project_id: 88,
+            project_code: 'SBL-2026-0002',
+            project_name: 'Created Pylon Sign',
+            description: 'Test Desc',
+            project_address: '475 Union Place',
+            project_location: 'Colombo 02',
+            project_status: 'ACTIVE',
+            created_at: new Date('2026-11-28T06:00:00Z'),
+            updated_at: null,
+            completed_at: null,
+            customer_id: 7,
+            customer_name: 'Dialog Axiata PLC',
+            customer_email: 'signage@dialog.lk',
+            customer_phone: '+94112345678',
+            customer_address: '475 Union Place, Colombo 02',
+            stage_id: 1,
+            stage_order: 1,
+            stage_name: 'PROJECT_REGISTRATION',
+            created_by_name: 'Owner User',
+            assigned_pm_name: null,
+          }],
+        };
+      }
+      return { rows: [] };
+    };
+
+    const ownerLogin = await performLogin('owner@test.local', 'valid_owner_pwd');
+    const newPageRes = await fetch(`${baseUrl}/projects/new`, { headers: { Cookie: ownerLogin.cookie } });
+    const postLoginCsrf = extractCsrfToken(await newPageRes.text());
+
+    const postRes = await fetch(`${baseUrl}/projects`, {
+      method: 'POST',
+      redirect: 'manual',
+      headers: {
+        Cookie: ownerLogin.cookie,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        _csrf: postLoginCsrf,
+        customerMode: 'existing',
+        customerId: '7',
+        projectName: 'Created Pylon Sign',
+        projectAddress: '475 Union Place',
+        projectLocation: 'Colombo 02',
+        description: 'Test Desc',
+        projectManagerId: '',
+        createdBy: '999',
+        projectCode: 'FAKE-001',
+      }).toString(),
+    });
+
+    assert.strictEqual(postRes.status, 302);
+    assert.strictEqual(postRes.headers.get('location'), '/projects/88');
+    assert.strictEqual(recordedInserts[0].params[6], 1, 'created_by must come from session userId (1)');
+
+    const detailRes = await fetch(`${baseUrl}/projects/88`, { headers: { Cookie: ownerLogin.cookie } });
+    assert.strictEqual(detailRes.status, 200);
+    const detailHtml = await detailRes.text();
+    assert.ok(detailHtml.includes('SBL-2026-0002'));
+    assert.ok(detailHtml.includes('Created Pylon Sign'));
+    assert.ok(detailHtml.includes('Dialog Axiata PLC'));
+    assert.ok(detailHtml.includes('Not Assigned'));
+  });
+
+  it('21. POST /projects/:projectId/cancel enforces auth, OWNER role, CSRF, and valid projectId', async () => {
+    // Unauthenticated without CSRF -> 403
+    const unauthNoCsrf = await fetch(`${baseUrl}/projects/1/cancel`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ reason: 'Test' }).toString(),
+    });
+    assert.strictEqual(unauthNoCsrf.status, 403);
+
+    // Unauthenticated with login page CSRF -> 302 redirect to /login
+    const loginPage = await fetch(`${baseUrl}/login`);
+    const loginCookie = loginPage.headers.get('set-cookie').split(';')[0];
+    const loginCsrf = extractCsrfToken(await loginPage.text());
+    const unauthWithCsrf = await fetch(`${baseUrl}/projects/1/cancel`, {
+      method: 'POST',
+      redirect: 'manual',
+      headers: { Cookie: loginCookie, 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ _csrf: loginCsrf, reason: 'Test' }).toString(),
+    });
+    assert.strictEqual(unauthWithCsrf.status, 302);
+    assert.strictEqual(unauthWithCsrf.headers.get('location'), '/login');
+
+    // PM gets 403 even with valid CSRF
+    const pmLogin = await performLogin('pm@test.local', 'valid_pm_pwd');
+    const pmRes = await fetch(`${baseUrl}/projects/1/cancel`, {
+      method: 'POST',
+      headers: { Cookie: pmLogin.cookie, 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ _csrf: pmLogin.csrfToken, reason: 'PM attempt' }).toString(),
+    });
+    assert.strictEqual(pmRes.status, 403);
+
+    // ACCOUNTS gets 403 even with valid CSRF
+    const accLogin = await performLogin('accounts@test.local', 'valid_accounts_pwd');
+    const accRes = await fetch(`${baseUrl}/projects/1/cancel`, {
+      method: 'POST',
+      headers: { Cookie: accLogin.cookie, 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ _csrf: accLogin.csrfToken, reason: 'Accounts attempt' }).toString(),
+    });
+    assert.strictEqual(accRes.status, 403);
+
+    // OWNER without CSRF gets 403
+    const ownerLogin = await performLogin('owner@test.local', 'valid_owner_pwd');
+    const ownerPage = await fetch(`${baseUrl}/projects`, { headers: { Cookie: ownerLogin.cookie } });
+    const ownerCsrf = extractCsrfToken(await ownerPage.text());
+
+    const noCsrfRes = await fetch(`${baseUrl}/projects/1/cancel`, {
+      method: 'POST',
+      headers: { Cookie: ownerLogin.cookie, 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ reason: 'Missing CSRF' }).toString(),
+    });
+    assert.strictEqual(noCsrfRes.status, 403);
+
+    // OWNER with invalid projectId gets 400
+    const badAlpha = await fetch(`${baseUrl}/projects/abc/cancel`, {
+      method: 'POST',
+      headers: { Cookie: ownerLogin.cookie, 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ _csrf: ownerCsrf, reason: 'Bad ID' }).toString(),
+    });
+    assert.strictEqual(badAlpha.status, 400);
+
+    const badZero = await fetch(`${baseUrl}/projects/0/cancel`, {
+      method: 'POST',
+      headers: { Cookie: ownerLogin.cookie, 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ _csrf: ownerCsrf, reason: 'Zero ID' }).toString(),
+    });
+    assert.strictEqual(badZero.status, 400);
+  });
+
+  it('22. OWNER POST /projects/:projectId/cancel succeeds in transaction and redirects to /projects/:projectId', async () => {
+    const txCalls = [];
+    mockDbConnectHandler = async () => ({
+      query: async (sql, params) => {
+        txCalls.push({ sql: sql.trim(), params });
+        return { rows: [], rowCount: 1 };
+      },
+      release: () => {},
+    });
+
+    const ownerLogin = await performLogin('owner@test.local', 'valid_owner_pwd');
+    const ownerPage = await fetch(`${baseUrl}/projects`, { headers: { Cookie: ownerLogin.cookie } });
+    const ownerCsrf = extractCsrfToken(await ownerPage.text());
+
+    const res = await fetch(`${baseUrl}/projects/1/cancel`, {
+      method: 'POST',
+      redirect: 'manual',
+      headers: { Cookie: ownerLogin.cookie, 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ _csrf: ownerCsrf, reason: 'Client withdrew order' }).toString(),
+    });
+
+    assert.strictEqual(res.status, 302);
+    assert.strictEqual(res.headers.get('location'), '/projects/1');
+    assert.ok(txCalls.some((c) => c.sql.includes('SELECT change_project_status($1, $2, \'CANCELLED\', $3)')));
+    assert.ok(txCalls.some((c) => c.sql.includes('UPDATE public.project_assignments')));
+    assert.ok(txCalls.some((c) => c.sql === 'COMMIT'));
+  });
+
+  it('23. OWNER POST /projects/:projectId/cancel returns 400 on empty reason and 409 on non-ACTIVE project', async () => {
+    setupMockProjectDb({ existingProjectIds: [1] });
+    const ownerLogin = await performLogin('owner@test.local', 'valid_owner_pwd');
+    const ownerPage = await fetch(`${baseUrl}/projects/1`, { headers: { Cookie: ownerLogin.cookie } });
+    const ownerCsrf = extractCsrfToken(await ownerPage.text());
+
+    // Empty reason -> 400 with rendered error banner
+    const emptyRes = await fetch(`${baseUrl}/projects/1/cancel`, {
+      method: 'POST',
+      headers: { Cookie: ownerLogin.cookie, 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ _csrf: ownerCsrf, reason: '   ' }).toString(),
+    });
+    assert.strictEqual(emptyRes.status, 400);
+    const emptyHtml = await emptyRes.text();
+    assert.ok(emptyHtml.includes('A cancellation reason is required.'));
+
+    // Non-ACTIVE project -> 409
+    mockDbConnectHandler = async () => ({
+      query: async (sql) => {
+        if (sql.includes('SELECT change_project_status')) {
+          throw new Error('This project status transition is not allowed');
+        }
+        return { rows: [] };
+      },
+      release: () => {},
+    });
+
+    const conflictRes = await fetch(`${baseUrl}/projects/1/cancel`, {
+      method: 'POST',
+      headers: { Cookie: ownerLogin.cookie, 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ _csrf: ownerCsrf, reason: 'Valid reason' }).toString(),
+    });
+    assert.strictEqual(conflictRes.status, 409);
+    const conflictHtml = await conflictRes.text();
+    assert.ok(conflictHtml.includes('Only active projects can be cancelled.'));
   });
 });

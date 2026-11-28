@@ -160,10 +160,25 @@
           <td class="px-space-sm py-3 font-code-tabular text-label-sm text-outline whitespace-nowrap"><%= fmtDate(p.createdAt) %></td>
           <td class="px-space-sm py-3 font-code-tabular text-label-sm text-outline whitespace-nowrap"><%= fmtDate(p.updatedAt) %></td>
           <td class="px-space-sm py-3 text-right whitespace-nowrap">
-            <a href="/projects/<%= p.projectId %>" class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-primary-container/20 hover:bg-primary-container text-primary hover:text-on-primary font-label-sm text-label-sm transition-colors">
-              <span class="material-symbols-outlined text-[14px]">open_in_new</span>
-              View Details
-            </a>
+            <div class="inline-flex items-center gap-1">
+              <a href="/projects/<%= p.projectId %>" class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-primary-container/20 hover:bg-primary-container text-primary hover:text-on-primary font-label-sm text-label-sm transition-colors">
+                <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+                View Details
+              </a>
+              <% if (p.projectStatus === 'ACTIVE' && user.role === 'OWNER') { %>
+              <button
+                type="button"
+                class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-error-container/40 hover:bg-error-container text-on-error-container font-label-sm text-label-sm transition-colors"
+                data-cancel-project-id="<%= p.projectId %>"
+                data-cancel-project-name="<%= p.projectName %>"
+                data-cancel-project-code="<%= p.projectCode %>"
+                title="Cancel project"
+              >
+                <span class="material-symbols-outlined text-[14px]">cancel</span>
+                Cancel
+              </button>
+              <% } %>
+            </div>
           </td>
         </tr>
         <% }); %>
@@ -205,5 +220,111 @@
   <% } %>
 
 </div>
+
+<% if (user.role === 'OWNER') { %>
+<!-- CANCEL PROJECT MODAL (shared across all project rows) -->
+<dialog
+  id="cancelProjectDialog"
+  class="bg-surface-container border border-outline-variant/60 shadow-2xl w-full max-w-md p-0 open:flex open:flex-col backdrop:bg-black/40"
+  aria-labelledby="cancelDialogTitle"
+  aria-modal="true"
+>
+  <div class="px-space-md py-space-sm border-b border-outline-variant/30 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <span class="material-symbols-outlined text-[20px] text-error">cancel</span>
+      <h2 id="cancelDialogTitle" class="font-headline-sm text-headline-sm text-on-surface">Cancel Project</h2>
+    </div>
+    <button
+      type="button"
+      class="p-space-xs text-outline hover:text-on-surface hover:bg-surface-container-high transition-colors"
+      id="cancelDialogClose"
+      aria-label="Close"
+    >
+      <span class="material-symbols-outlined text-[20px]">close</span>
+    </button>
+  </div>
+
+  <div class="px-space-md py-space-md space-y-space-md">
+    <p class="font-body-md text-body-md text-on-surface-variant">
+      You are about to cancel project
+      <strong class="text-on-surface" id="cancelProjectLabel"></strong>.
+      This action cannot be undone.
+    </p>
+
+    <form method="POST" id="cancelProjectForm" novalidate>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+      <div class="space-y-space-xs">
+        <label for="cancelReason" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+          Cancellation Reason <span class="text-error" aria-hidden="true">*</span>
+        </label>
+        <textarea
+          id="cancelReason"
+          name="reason"
+          rows="4"
+          maxlength="500"
+          required
+          placeholder="Enter a mandatory business reason..."
+          class="w-full px-space-sm py-space-xs bg-surface border border-outline-variant/60 focus:border-primary focus:outline-none font-body-md text-body-md text-on-surface placeholder:text-outline resize-none transition-colors"
+          aria-describedby="cancelReasonCount"
+        ></textarea>
+        <div class="flex justify-end">
+          <span id="cancelReasonCount" class="font-code-tabular text-[11px] text-outline">0 / 500</span>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-space-sm pt-space-sm">
+        <button type="button" id="cancelDialogAbort" class="px-4 py-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md transition-colors">
+          Keep Project
+        </button>
+        <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 bg-error hover:bg-error/90 text-on-error font-label-md text-label-md transition-colors">
+          <span class="material-symbols-outlined text-[16px]">cancel</span>
+          Confirm Cancellation
+        </button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<script>
+(function initCancelDialog() {
+  var dialog  = document.getElementById('cancelProjectDialog');
+  var form    = document.getElementById('cancelProjectForm');
+  var label   = document.getElementById('cancelProjectLabel');
+  var closeBtn = document.getElementById('cancelDialogClose');
+  var abortBtn = document.getElementById('cancelDialogAbort');
+  var textarea = document.getElementById('cancelReason');
+  var counter  = document.getElementById('cancelReasonCount');
+
+  if (!dialog || !form) return;
+
+  function closeDialog() { dialog.close(); }
+
+  document.querySelectorAll('[data-cancel-project-id]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var projectId   = btn.getAttribute('data-cancel-project-id');
+      var projectCode = btn.getAttribute('data-cancel-project-code') || '';
+      var projectName = btn.getAttribute('data-cancel-project-name') || '';
+      if (label) label.textContent = projectCode + (projectName ? ' – ' + projectName : '');
+      if (textarea) textarea.value = '';
+      if (counter) counter.textContent = '0 / 500';
+      form.action = '/projects/' + projectId + '/cancel';
+      dialog.showModal();
+    });
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', closeDialog);
+  if (abortBtn) abortBtn.addEventListener('click', closeDialog);
+
+  if (textarea && counter) {
+    textarea.addEventListener('input', function() {
+      counter.textContent = textarea.value.length + ' / 500';
+    });
+  }
+
+  dialog.addEventListener('click', function(e) { if (e.target === dialog) closeDialog(); });
+})();
+</script>
+<% } %>
 
 <%- include('../partials/project-shell-end') %>

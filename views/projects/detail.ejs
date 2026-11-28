@@ -70,7 +70,27 @@
       </div>
       <h1 class="font-headline-md text-headline-md text-on-surface tracking-tight"><%= p.projectName %></h1>
     </div>
+    <% if (p.projectStatus === 'ACTIVE' && user.role === 'OWNER') { %>
+    <div class="shrink-0">
+      <button
+        type="button"
+        class="inline-flex items-center gap-2 px-3.5 py-2.5 bg-error-container hover:bg-error text-on-error-container hover:text-on-error transition-colors font-label-md text-label-md"
+        id="btn-cancel-project"
+        title="Cancel project (reason required)"
+      >
+        <span class="material-symbols-outlined text-[18px]">cancel</span>
+        <span>Cancel Project</span>
+      </button>
+    </div>
+    <% } %>
   </div>
+
+  <% if (typeof cancelError !== 'undefined' && cancelError) { %>
+  <div class="flex items-start gap-space-sm bg-error-container border border-error/30 px-space-md py-space-sm" role="alert">
+    <span class="material-symbols-outlined text-[20px] text-error shrink-0 mt-0.5">error</span>
+    <span class="font-body-md text-body-md text-on-error-container"><%= cancelError %></span>
+  </div>
+  <% } %>
 
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-space-lg">
 
@@ -103,7 +123,7 @@
               <% if (p.assignedPmName) { %>
               <span class="text-primary font-semibold"><%= p.assignedPmName %></span>
               <% } else { %>
-              <span class="text-outline italic">Unassigned</span>
+              <span class="text-outline italic">Not Assigned</span>
               <% } %>
             </dd>
           </div>
@@ -222,5 +242,121 @@
   </div>
 
 </div>
+
+<% if (p.projectStatus === 'ACTIVE' && user.role === 'OWNER') { %>
+<!-- CANCEL PROJECT MODAL -->
+<dialog
+  id="cancelProjectDialog"
+  class="bg-surface-container border border-outline-variant/60 shadow-2xl w-full max-w-md p-0 open:flex open:flex-col backdrop:bg-black/40"
+  aria-labelledby="cancelDialogTitle"
+  aria-modal="true"
+>
+  <div class="px-space-md py-space-sm border-b border-outline-variant/30 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <span class="material-symbols-outlined text-[20px] text-error">cancel</span>
+      <h2 id="cancelDialogTitle" class="font-headline-sm text-headline-sm text-on-surface">Cancel Project</h2>
+    </div>
+    <button
+      type="button"
+      class="p-space-xs text-outline hover:text-on-surface hover:bg-surface-container-high transition-colors"
+      id="cancelDialogClose"
+      aria-label="Close"
+    >
+      <span class="material-symbols-outlined text-[20px]">close</span>
+    </button>
+  </div>
+
+  <div class="px-space-md py-space-md space-y-space-md">
+    <p class="font-body-md text-body-md text-on-surface-variant">
+      You are about to cancel project
+      <strong class="text-on-surface"><%= p.projectCode %> – <%= p.projectName %></strong>.
+      This action cannot be undone. The project will be marked as <strong class="text-error">CANCELLED</strong>
+      and any active Project Manager assignment will be ended.
+    </p>
+
+    <form
+      method="POST"
+      action="/projects/<%= p.projectId %>/cancel"
+      id="cancelProjectForm"
+      novalidate
+    >
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+      <div class="space-y-space-xs">
+        <label for="cancelReason" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+          Cancellation Reason <span class="text-error" aria-hidden="true">*</span>
+        </label>
+        <textarea
+          id="cancelReason"
+          name="reason"
+          rows="4"
+          maxlength="500"
+          required
+          placeholder="Enter a mandatory business reason for cancelling this project..."
+          class="w-full px-space-sm py-space-xs bg-surface border border-outline-variant/60 focus:border-primary focus:outline-none font-body-md text-body-md text-on-surface placeholder:text-outline resize-none transition-colors"
+          aria-describedby="cancelReasonCount"
+        ></textarea>
+        <div class="flex justify-end">
+          <span id="cancelReasonCount" class="font-code-tabular text-[11px] text-outline">0 / 500</span>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-space-sm pt-space-sm">
+        <button
+          type="button"
+          id="cancelDialogAbort"
+          class="px-4 py-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md transition-colors"
+        >
+          Keep Project
+        </button>
+        <button
+          type="submit"
+          class="inline-flex items-center gap-2 px-4 py-2 bg-error hover:bg-error/90 text-on-error font-label-md text-label-md transition-colors"
+          id="cancelDialogSubmit"
+        >
+          <span class="material-symbols-outlined text-[16px]">cancel</span>
+          Confirm Cancellation
+        </button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<script>
+(function initCancelProjectDialog() {
+  var dialog = document.getElementById('cancelProjectDialog');
+  var openBtn = document.getElementById('btn-cancel-project');
+  var closeBtn = document.getElementById('cancelDialogClose');
+  var abortBtn = document.getElementById('cancelDialogAbort');
+  var textarea = document.getElementById('cancelReason');
+  var counter  = document.getElementById('cancelReasonCount');
+
+  if (!dialog || !openBtn) return;
+
+  function openDialog() {
+    if (textarea) textarea.value = '';
+    if (counter) counter.textContent = '0 / 500';
+    dialog.showModal();
+  }
+
+  function closeDialog() { dialog.close(); }
+
+  openBtn.addEventListener('click', openDialog);
+  if (closeBtn) closeBtn.addEventListener('click', closeDialog);
+  if (abortBtn) abortBtn.addEventListener('click', closeDialog);
+
+  if (textarea && counter) {
+    textarea.addEventListener('input', function() {
+      counter.textContent = textarea.value.length + ' / 500';
+    });
+  }
+
+  // Close on backdrop click
+  dialog.addEventListener('click', function(e) {
+    if (e.target === dialog) closeDialog();
+  });
+})();
+</script>
+<% } %>
 
 <%- include('../partials/project-shell-end') %>

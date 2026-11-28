@@ -8,6 +8,9 @@ const path = require('node:path');
 const databaseConfigPath = path.resolve(__dirname, '../../src/config/database.js');
 
 let mockQueryFn = async () => ({ rows: [] });
+let mockConnectFn = async () => {
+  throw new Error('mockConnectFn not configured for this test');
+};
 
 require.cache[databaseConfigPath] = {
   id: databaseConfigPath,
@@ -15,6 +18,7 @@ require.cache[databaseConfigPath] = {
   loaded: true,
   exports: {
     query: async (...args) => mockQueryFn(...args),
+    connect: async (...args) => mockConnectFn(...args),
   },
 };
 
@@ -412,5 +416,488 @@ describe('projectService.parsePositiveInteger', () => {
 
   it('23. Float string returns null', () => {
     assert.strictEqual(parsePositiveInteger('1.5'), null);
+  });
+});
+
+// ── Customer Search, PM List, and Project Creation ────────────────────────
+
+describe('projectService.searchActiveCustomers', () => {
+  it('24. Returns empty array when query has fewer than 2 characters', async () => {
+    let called = false;
+    mockQueryFn = async () => { called = true; return { rows: [] }; };
+    const res = await projectService.searchActiveCustomers('a');
+    assert.deepStrictEqual(res, []);
+    assert.strictEqual(called, false);
+  });
+
+  it('25. Searches active customers by email or address and excludes inactive', async () => {
+    let capturedSql = '';
+    let capturedParams = [];
+    mockQueryFn = async (sql, params) => {
+      capturedSql = sql;
+      capturedParams = params;
+      return {
+        rows: [
+          {
+            customer_id: 5,
+            full_name: 'Dialog Axiata PLC',
+            email: 'signage@dialog.lk',
+            phone: '+94 11 234 5678',
+            address: '475 Union Place, Colombo 02',
+          },
+        ],
+      };
+    };
+
+    const res = await projectService.searchActiveCustomers('colombo');
+    assert.ok(capturedSql.includes('is_active = true'));
+    assert.ok(capturedSql.includes('email ILIKE'));
+    assert.ok(capturedSql.includes('address ILIKE'));
+    assert.strictEqual(capturedParams[0], '%colombo%');
+    assert.strictEqual(res.length, 1);
+    assert.strictEqual(res[0].customerId, 5);
+    assert.strictEqual(res[0].fullName, 'Dialog Axiata PLC');
+  });
+});
+
+describe('projectService.listActiveProjectManagers', () => {
+  it('26. Queries active users with PROJECT_MANAGER role', async () => {
+    let capturedSql = '';
+    mockQueryFn = async (sql) => {
+      capturedSql = sql;
+      return {
+        rows: [{ user_id: 3, full_name: 'Kasun PM', email: 'kasun@test.local' }],
+      };
+    };
+
+    const res = await projectService.listActiveProjectManagers();
+    assert.ok(capturedSql.includes("r.role_name = 'PROJECT_MANAGER'"));
+    assert.ok(capturedSql.includes('u.is_active = true'));
+    assert.deepStrictEqual(res, [{ userId: 3, fullName: 'Kasun PM', email: 'kasun@test.local' }]);
+  });
+});
+
+describe('projectService.createProject', () => {
+  function makeMockClient(handler) {
+    const calls = [];
+    let released = false;
+    const client = {
+      calls,
+      get released() { return released; },
+      query: async (sql, params) => {
+        calls.push({ sql, params });
+        return handler(sql, params, calls);
+      },
+      release: () => { released = true; },
+    };
+    return client;
+  }
+
+  it('27. Creates project with existing active customer and no PM in a transaction', async () => {
+    const year = projectService.getSriLankaYear();
+    const client = makeMockClient(async (sql) => {
+      if (sql.includes('FROM public.customers')) return { rows: [{ customer_id: 10, is_active: true }] };
+      if (sql.includes('MAX(')) return { rows: [{ max_seq: 4 }] };
+      if (sql.includes('INSERT INTO public.projects')) return { rows: [{ project_id: 77 }] };
+      return { rows: [] };
+    });
+    mockConnectFn = async () => client;
+
+    const result = await projectService.createProject(
+      {
+        customerMode: 'existing',
+        customerId: 10,
+        newCustomer: null,
+        projectName: 'Main Street Sign',
+        projectAddress: '12 Galle Rd',
+        projectLocation: 'Colombo',
+        description: 'Illuminated',
+        projectManagerId: null,
+      },
+      1
+    );
+
+    assert.strictEqual(result.projectId, 77);
+    assert.strictEqual(result.projectCode, `SBL-${year}-0005`);
+    assert.strictEqual(result.customerId, 10);
+    assert.ok(client.calls.some((c) => c.sql === 'BEGIN'));
+    assert.ok(client.calls.some((c) => c.sql.includes('pg_advisory_xact_lock')));
+    assert.ok(client.calls.some((c) => c.sql === 'COMMIT'));
+    assert.ok(!client.calls.some((c) => c.sql.includes('project_assignments')));
+    assert.ok(!client.calls.some((c) => c.sql.includes('project_status_history')));
+    assert.strictEqual(client.released, true);
+  });
+
+  it('28. Creates new customer, project, and PM assignment using session ownerUserId', async () => {
+    const year = projectService.getSriLankaYear();
+    const client = makeMockClient(async (sql) => {
+      if (sql.includes('LOWER(email)')) return { rows: [] };
+      if (sql.includes('INSERT INTO public.customers')) return { rows: [{ customer_id: 22 }] };
+      if (sql.includes('FROM public.users u')) return { rows: [{ user_id: 8, is_active: true, role_name: 'PROJECT_MANAGER' }] };
+      if (sql.includes('MAX(')) return { rows: [{ max_seq: 0 }] };
+      if (sql.includes('INSERT INTO public.projects')) return { rows: [{ project_id: 99 }] };
+      return { rows: [] };
+    });
+    mockConnectFn = async () => client;
+
+    const result = await projectService.createProject(
+      {
+        customerMode: 'new',
+        customerId: null,
+        newCustomer: {
+          fullName: 'New Co',
+          email: 'new@co.lk',
+          phone: '0112223334',
+          address: '100 Kandy Rd',
+        },
+        projectName: 'Billboard',
+        projectAddress: '100 Kandy Rd',
+        projectLocation: null,
+        description: null,
+        projectManagerId: 8,
+      },
+      15
+    );
+
+    assert.strictEqual(result.projectId, 99);
+    assert.strictEqual(result.projectCode, `SBL-${year}-0001`);
+    assert.strictEqual(result.customerId, 22);
+    const projInsert = client.calls.find((c) => c.sql.includes('INSERT INTO public.projects'));
+    assert.strictEqual(projInsert.params[6], 15);
+    const assignInsert = client.calls.find((c) => c.sql.includes('INSERT INTO public.project_assignments'));
+    assert.deepStrictEqual(assignInsert.params, [99, 8, 15]);
+    assert.strictEqual(client.released, true);
+  });
+
+  it('29. Rejects duplicate customer email with 409 ProjectCreationError and existing customer info', async () => {
+    const client = makeMockClient(async (sql) => {
+      if (sql.includes('LOWER(email)')) {
+        return {
+          rows: [{
+            customer_id: 14,
+            full_name: 'Existing Co',
+            email: 'dup@co.lk',
+            phone: '0110000000',
+            address: '50 Main St',
+            is_active: true,
+          }],
+        };
+      }
+      return { rows: [] };
+    });
+    mockConnectFn = async () => client;
+
+    await assert.rejects(
+      () => projectService.createProject(
+        {
+          customerMode: 'new',
+          customerId: null,
+          newCustomer: { fullName: 'Dup', email: 'dup@co.lk', phone: '123', address: 'Addr' },
+          projectName: 'P',
+          projectAddress: 'A',
+          projectLocation: null,
+          description: null,
+          projectManagerId: null,
+        },
+        1
+      ),
+      (err) => {
+        assert.strictEqual(err.name, 'ProjectCreationError');
+        assert.strictEqual(err.statusCode, 409);
+        assert.strictEqual(err.duplicateCustomer.customerId, 14);
+        return true;
+      }
+    );
+    assert.ok(client.calls.some((c) => c.sql === 'ROLLBACK'));
+    assert.strictEqual(client.released, true);
+  });
+
+  it('30. Rejects inactive PM or non-PROJECT_MANAGER user and rolls back', async () => {
+    const inactiveClient = makeMockClient(async (sql) => {
+      if (sql.includes('FROM public.customers')) return { rows: [{ customer_id: 10, is_active: true }] };
+      if (sql.includes('FROM public.users u')) return { rows: [{ user_id: 8, is_active: false, role_name: 'PROJECT_MANAGER' }] };
+      return { rows: [] };
+    });
+    mockConnectFn = async () => inactiveClient;
+
+    await assert.rejects(
+      () => projectService.createProject(
+        {
+          customerMode: 'existing',
+          customerId: 10,
+          newCustomer: null,
+          projectName: 'P',
+          projectAddress: 'A',
+          projectLocation: null,
+          description: null,
+          projectManagerId: 8,
+        },
+        1
+      ),
+      /inactive/i
+    );
+    assert.ok(inactiveClient.calls.some((c) => c.sql === 'ROLLBACK'));
+    assert.strictEqual(inactiveClient.released, true);
+
+    const wrongRoleClient = makeMockClient(async (sql) => {
+      if (sql.includes('FROM public.customers')) return { rows: [{ customer_id: 10, is_active: true }] };
+      if (sql.includes('FROM public.users u')) return { rows: [{ user_id: 9, is_active: true, role_name: 'ACCOUNTS' }] };
+      return { rows: [] };
+    });
+    mockConnectFn = async () => wrongRoleClient;
+
+    await assert.rejects(
+      () => projectService.createProject(
+        {
+          customerMode: 'existing',
+          customerId: 10,
+          newCustomer: null,
+          projectName: 'P',
+          projectAddress: 'A',
+          projectLocation: null,
+          description: null,
+          projectManagerId: 9,
+        },
+        1
+      ),
+      /PROJECT_MANAGER/
+    );
+    assert.ok(wrongRoleClient.calls.some((c) => c.sql === 'ROLLBACK'));
+    assert.strictEqual(wrongRoleClient.released, true);
+  });
+
+  it('31. Rolls back entire transaction and releases client if project or assignment insert fails', async () => {
+    const failProjectClient = makeMockClient(async (sql) => {
+      if (sql.includes('LOWER(email)')) return { rows: [] };
+      if (sql.includes('INSERT INTO public.customers')) return { rows: [{ customer_id: 30 }] };
+      if (sql.includes('MAX(')) return { rows: [{ max_seq: 0 }] };
+      if (sql.includes('INSERT INTO public.projects')) throw new Error('db write failure');
+      return { rows: [] };
+    });
+    mockConnectFn = async () => failProjectClient;
+
+    await assert.rejects(
+      () => projectService.createProject(
+        {
+          customerMode: 'new',
+          customerId: null,
+          newCustomer: { fullName: 'C', email: 'c@c.lk', phone: '123', address: 'Addr' },
+          projectName: 'P',
+          projectAddress: 'A',
+          projectLocation: null,
+          description: null,
+          projectManagerId: null,
+        },
+        1
+      ),
+      /db write failure/
+    );
+    assert.ok(failProjectClient.calls.some((c) => c.sql === 'ROLLBACK'));
+    assert.ok(!failProjectClient.calls.some((c) => c.sql === 'COMMIT'));
+    assert.strictEqual(failProjectClient.released, true);
+
+    const failAssignClient = makeMockClient(async (sql) => {
+      if (sql.includes('FROM public.customers')) return { rows: [{ customer_id: 10, is_active: true }] };
+      if (sql.includes('FROM public.users u')) return { rows: [{ user_id: 8, is_active: true, role_name: 'PROJECT_MANAGER' }] };
+      if (sql.includes('MAX(')) return { rows: [{ max_seq: 0 }] };
+      if (sql.includes('INSERT INTO public.projects')) return { rows: [{ project_id: 55 }] };
+      if (sql.includes('INSERT INTO public.project_assignments')) throw new Error('trigger error');
+      return { rows: [] };
+    });
+    mockConnectFn = async () => failAssignClient;
+
+    await assert.rejects(
+      () => projectService.createProject(
+        {
+          customerMode: 'existing',
+          customerId: 10,
+          newCustomer: null,
+          projectName: 'P',
+          projectAddress: 'A',
+          projectLocation: null,
+          description: null,
+          projectManagerId: 8,
+        },
+        1
+      ),
+      /trigger error/
+    );
+    assert.ok(failAssignClient.calls.some((c) => c.sql === 'ROLLBACK'));
+    assert.ok(!failAssignClient.calls.some((c) => c.sql === 'COMMIT'));
+    assert.strictEqual(failAssignClient.released, true);
+  });
+});
+
+// ── cancelProject ──────────────────────────────────────────────────────────
+
+describe('projectService.cancelProject', () => {
+  function makeCancelClient(handler) {
+    const calls = [];
+    let released = false;
+    return {
+      calls,
+      get released() { return released; },
+      query: async (sql, params) => {
+        const clean = typeof sql === 'string' ? sql.trim() : '';
+        calls.push({ sql: clean, params });
+        if (clean === 'BEGIN' || clean === 'COMMIT' || clean === 'ROLLBACK') {
+          return { rows: [] };
+        }
+        return handler(clean, params, calls);
+      },
+      release: () => { released = true; },
+    };
+  }
+
+  it('32. Cancels ACTIVE project via change_project_status(), ends active PM assignment, and commits', async () => {
+    const client = makeCancelClient(async (sql) => {
+      if (sql.includes('SELECT change_project_status')) return { rows: [{ change_project_status: null }] };
+      if (sql.includes('UPDATE public.project_assignments')) return { rowCount: 1, rows: [] };
+      return { rows: [] };
+    });
+    mockConnectFn = async () => client;
+
+    const result = await projectService.cancelProject(15, 1, '  Client cancelled order  ');
+    assert.deepStrictEqual(result, { projectId: 15 });
+
+    const sqls = client.calls.map((c) => c.sql);
+    assert.strictEqual(sqls[0], 'BEGIN');
+    assert.ok(sqls[1].includes('SELECT change_project_status($1, $2, \'CANCELLED\', $3)'));
+    assert.deepStrictEqual(client.calls[1].params, [15, 1, 'Client cancelled order']);
+    assert.ok(sqls[2].includes('UPDATE public.project_assignments'));
+    assert.ok(sqls[2].includes('ended_at = CURRENT_TIMESTAMP'));
+    assert.ok(sqls[2].includes('ended_at IS NULL'));
+    assert.deepStrictEqual(client.calls[2].params, [15]);
+    assert.strictEqual(sqls[3], 'COMMIT');
+    assert.strictEqual(client.released, true);
+
+    // Ensure no financial tables are touched
+    const joined = sqls.join('\n').toLowerCase();
+    assert.ok(!joined.includes('payment'));
+    assert.ok(!joined.includes('advance'));
+    assert.ok(!joined.includes('refund'));
+  });
+
+  it('33. Commits cleanly even when project has no active PM assignment (0 rows updated)', async () => {
+    const client = makeCancelClient(async (sql) => {
+      if (sql.includes('SELECT change_project_status')) return { rows: [] };
+      if (sql.includes('UPDATE public.project_assignments')) return { rowCount: 0, rows: [] };
+      return { rows: [] };
+    });
+    mockConnectFn = async () => client;
+
+    const result = await projectService.cancelProject('22', '3', 'No PM assigned');
+    assert.deepStrictEqual(result, { projectId: 22 });
+    assert.ok(client.calls.some((c) => c.sql === 'COMMIT'));
+    assert.strictEqual(client.released, true);
+  });
+
+  it('34. Rolls back entire transaction if ending PM assignment fails', async () => {
+    const client = makeCancelClient(async (sql) => {
+      if (sql.includes('SELECT change_project_status')) return { rows: [] };
+      if (sql.includes('UPDATE public.project_assignments')) throw new Error('assignment update failure');
+      return { rows: [] };
+    });
+    mockConnectFn = async () => client;
+
+    await assert.rejects(
+      () => projectService.cancelProject(15, 1, 'Valid reason'),
+      /assignment update failure/
+    );
+    assert.ok(client.calls.some((c) => c.sql === 'ROLLBACK'));
+    assert.ok(!client.calls.some((c) => c.sql === 'COMMIT'));
+    assert.strictEqual(client.released, true);
+  });
+
+  it('35. Maps non-ACTIVE status DB error to ProjectCancellationError (409) and rolls back', async () => {
+    const client = makeCancelClient(async (sql) => {
+      if (sql.includes('SELECT change_project_status')) {
+        throw new Error('This project status transition is not allowed');
+      }
+      return { rows: [] };
+    });
+    mockConnectFn = async () => client;
+
+    await assert.rejects(
+      () => projectService.cancelProject(15, 1, 'Valid reason'),
+      (err) => {
+        assert.strictEqual(err.name, 'ProjectCancellationError');
+        assert.strictEqual(err.statusCode, 409);
+        assert.ok(err.message.includes('Only active projects can be cancelled'));
+        return true;
+      }
+    );
+    assert.ok(client.calls.some((c) => c.sql === 'ROLLBACK'));
+    assert.ok(!client.calls.some((c) => c.sql === 'COMMIT'));
+    assert.strictEqual(client.released, true);
+  });
+
+  it('36. Maps missing project DB error to ProjectCancellationError (404) and rolls back', async () => {
+    const client = makeCancelClient(async (sql) => {
+      if (sql.includes('SELECT change_project_status')) {
+        throw new Error('Project not found');
+      }
+      return { rows: [] };
+    });
+    mockConnectFn = async () => client;
+
+    await assert.rejects(
+      () => projectService.cancelProject(999, 1, 'Valid reason'),
+      (err) => {
+        assert.strictEqual(err.name, 'ProjectCancellationError');
+        assert.strictEqual(err.statusCode, 404);
+        return true;
+      }
+    );
+    assert.ok(client.calls.some((c) => c.sql === 'ROLLBACK'));
+    assert.strictEqual(client.released, true);
+  });
+
+  it('37. Maps OWNER / inactive user / reason DB errors to appropriate status codes', async () => {
+    for (const [dbMsg, expectedStatus] of [
+      ['Only an OWNER can change this project status', 403],
+      ['Invalid or inactive user', 403],
+      ['A reason is required', 400],
+    ]) {
+      const client = makeCancelClient(async () => { throw new Error(dbMsg); });
+      mockConnectFn = async () => client;
+
+      await assert.rejects(
+        () => projectService.cancelProject(15, 1, 'Valid reason'),
+        (err) => {
+          assert.strictEqual(err.name, 'ProjectCancellationError');
+          assert.strictEqual(err.statusCode, expectedStatus);
+          return true;
+        }
+      );
+      assert.ok(client.calls.some((c) => c.sql === 'ROLLBACK'));
+      assert.strictEqual(client.released, true);
+    }
+  });
+
+  it('38. Rejects invalid projectId, ownerUserId, empty reason, or >500 chars before connecting to DB', async () => {
+    let connectCalled = false;
+    mockConnectFn = async () => {
+      connectCalled = true;
+      throw new Error('Should not connect');
+    };
+
+    for (const args of [
+      [0, 1, 'Reason'],
+      ['abc', 1, 'Reason'],
+      [1, 0, 'Reason'],
+      [1, 1, '   '],
+      [1, 1, 'X'.repeat(501)],
+    ]) {
+      await assert.rejects(
+        () => projectService.cancelProject(...args),
+        (err) => {
+          assert.strictEqual(err.name, 'ProjectCancellationError');
+          assert.strictEqual(err.statusCode, 400);
+          return true;
+        }
+      );
+    }
+    assert.strictEqual(connectCalled, false);
   });
 });

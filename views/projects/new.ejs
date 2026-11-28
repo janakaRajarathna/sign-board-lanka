@@ -1,0 +1,519 @@
+<%
+  var fv = (typeof formValues === 'object' && formValues) ? formValues : {};
+  var errs = (typeof errors === 'object' && errors) ? errors : {};
+  var pms = Array.isArray(projectManagers) ? projectManagers : [];
+  var mode = fv.customerMode === 'new' ? 'new' : 'existing';
+  var dupCust = (typeof duplicateCustomer === 'object' && duplicateCustomer) ? duplicateCustomer : null;
+%>
+<%- include('../partials/head-theme', { title: 'New Project Registration' }) %>
+<%- include('../partials/project-shell-start', { user: user, csrfToken: csrfToken, activePath: 'projects' }) %>
+
+<div class="px-space-md lg:px-space-lg py-space-md lg:py-space-lg flex flex-col space-y-space-lg max-w-5xl">
+
+  <!-- BACK LINK -->
+  <div>
+    <a href="/projects" class="inline-flex items-center gap-1.5 font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors">
+      <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_back</span>
+      Back to Projects
+    </a>
+  </div>
+
+  <!-- PAGE HEADER -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+    <div>
+      <div class="flex flex-wrap items-center gap-2 mb-1">
+        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-primary-container text-on-primary-container font-label-sm text-label-sm uppercase tracking-wider font-semibold">
+          Stage 1: Project Registration
+        </span>
+      </div>
+      <h1 class="font-headline-md text-headline-md text-on-surface tracking-tight">New Project Registration</h1>
+      <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+        Register a new client signage project and optionally assign a Project Manager. Fields marked with <span class="text-error font-semibold">*</span> are required.
+      </p>
+    </div>
+  </div>
+
+  <!-- FORM-LEVEL ERROR ALERT -->
+  <% if (typeof formError === 'string' && formError) { %>
+  <div role="alert" id="form-error-banner" class="flex flex-col gap-2 bg-error-container/30 border border-error/50 px-space-md py-space-sm text-error">
+    <div class="flex items-start gap-space-sm">
+      <span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5" aria-hidden="true">error</span>
+      <p class="font-body-sm text-body-sm font-medium"><%= formError %></p>
+    </div>
+    <% if (dupCust) { %>
+    <div class="pl-7 flex flex-wrap items-center gap-space-sm">
+      <span class="font-body-sm text-body-sm text-on-surface">
+        Existing customer: <strong><%= dupCust.fullName %></strong> (<%= dupCust.email %>)
+      </span>
+      <button
+        type="button"
+        id="btn-select-duplicate-customer"
+        data-customer-id="<%= dupCust.customerId %>"
+        data-customer-name="<%= dupCust.fullName %>"
+        data-customer-email="<%= dupCust.email %>"
+        data-customer-phone="<%= dupCust.phone %>"
+        data-customer-address="<%= dupCust.address %>"
+        class="inline-flex items-center gap-1 px-3 py-1 bg-primary text-on-primary font-label-sm text-label-sm hover:opacity-90 transition-opacity cursor-pointer"
+      >
+        <span class="material-symbols-outlined text-[15px]" aria-hidden="true">check_circle</span>
+        Select This Existing Customer
+      </button>
+    </div>
+    <% } %>
+  </div>
+  <% } %>
+
+  <form method="POST" action="/projects" id="project-registration-form" class="flex flex-col space-y-space-lg" novalidate>
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <input type="hidden" id="customer-mode" name="customerMode" value="<%= mode %>">
+    <input type="hidden" id="customer-id" name="customerId" value="<%= fv.customerId || '' %>">
+
+    <!-- SECTION A: CUSTOMER INFORMATION -->
+    <section aria-labelledby="section-customer-heading" class="bg-surface-container-lowest border border-outline-variant/30 p-space-md lg:p-space-lg space-y-space-md">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm border-b border-outline-variant/30 pb-space-sm">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[20px] text-primary" aria-hidden="true">groups</span>
+          <h2 id="section-customer-heading" class="font-headline-sm text-headline-sm text-on-surface">A. Customer Information</h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            id="btn-use-existing-customer"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 border font-label-md text-label-md transition-colors cursor-pointer <%= mode === 'existing' ? 'bg-primary-container text-on-primary-container border-primary' : 'bg-surface-container-high hover:bg-surface-container-highest text-on-surface border-outline-variant/40' %>"
+          >
+            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">person_search</span>
+            Existing Customer
+          </button>
+          <button
+            type="button"
+            id="btn-register-new-customer"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 border font-label-md text-label-md transition-colors cursor-pointer <%= mode === 'new' ? 'bg-primary-container text-on-primary-container border-primary' : 'bg-surface-container-high hover:bg-surface-container-highest text-on-surface border-outline-variant/40' %>"
+          >
+            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">person_add</span>
+            Register New Customer
+          </button>
+        </div>
+      </div>
+
+      <!-- Existing Customer Search Panel -->
+      <div id="existing-customer-panel" class="space-y-space-md <%= mode === 'new' ? 'hidden' : '' %>">
+        <div class="flex flex-col gap-1 relative">
+          <label for="customer-search" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+            Search Existing Customer <span class="text-error" aria-hidden="true">*</span>
+          </label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]" aria-hidden="true">search</span>
+            <input
+              id="customer-search"
+              type="text"
+              placeholder="Type at least 2 characters of customer email or address…"
+              autocomplete="off"
+              class="w-full h-10 pl-9 pr-3 bg-surface-container border border-outline-variant/50 font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary"
+            >
+          </div>
+          <p class="font-body-sm text-body-sm text-outline">Only active customers appear in search results (searches email and address).</p>
+
+          <!-- Search Results List -->
+          <div
+            id="customer-search-results"
+            role="listbox"
+            aria-label="Matching active customers"
+            class="hidden mt-1 bg-surface-container border border-outline-variant/60 max-h-64 overflow-y-auto divide-y divide-outline-variant/30"
+          ></div>
+        </div>
+
+        <!-- Selected Customer Summary Card -->
+        <div id="selected-customer-card" aria-live="polite" class="bg-surface-container-low border border-dashed border-outline-variant/60 p-space-md flex items-start gap-space-sm text-on-surface-variant">
+          <span class="material-symbols-outlined text-[20px] text-outline shrink-0 mt-0.5" aria-hidden="true">badge</span>
+          <div class="font-body-sm text-body-sm flex-1">
+            <span class="text-on-surface font-semibold block">Selected Customer</span>
+            <div id="selected-customer-empty" class="<%= fv.customerId ? 'hidden' : '' %>">
+              No customer selected yet. Search for an active customer above or click &ldquo;Register New Customer&rdquo;.
+            </div>
+            <div id="selected-customer-details" class="<%= fv.customerId ? '' : 'hidden' %> grid grid-cols-1 sm:grid-cols-2 gap-x-space-md gap-y-1 mt-1 text-on-surface">
+              <div><span class="text-on-surface-variant">Name:</span> <span id="sel-cust-name" class="font-semibold"><%= fv.customerFullName || '—' %></span></div>
+              <div><span class="text-on-surface-variant">Email:</span> <span id="sel-cust-email"><%= fv.customerEmail || '—' %></span></div>
+              <div><span class="text-on-surface-variant">Phone:</span> <span id="sel-cust-phone"><%= fv.customerPhone || '—' %></span></div>
+              <div><span class="text-on-surface-variant">Address:</span> <span id="sel-cust-address"><%= fv.customerAddress || '—' %></span></div>
+            </div>
+          </div>
+        </div>
+
+        <% if (errs.customerId) { %>
+        <p class="font-body-sm text-body-sm text-error" role="alert"><%= errs.customerId %></p>
+        <% } %>
+      </div>
+
+      <!-- New Customer Registration Panel -->
+      <div id="new-customer-panel" class="pt-space-xs space-y-space-sm <%= mode === 'new' ? '' : 'hidden' %>">
+        <p class="font-label-sm text-label-sm text-outline uppercase tracking-wider">New Customer Details</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+          <div class="flex flex-col gap-1">
+            <label for="customer-full-name" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+              Full Name <span class="text-error" aria-hidden="true">*</span>
+            </label>
+            <input
+              id="customer-full-name"
+              name="customerFullName"
+              type="text"
+              maxlength="150"
+              value="<%= fv.customerFullName || '' %>"
+              placeholder="e.g., Dialog Axiata PLC"
+              class="w-full h-10 px-3 bg-surface-container border <%= errs.customerFullName ? 'border-error' : 'border-outline-variant/50' %> font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary"
+            >
+            <% if (errs.customerFullName) { %><span class="font-body-sm text-body-sm text-error"><%= errs.customerFullName %></span><% } %>
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label for="customer-email" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+              Email <span class="text-error" aria-hidden="true">*</span>
+            </label>
+            <input
+              id="customer-email"
+              name="customerEmail"
+              type="email"
+              maxlength="254"
+              value="<%= fv.customerEmail || '' %>"
+              placeholder="e.g., signage@company.lk"
+              class="w-full h-10 px-3 bg-surface-container border <%= errs.customerEmail ? 'border-error' : 'border-outline-variant/50' %> font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary"
+            >
+            <% if (errs.customerEmail) { %><span class="font-body-sm text-body-sm text-error"><%= errs.customerEmail %></span><% } %>
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label for="customer-phone" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+              Phone <span class="text-error" aria-hidden="true">*</span>
+            </label>
+            <input
+              id="customer-phone"
+              name="customerPhone"
+              type="tel"
+              maxlength="20"
+              value="<%= fv.customerPhone || '' %>"
+              placeholder="e.g., +94 11 234 5678"
+              class="w-full h-10 px-3 bg-surface-container border <%= errs.customerPhone ? 'border-error' : 'border-outline-variant/50' %> font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary"
+            >
+            <% if (errs.customerPhone) { %><span class="font-body-sm text-body-sm text-error"><%= errs.customerPhone %></span><% } %>
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label for="customer-address" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+              Address <span class="text-error" aria-hidden="true">*</span>
+            </label>
+            <input
+              id="customer-address"
+              name="customerAddress"
+              type="text"
+              maxlength="1000"
+              value="<%= fv.customerAddress || '' %>"
+              placeholder="e.g., 475 Union Place, Colombo 02"
+              class="w-full h-10 px-3 bg-surface-container border <%= errs.customerAddress ? 'border-error' : 'border-outline-variant/50' %> font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary"
+            >
+            <% if (errs.customerAddress) { %><span class="font-body-sm text-body-sm text-error"><%= errs.customerAddress %></span><% } %>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION B: PROJECT INFORMATION -->
+    <section aria-labelledby="section-project-heading" class="bg-surface-container-lowest border border-outline-variant/30 p-space-md lg:p-space-lg space-y-space-md">
+      <div class="flex items-center gap-2 border-b border-outline-variant/30 pb-space-sm">
+        <span class="material-symbols-outlined text-[20px] text-primary" aria-hidden="true">precision_manufacturing</span>
+        <h2 id="section-project-heading" class="font-headline-sm text-headline-sm text-on-surface">B. Project Information</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+        <div class="flex flex-col gap-1">
+          <label for="project-code" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+            Project Code
+          </label>
+          <input
+            id="project-code"
+            type="text"
+            readonly
+            value=""
+            placeholder="Automatically generated (SBL-YYYY-NNNN)"
+            aria-describedby="project-code-hint"
+            class="w-full h-10 px-3 bg-surface-container-low border border-outline-variant/40 font-code-tabular text-code-tabular text-outline placeholder:text-outline cursor-not-allowed focus:outline-none"
+          >
+          <span id="project-code-hint" class="font-body-sm text-body-sm text-outline">
+            Automatically generated on the server upon creation.
+          </span>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="project-name" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+            Project Name <span class="text-error" aria-hidden="true">*</span>
+          </label>
+          <input
+            id="project-name"
+            name="projectName"
+            type="text"
+            required
+            maxlength="200"
+            aria-required="true"
+            value="<%= fv.projectName || '' %>"
+            placeholder="e.g., 3D Acrylic Pylon Sign – Colombo"
+            class="w-full h-10 px-3 bg-surface-container border <%= errs.projectName ? 'border-error' : 'border-outline-variant/50' %> font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary"
+          >
+          <% if (errs.projectName) { %><span class="font-body-sm text-body-sm text-error"><%= errs.projectName %></span><% } %>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="project-address" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+            Project Address <span class="text-error" aria-hidden="true">*</span>
+          </label>
+          <input
+            id="project-address"
+            name="projectAddress"
+            type="text"
+            required
+            maxlength="1000"
+            aria-required="true"
+            value="<%= fv.projectAddress || '' %>"
+            placeholder="Installation site street address"
+            class="w-full h-10 px-3 bg-surface-container border <%= errs.projectAddress ? 'border-error' : 'border-outline-variant/50' %> font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary"
+          >
+          <% if (errs.projectAddress) { %><span class="font-body-sm text-body-sm text-error"><%= errs.projectAddress %></span><% } %>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="project-location" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+            Project Location <span class="text-outline font-normal normal-case">(Optional)</span>
+          </label>
+          <input
+            id="project-location"
+            name="projectLocation"
+            type="text"
+            maxlength="255"
+            value="<%= fv.projectLocation || '' %>"
+            placeholder="e.g., Colombo 03 / Western Province"
+            class="w-full h-10 px-3 bg-surface-container border <%= errs.projectLocation ? 'border-error' : 'border-outline-variant/50' %> font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary"
+          >
+          <% if (errs.projectLocation) { %><span class="font-body-sm text-body-sm text-error"><%= errs.projectLocation %></span><% } %>
+        </div>
+
+        <div class="flex flex-col gap-1 md:col-span-2">
+          <label for="project-description" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+            Description <span class="text-outline font-normal normal-case">(Optional)</span>
+          </label>
+          <textarea
+            id="project-description"
+            name="description"
+            rows="3"
+            maxlength="2000"
+            placeholder="Signage specifications, dimensions, illumination, or site notes…"
+            class="w-full px-3 py-2 bg-surface-container border <%= errs.description ? 'border-error' : 'border-outline-variant/50' %> font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary"
+          ><%= fv.description || '' %></textarea>
+          <% if (errs.description) { %><span class="font-body-sm text-body-sm text-error"><%= errs.description %></span><% } %>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION C: PROJECT ASSIGNMENT -->
+    <section aria-labelledby="section-assignment-heading" class="bg-surface-container-lowest border border-outline-variant/30 p-space-md lg:p-space-lg space-y-space-md">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs border-b border-outline-variant/30 pb-space-sm">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[20px] text-primary" aria-hidden="true">assignment_ind</span>
+          <h2 id="section-assignment-heading" class="font-headline-sm text-headline-sm text-on-surface">C. Project Assignment</h2>
+        </div>
+        <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider bg-surface-container-high px-2 py-0.5">
+          Optional
+        </span>
+      </div>
+
+      <div class="flex flex-col gap-1 max-w-md">
+        <label for="project-manager-id" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+          Project Manager <span class="text-outline font-normal normal-case">(Optional)</span>
+        </label>
+        <select
+          id="project-manager-id"
+          name="projectManagerId"
+          aria-describedby="project-manager-hint"
+          class="w-full h-10 px-3 bg-surface-container border <%= errs.projectManagerId ? 'border-error' : 'border-outline-variant/50' %> font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary"
+        >
+          <option value="">Unassigned (Select later)</option>
+          <% pms.forEach(function(pm) { %>
+            <option value="<%= pm.userId %>" <%= String(fv.projectManagerId || '') === String(pm.userId) ? 'selected' : '' %>><%= pm.fullName %></option>
+          <% }); %>
+        </select>
+        <% if (errs.projectManagerId) { %><span class="font-body-sm text-body-sm text-error"><%= errs.projectManagerId %></span><% } %>
+        <p id="project-manager-hint" class="font-body-sm text-body-sm text-outline">
+          Assigning a Project Manager is optional during registration and can be done later.
+        </p>
+      </div>
+    </section>
+
+    <!-- FORM ACTIONS -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-end gap-space-sm pt-space-xs">
+      <a
+        href="/projects"
+        class="inline-flex items-center justify-center h-10 px-5 bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-lg text-label-lg transition-colors"
+      >
+        Cancel
+      </a>
+      <button
+        type="submit"
+        id="btn-save-project"
+        class="inline-flex items-center justify-center gap-2 h-10 px-5 bg-primary hover:opacity-90 text-on-primary font-label-lg text-label-lg transition-opacity cursor-pointer"
+      >
+        <span class="material-symbols-outlined text-[18px]" aria-hidden="true">save</span>
+        Create Project
+      </button>
+    </div>
+
+  </form>
+
+</div>
+
+<script>
+(function () {
+  var modeInput = document.getElementById('customer-mode');
+  var customerIdInput = document.getElementById('customer-id');
+  var btnExisting = document.getElementById('btn-use-existing-customer');
+  var btnNew = document.getElementById('btn-register-new-customer');
+  var existingPanel = document.getElementById('existing-customer-panel');
+  var newPanel = document.getElementById('new-customer-panel');
+
+  var searchInput = document.getElementById('customer-search');
+  var resultsBox = document.getElementById('customer-search-results');
+  var emptyState = document.getElementById('selected-customer-empty');
+  var detailsBox = document.getElementById('selected-customer-details');
+  var selName = document.getElementById('sel-cust-name');
+  var selEmail = document.getElementById('sel-cust-email');
+  var selPhone = document.getElementById('sel-cust-phone');
+  var selAddress = document.getElementById('sel-cust-address');
+
+  var custNameInput = document.getElementById('customer-full-name');
+  var custEmailInput = document.getElementById('customer-email');
+  var custPhoneInput = document.getElementById('customer-phone');
+  var custAddressInput = document.getElementById('customer-address');
+  var projectAddressInput = document.getElementById('project-address');
+
+  var debounceTimer = null;
+
+  function setMode(nextMode) {
+    modeInput.value = nextMode;
+    if (nextMode === 'new') {
+      existingPanel.classList.add('hidden');
+      newPanel.classList.remove('hidden');
+      btnNew.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 border font-label-md text-label-md transition-colors cursor-pointer bg-primary-container text-on-primary-container border-primary';
+      btnExisting.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 border font-label-md text-label-md transition-colors cursor-pointer bg-surface-container-high hover:bg-surface-container-highest text-on-surface border-outline-variant/40';
+    } else {
+      newPanel.classList.add('hidden');
+      existingPanel.classList.remove('hidden');
+      btnExisting.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 border font-label-md text-label-md transition-colors cursor-pointer bg-primary-container text-on-primary-container border-primary';
+      btnNew.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 border font-label-md text-label-md transition-colors cursor-pointer bg-surface-container-high hover:bg-surface-container-highest text-on-surface border-outline-variant/40';
+    }
+  }
+
+  function selectCustomer(c) {
+    setMode('existing');
+    customerIdInput.value = String(c.customerId);
+    selName.textContent = c.fullName || '—';
+    selEmail.textContent = c.email || '—';
+    selPhone.textContent = c.phone || '—';
+    selAddress.textContent = c.address || '—';
+    emptyState.classList.add('hidden');
+    detailsBox.classList.remove('hidden');
+
+    // Keep hidden/display fields in sync so validation errors preserve details if needed
+    custNameInput.value = c.fullName || '';
+    custEmailInput.value = c.email || '';
+    custPhoneInput.value = c.phone || '';
+    custAddressInput.value = c.address || '';
+
+    if (c.address) {
+      projectAddressInput.value = c.address;
+    }
+
+    resultsBox.classList.add('hidden');
+    resultsBox.innerHTML = '';
+  }
+
+  function renderResults(customers) {
+    resultsBox.innerHTML = '';
+    if (!Array.isArray(customers) || customers.length === 0) {
+      var emptyRow = document.createElement('div');
+      emptyRow.className = 'px-3 py-2.5 font-body-sm text-body-sm text-on-surface-variant';
+      emptyRow.textContent = 'No active customers matched your search.';
+      resultsBox.appendChild(emptyRow);
+      resultsBox.classList.remove('hidden');
+      return;
+    }
+
+    customers.forEach(function (c) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.setAttribute('role', 'option');
+      btn.className = 'w-full text-left px-3 py-2.5 hover:bg-surface-container-high transition-colors cursor-pointer flex flex-col gap-0.5';
+
+      var topLine = document.createElement('div');
+      topLine.className = 'flex flex-wrap items-center justify-between gap-2';
+      var nameSpan = document.createElement('span');
+      nameSpan.className = 'font-body-md text-body-md font-semibold text-on-surface';
+      nameSpan.textContent = c.fullName;
+      var phoneSpan = document.createElement('span');
+      phoneSpan.className = 'font-code-tabular text-label-sm text-on-surface-variant';
+      phoneSpan.textContent = c.phone;
+      topLine.appendChild(nameSpan);
+      topLine.appendChild(phoneSpan);
+
+      var subLine = document.createElement('div');
+      subLine.className = 'font-body-sm text-body-sm text-on-surface-variant';
+      subLine.textContent = c.email + ' • ' + c.address;
+
+      btn.appendChild(topLine);
+      btn.appendChild(subLine);
+      btn.addEventListener('click', function () {
+        selectCustomer(c);
+      });
+      resultsBox.appendChild(btn);
+    });
+
+    resultsBox.classList.remove('hidden');
+  }
+
+  if (btnExisting) {
+    btnExisting.addEventListener('click', function () { setMode('existing'); });
+  }
+  if (btnNew) {
+    btnNew.addEventListener('click', function () { setMode('new'); });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      var q = searchInput.value.trim();
+      clearTimeout(debounceTimer);
+      if (q.length < 2) {
+        resultsBox.classList.add('hidden');
+        resultsBox.innerHTML = '';
+        return;
+      }
+      debounceTimer = setTimeout(function () {
+        fetch('/projects/customers/search?q=' + encodeURIComponent(q), {
+          headers: { 'Accept': 'application/json' },
+        })
+          .then(function (res) { return res.ok ? res.json() : { customers: [] }; })
+          .then(function (data) { renderResults(data.customers || []); })
+          .catch(function () { resultsBox.classList.add('hidden'); });
+      }, 200);
+    });
+  }
+
+  var dupBtn = document.getElementById('btn-select-duplicate-customer');
+  if (dupBtn) {
+    dupBtn.addEventListener('click', function () {
+      selectCustomer({
+        customerId: dupBtn.getAttribute('data-customer-id'),
+        fullName: dupBtn.getAttribute('data-customer-name'),
+        email: dupBtn.getAttribute('data-customer-email'),
+        phone: dupBtn.getAttribute('data-customer-phone'),
+        address: dupBtn.getAttribute('data-customer-address'),
+      });
+    });
+  }
+})();
+</script>
+
+<%- include('../partials/project-shell-end') %>
